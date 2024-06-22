@@ -1,25 +1,9 @@
+import * as utils from "./utils";
+
 // ===================
 //       Types
 // ===================
-type Nullable<T> = T | null;
-
-// ===================
-//       Utils
-// ===================
-
-/**
- * Get the first element of a list.
- */
-const hd = <T>(xs: ReadonlyArray<T>): T => {
-  return xs[0];
-};
-
-/**
- * Removes the first element of a list.
- */
-const tail = <T>(xs: ReadonlyArray<T>): ReadonlyArray<T> => {
-  return xs.slice(1);
-};
+type Nullable<A> = A | null;
 
 // ===================
 //      Problems
@@ -28,17 +12,17 @@ const tail = <T>(xs: ReadonlyArray<T>): ReadonlyArray<T> => {
 /*
  * Problem 1
  *
- * Write a function `last(xs: [T]) => T` that returns the last element of a list
+ * Write a function `last(xs: [A]) => A` that returns the last element of a list
  */
-export const last = <T>(xs: ReadonlyArray<T>): Nullable<T> => {
+export const last = <A>(xs: ReadonlyArray<A>): Nullable<A> => {
   if (xs.length === 0) {
     return null;
   }
 
   if (xs.length === 1) {
-    return hd(xs);
+    return utils.hd(xs);
   } else {
-    return last(tail(xs));
+    return last(utils.tail(xs));
   }
 };
 
@@ -47,7 +31,7 @@ export const last = <T>(xs: ReadonlyArray<T>): Nullable<T> => {
  *
  * Find the last two (last and penultimate) elements of a list.
  */
-export const last_two = <T>(xs: ReadonlyArray<T>): Nullable<ReadonlyArray<T>> => {
+export const last_two = <A>(xs: ReadonlyArray<A>): Nullable<ReadonlyArray<A>> => {
   if (xs.length === 0 || xs.length === 1) {
     return null;
   }
@@ -56,7 +40,7 @@ export const last_two = <T>(xs: ReadonlyArray<T>): Nullable<ReadonlyArray<T>> =>
     return xs;
   }
 
-  return last_two(tail(xs));
+  return last_two(utils.tail(xs));
 };
 
 /*
@@ -64,8 +48,8 @@ export const last_two = <T>(xs: ReadonlyArray<T>): Nullable<ReadonlyArray<T>> =>
  *
  * Find the N'th element of a list.
  */
-export const nth = <T>(n: number) => {
-  return (xs: ReadonlyArray<T>): Nullable<T> => {
+export const nth = <A>(n: number) => {
+  return (xs: ReadonlyArray<A>): Nullable<A> => {
     if (n < 0) {
       return null;
     }
@@ -83,12 +67,12 @@ export const nth = <T>(n: number) => {
  *
  * Find the number of elements of a list.
  */
-export const length = <T>(xs: ReadonlyArray<T>): number => {
+export const length = <A>(xs: ReadonlyArray<A>): number => {
   if (xs.length === 0) {
     return 0;
   }
 
-  return 1 + length(tail(xs));
+  return 1 + length(utils.tail(xs));
 };
 
 /*
@@ -96,7 +80,7 @@ export const length = <T>(xs: ReadonlyArray<T>): number => {
  *
  * Reverse the elements of a list.
  */
-export const reverse = <T>(xs: ReadonlyArray<T>): ReadonlyArray<T> => {
+export const reverse = <A>(xs: ReadonlyArray<A>): ReadonlyArray<A> => {
   if (xs.length < 2) {
     return xs;
   }
