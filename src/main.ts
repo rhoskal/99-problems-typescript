@@ -52,3 +52,16 @@ export const nth = <T>(n: number) => {
     return xs[n - 1];
   };
 };
+
+/*
+ * Problem 4
+ *
+ * Find the number of elements of a list.
+ */
+export const length = <T>(xs: ReadonlyArray<T>): number => {
+  if (xs.length === 0) {
+    return 0;
+  }
+
+  return 1 + length(xs.slice(1));
+};
