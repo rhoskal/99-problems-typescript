@@ -107,3 +107,23 @@ export const is_palindrome = <A>(as: ReadonlyArray<A>): boolean => {
 
   return (first_el === last_el) === is_palindrome(slice);
 };
+
+/*
+ * Problem 7
+ *
+ * Flatten a nested list structure.
+ */
+export const flatten = (possiblyNested: ReadonlyArray<unknown>): ReadonlyArray<unknown> => {
+  if (Array.isArray(possiblyNested)) {
+    if (possiblyNested.length === 0) {
+      return possiblyNested;
+    }
+
+    const head = utils.hd(possiblyNested);
+    const tail = utils.tail(possiblyNested);
+
+    return [...flatten(head), ...flatten(tail)];
+  } else {
+    return [possiblyNested];
+  }
+};
