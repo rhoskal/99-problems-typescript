@@ -1,7 +1,7 @@
 import { expect, test } from "vitest";
 // import * as fc from "fast-check";
 
-import { last, last_two, nth, length } from "../src/main";
+import { last, last_two, nth, length, reverse } from "../src/main";
 
 test("Return the last element of a list", () => {
   expect(last([])).toEqual(null);
@@ -27,4 +27,10 @@ test("Return the length of a list", () => {
   expect(length([])).toEqual(0);
   expect(length([1])).toEqual(1);
   expect(length(["a", "b", "c", "d", "e"])).toEqual(5);
+});
+
+test("Return the items of a list reversed", () => {
+  expect(reverse([])).toEqual([]);
+  expect(reverse([1])).toEqual([1]);
+  expect(reverse([1, 2, 3])).toEqual([3, 2, 1]);
 });

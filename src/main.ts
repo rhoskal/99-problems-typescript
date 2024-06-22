@@ -6,10 +6,17 @@ type Nullable<T> = T | null;
 // ===================
 //       Utils
 // ===================
+
+/**
+ * Get the first element of a list.
+ */
 const hd = <T>(xs: ReadonlyArray<T>): T => {
   return xs[0];
 };
 
+/**
+ * Removes the first element of a list.
+ */
 const tail = <T>(xs: ReadonlyArray<T>): ReadonlyArray<T> => {
   return xs.slice(1);
 };
@@ -40,9 +47,7 @@ export const last = <T>(xs: ReadonlyArray<T>): Nullable<T> => {
  *
  * Find the last two (last and penultimate) elements of a list.
  */
-export const last_two = <T>(
-  xs: ReadonlyArray<T>,
-): Nullable<ReadonlyArray<T>> => {
+export const last_two = <T>(xs: ReadonlyArray<T>): Nullable<ReadonlyArray<T>> => {
   if (xs.length === 0 || xs.length === 1) {
     return null;
   }
@@ -85,4 +90,18 @@ export const length = <T>(xs: ReadonlyArray<T>): number => {
 
   return 1 + length(tail(xs));
 };
+
+/*
+ * Problem 5
+ *
+ * Reverse the elements of a list.
+ */
+export const reverse = <T>(xs: ReadonlyArray<T>): ReadonlyArray<T> => {
+  if (xs.length < 2) {
+    return xs;
+  }
+
+  const last = xs[xs.length - 1];
+
+  return [last, ...reverse(xs.slice(0, -1))];
 };
