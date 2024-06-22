@@ -1,7 +1,16 @@
 import { expect, test } from "vitest";
 // import * as fc from "fast-check";
 
-import { last, last_two, nth, length, reverse, is_palindrome, flatten } from "../src/main";
+import {
+  last,
+  last_two,
+  nth,
+  length,
+  reverse,
+  is_palindrome,
+  flatten,
+  compress,
+} from "../src/main";
 
 test("Return the last element of a list", () => {
   expect(last([])).toEqual(null);
@@ -50,4 +59,11 @@ test("Return a flattened list", () => {
   expect(flatten([[2, 3], 1])).toStrictEqual([2, 3, 1]);
   expect(flatten(["a", ["b", ["c", "d"], "e"]])).toStrictEqual(["a", "b", "c", "d", "e"]);
   expect(flatten([[["a"]]])).toStrictEqual(["a"]);
+});
+
+test("Remove consecutive duplicates", () => {
+  expect(compress(["a", "a", "b", "c", "c"])).toStrictEqual(["a", "b", "c"]);
+  expect(
+    compress(["a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"]),
+  ).toStrictEqual(["a", "b", "c", "a", "d", "e"]);
 });

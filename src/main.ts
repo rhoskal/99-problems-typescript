@@ -3,6 +3,7 @@ import * as utils from "./utils";
 // ===================
 //       Types
 // ===================
+
 type Nullable<A> = A | null;
 
 // ===================
@@ -126,4 +127,22 @@ export const flatten = (possiblyNested: ReadonlyArray<unknown>): ReadonlyArray<u
   } else {
     return [possiblyNested];
   }
+};
+
+/*
+ * Problem 8
+ *
+ * Eliminate consecutive duplicates of list elements.
+ */
+export const compress = <A>(as: ReadonlyArray<A>): ReadonlyArray<A> => {
+  return as.reduce((acc, _val, idx) => {
+    const a = as[idx];
+    const b = as[idx + 1];
+
+    if (a === b) {
+      return acc;
+    } else {
+      return [...acc, a];
+    }
+  }, [] as ReadonlyArray<A>);
 };
