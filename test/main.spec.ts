@@ -1,7 +1,7 @@
 import { expect, test } from "vitest";
 // import * as fc from "fast-check";
 
-import { last, last_two, nth, length, reverse } from "../src/main";
+import { last, last_two, nth, length, reverse, is_palindrome } from "../src/main";
 
 test("Return the last element of a list", () => {
   expect(last([])).toEqual(null);
@@ -33,4 +33,14 @@ test("Return the items of a list reversed", () => {
   expect(reverse([])).toEqual([]);
   expect(reverse([1])).toEqual([1]);
   expect(reverse([1, 2, 3])).toEqual([3, 2, 1]);
+});
+
+test("Return the items of a list reversed", () => {
+  expect(is_palindrome([])).toBe(true);
+  expect(is_palindrome([1])).toBe(true);
+  expect(is_palindrome([1, 2, 3])).toBe(false);
+  expect(is_palindrome(["a", "b", "a"])).toBe(true);
+  expect(is_palindrome([1, 2, 2, 1])).toBe(true);
+  expect(is_palindrome(["x", "a", "m", "a", "x"])).toBe(true);
+  expect(is_palindrome([1, 2, 4, 8, 16, 8, 4, 2, 1])).toBe(true);
 });

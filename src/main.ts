@@ -14,15 +14,15 @@ type Nullable<A> = A | null;
  *
  * Write a function `last(xs: [A]) => A` that returns the last element of a list
  */
-export const last = <A>(xs: ReadonlyArray<A>): Nullable<A> => {
-  if (xs.length === 0) {
+export const last = <A>(as: ReadonlyArray<A>): Nullable<A> => {
+  if (as.length === 0) {
     return null;
   }
 
-  if (xs.length === 1) {
-    return utils.hd(xs);
+  if (as.length === 1) {
+    return utils.hd(as);
   } else {
-    return last(utils.tail(xs));
+    return last(utils.tail(as));
   }
 };
 
@@ -31,16 +31,16 @@ export const last = <A>(xs: ReadonlyArray<A>): Nullable<A> => {
  *
  * Find the last two (last and penultimate) elements of a list.
  */
-export const last_two = <A>(xs: ReadonlyArray<A>): Nullable<ReadonlyArray<A>> => {
-  if (xs.length === 0 || xs.length === 1) {
+export const last_two = <A>(as: ReadonlyArray<A>): Nullable<ReadonlyArray<A>> => {
+  if (as.length === 0 || as.length === 1) {
     return null;
   }
 
-  if (xs.length === 2) {
-    return xs;
+  if (as.length === 2) {
+    return as;
   }
 
-  return last_two(utils.tail(xs));
+  return last_two(utils.tail(as));
 };
 
 /*
@@ -49,16 +49,16 @@ export const last_two = <A>(xs: ReadonlyArray<A>): Nullable<ReadonlyArray<A>> =>
  * Find the N'th element of a list.
  */
 export const nth = <A>(n: number) => {
-  return (xs: ReadonlyArray<A>): Nullable<A> => {
+  return (as: ReadonlyArray<A>): Nullable<A> => {
     if (n < 0) {
       return null;
     }
 
-    if (n > xs.length) {
+    if (n > as.length) {
       return null;
     }
 
-    return xs[n - 1];
+    return as[n - 1];
   };
 };
 
@@ -67,12 +67,12 @@ export const nth = <A>(n: number) => {
  *
  * Find the number of elements of a list.
  */
-export const length = <A>(xs: ReadonlyArray<A>): number => {
-  if (xs.length === 0) {
+export const length = <A>(as: ReadonlyArray<A>): number => {
+  if (as.length === 0) {
     return 0;
   }
 
-  return 1 + length(utils.tail(xs));
+  return 1 + length(utils.tail(as));
 };
 
 /*
@@ -80,12 +80,30 @@ export const length = <A>(xs: ReadonlyArray<A>): number => {
  *
  * Reverse the elements of a list.
  */
-export const reverse = <A>(xs: ReadonlyArray<A>): ReadonlyArray<A> => {
-  if (xs.length < 2) {
-    return xs;
+export const reverse = <A>(as: ReadonlyArray<A>): ReadonlyArray<A> => {
+  if (as.length < 2) {
+    return as;
   }
 
-  const last = xs[xs.length - 1];
+  const last = as[as.length - 1];
 
-  return [last, ...reverse(xs.slice(0, -1))];
+  return [last, ...reverse(as.slice(0, -1))];
+};
+
+/*
+ * Problem 6
+ *
+ * Determine if a list is a palindrome.
+ */
+export const is_palindrome = <A>(as: ReadonlyArray<A>): boolean => {
+  if (as.length < 2) {
+    return true;
+  }
+
+  const first_el = utils.hd(as);
+  const last_el = utils.last(as);
+
+  const slice = utils.drop_right(1)(utils.drop_left(1)(as));
+
+  return (first_el === last_el) === is_palindrome(slice);
 };

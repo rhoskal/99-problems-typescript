@@ -20,10 +20,19 @@ export const last = <A>(as: ReadonlyArray<A>): A => {
 };
 
 /**
- * Drop n elements from the start of the list.
+ * Drop n elements from the start of a list.
  */
 export const drop_left = (n: number) => {
   return <A>(as: ReadonlyArray<A>) => {
     return as.slice(n);
+  };
+};
+
+/**
+ * Drop n elements from the end of a list.
+ */
+export const drop_right = (n: number) => {
+  return <A>(as: ReadonlyArray<A>) => {
+    return as.slice(0, n * -1);
   };
 };
