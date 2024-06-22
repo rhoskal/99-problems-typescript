@@ -15,7 +15,8 @@
     "format": "prettier --write 'src/**/*.ts'",
     "lint": "eslint 'src/**/*.ts'",
     "run": "running...",
-    "test": "vitest",
+    "test": "vitest --dir test --run",
+    "test:watch": "vitest --dir test",
     "prepare": "is-ci || husky install"
   },
   "devDependencies": {
