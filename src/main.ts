@@ -1,4 +1,22 @@
+// ===================
+//       Types
+// ===================
 type Nullable<T> = T | null;
+
+// ===================
+//       Utils
+// ===================
+const hd = <T>(xs: ReadonlyArray<T>): T => {
+  return xs[0];
+};
+
+const tail = <T>(xs: ReadonlyArray<T>): ReadonlyArray<T> => {
+  return xs.slice(1);
+};
+
+// ===================
+//      Problems
+// ===================
 
 /*
  * Problem 1
@@ -11,9 +29,9 @@ export const last = <T>(xs: ReadonlyArray<T>): Nullable<T> => {
   }
 
   if (xs.length === 1) {
-    return xs[0];
+    return hd(xs);
   } else {
-    return last(xs.slice(1));
+    return last(tail(xs));
   }
 };
 
@@ -22,7 +40,9 @@ export const last = <T>(xs: ReadonlyArray<T>): Nullable<T> => {
  *
  * Find the last two (last and penultimate) elements of a list.
  */
-export const last_two = <T>(xs: ReadonlyArray<T>): Nullable<ReadonlyArray<T>> => {
+export const last_two = <T>(
+  xs: ReadonlyArray<T>,
+): Nullable<ReadonlyArray<T>> => {
   if (xs.length === 0 || xs.length === 1) {
     return null;
   }
@@ -31,7 +51,7 @@ export const last_two = <T>(xs: ReadonlyArray<T>): Nullable<ReadonlyArray<T>> =>
     return xs;
   }
 
-  return last_two(xs.slice(1));
+  return last_two(tail(xs));
 };
 
 /*
@@ -63,5 +83,6 @@ export const length = <T>(xs: ReadonlyArray<T>): number => {
     return 0;
   }
 
-  return 1 + length(xs.slice(1));
+  return 1 + length(tail(xs));
+};
 };
