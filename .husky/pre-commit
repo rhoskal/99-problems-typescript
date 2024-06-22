@@ -1,2 +1,3 @@
 pnpm lint-staged
+pnpm tsc
 pnpm vitest --dir test --run
