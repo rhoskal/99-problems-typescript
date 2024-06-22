@@ -1,10 +1,11 @@
+type Nullable<T> = T | null;
+
 /*
  * Problem 1
  *
  * Write a function `last(xs: [T]) => T` that returns the last element of a list
- * Recursive implementation.
  */
-export const last = <T>(xs: ReadonlyArray<T>): T | null => {
+export const last = <T>(xs: ReadonlyArray<T>): Nullable<T> => {
   if (xs.length === 0) {
     return null;
   }
@@ -21,7 +22,7 @@ export const last = <T>(xs: ReadonlyArray<T>): T | null => {
  *
  * Find the last two (last and penultimate) elements of a list.
  */
-export const last_two = <T>(xs: ReadonlyArray<T>): ReadonlyArray<T> | null => {
+export const last_two = <T>(xs: ReadonlyArray<T>): Nullable<ReadonlyArray<T>> => {
   if (xs.length === 0 || xs.length === 1) {
     return null;
   }
@@ -31,4 +32,23 @@ export const last_two = <T>(xs: ReadonlyArray<T>): ReadonlyArray<T> | null => {
   }
 
   return last_two(xs.slice(1));
+};
+
+/*
+ * Problem 3
+ *
+ * Find the N'th element of a list.
+ */
+export const nth = <T>(n: number) => {
+  return (xs: ReadonlyArray<T>): Nullable<T> => {
+    if (n < 0) {
+      return null;
+    }
+
+    if (n > xs.length) {
+      return null;
+    }
+
+    return xs[n - 1];
+  };
 };
