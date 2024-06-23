@@ -14,6 +14,7 @@ import {
   encode,
   encode_modified,
   decode_modified,
+  encode_direct,
 } from "../src/main";
 
 test("[1] Return the last element of a list", () => {
@@ -121,4 +122,17 @@ test("[12] Decode encoded duplicates", () => {
       { _kind: "multiple_encode", value: "e", count: 4 },
     ]),
   ).toStrictEqual("aaaabccaadeeee");
+});
+
+test("[13] Encode duplicates directly", () => {
+  expect(
+    encode_direct(["a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"]),
+  ).toStrictEqual([
+    { _kind: "multiple_encode", value: "a", count: 4 },
+    { _kind: "single_encode", value: "b" },
+    { _kind: "multiple_encode", value: "c", count: 2 },
+    { _kind: "multiple_encode", value: "a", count: 2 },
+    { _kind: "single_encode", value: "d" },
+    { _kind: "multiple_encode", value: "e", count: 4 },
+  ]);
 });

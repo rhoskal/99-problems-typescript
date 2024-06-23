@@ -200,10 +200,7 @@ export const encode_modified = (as: ReadonlyArray<string>): ReadonlyArray<Encode
       const head = utils.hd(val.split(""));
       const len = val.length;
 
-      const encoded: Encoded<string> =
-        len === 1
-          ? { _kind: "single_encode", value: head }
-          : { _kind: "multiple_encode", value: head, count: len };
+      const encoded = len === 1 ? mkSingleEncode(head) : mkMultipleEncode(head, len);
 
       return [...acc, encoded];
     },
@@ -224,6 +221,17 @@ interface SingleEncode<A> {
 
 type Encoded<A> = MultipleEncode<A> | SingleEncode<A>;
 
+const mkMultipleEncode = (value: string, count: number): MultipleEncode<string> => ({
+  _kind: "multiple_encode",
+  value,
+  count,
+});
+
+const mkSingleEncode = (value: string): SingleEncode<string> => ({
+  _kind: "single_encode",
+  value,
+});
+
 /*
  * Problem 12
  *
@@ -235,4 +243,37 @@ export const decode_modified = (as: ReadonlyArray<Encoded<string>>): string => {
 
     return acc.concat(encoded.value.repeat(count));
   }, "");
+};
+
+/*
+ * Problem 13
+ *
+ * Run-length encoding of a list (direct solution).
+ * Implement the so-called run-length encoding data compression method directly.
+ * e.g. don't explicitly create the sublists containing the duplicates, as in
+ * problem 9, but only count them. As in problem P11, simplify the result list
+ * by replacing the singleton lists (1 X) by X.
+ */
+export const encode_direct = (as: ReadonlyArray<string>): ReadonlyArray<Encoded<string>> => {
+  return encode_direct_helper(as, []);
+};
+
+export const encode_direct_helper = (
+  as: ReadonlyArray<string>,
+  es: ReadonlyArray<Encoded<string>>,
+): ReadonlyArray<Encoded<string>> => {
+  if (as.length === 0) {
+    return es;
+  }
+
+  const head = utils.hd(as);
+
+  const matches = utils.take_while((x: string) => x === head)(as);
+
+  const encoded =
+    matches.length === 1 ? mkSingleEncode(head) : mkMultipleEncode(head, matches.length);
+
+  const chopped = utils.drop_while((x: string) => x === head)(utils.tail(as));
+
+  return encode_direct_helper(chopped, [...es, encoded]);
 };
