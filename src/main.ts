@@ -146,3 +146,24 @@ export const compress = <A>(as: ReadonlyArray<A>): ReadonlyArray<A> => {
     }
   }, [] as ReadonlyArray<A>);
 };
+
+/*
+ * Problem 9
+ *
+ * Pack consecutive duplicates of list elements into sublists.
+ */
+export const pack = <A>(as: ReadonlyArray<A>): ReadonlyArray<A> => {
+  if (as.length === 0) {
+    return [];
+  }
+
+  const head = utils.hd(as);
+
+  const matches = utils.take_while((x: A) => x === head)(as);
+  const matches_joined = Array.of(matches.join(""));
+
+  const chopped = utils.drop_while((x: A) => x === head)(utils.tail(as));
+
+  // forgive me... i don't feel like bending over backwards for the TS compiler
+  return [...matches_joined, ...pack(chopped)] as ReadonlyArray<A>;
+};
