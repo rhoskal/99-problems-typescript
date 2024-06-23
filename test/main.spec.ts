@@ -100,11 +100,11 @@ test("[11] Encode duplicates but modified", () => {
   expect(
     encode_modified(["a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"]),
   ).toStrictEqual([
-    { _kind: "multiple_encode", value: "a" },
+    { _kind: "multiple_encode", value: "a", count: 4 },
     { _kind: "single_encode", value: "b" },
-    { _kind: "multiple_encode", value: "c" },
-    { _kind: "multiple_encode", value: "a" },
+    { _kind: "multiple_encode", value: "c", count: 2 },
+    { _kind: "multiple_encode", value: "a", count: 2 },
     { _kind: "single_encode", value: "d" },
-    { _kind: "multiple_encode", value: "e" },
+    { _kind: "multiple_encode", value: "e", count: 4 },
   ]);
 });

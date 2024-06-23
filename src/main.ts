@@ -192,18 +192,6 @@ export const encode = (as: ReadonlyArray<string>): ReadonlyArray<[number, string
  * Runs the "run-length" encoding data compression algorithm.
  * Consecutive duplicates of elements are encoded as lists (N E) where N is the number of duplicates of the element E..
  */
-interface MultipleEncode<A> {
-  _kind: "multiple_encode";
-  value: A;
-}
-
-interface SingleEncode<A> {
-  _kind: "single_encode";
-  value: A;
-}
-
-type Encoded<A> = MultipleEncode<A> | SingleEncode<A>;
-
 export const encode_modified = (as: ReadonlyArray<string>): ReadonlyArray<Encoded<string>> => {
   const packed = pack(as);
 
@@ -215,10 +203,23 @@ export const encode_modified = (as: ReadonlyArray<string>): ReadonlyArray<Encode
       const encoded: Encoded<string> =
         len === 1
           ? { _kind: "single_encode", value: head }
-          : { _kind: "multiple_encode", value: head };
+          : { _kind: "multiple_encode", value: head, count: len };
 
       return [...acc, encoded];
     },
     [] as ReadonlyArray<Encoded<string>>,
   );
 };
+
+interface MultipleEncode<A> {
+  _kind: "multiple_encode";
+  value: A;
+  count: number;
+}
+
+interface SingleEncode<A> {
+  _kind: "single_encode";
+  value: A;
+}
+
+type Encoded<A> = MultipleEncode<A> | SingleEncode<A>;
