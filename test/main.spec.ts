@@ -11,6 +11,7 @@ import {
   flatten,
   compress,
   pack,
+  encode,
 } from "../src/main";
 
 test("[1] Return the last element of a list", () => {
@@ -74,4 +75,22 @@ test("[9] Pack/combine duplicates", () => {
   expect(
     pack(["a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"]),
   ).toStrictEqual(["aaaa", "b", "cc", "aa", "d", "eeee"]);
+});
+
+test("[10] Encode duplicates", () => {
+  expect(encode(["a", "a", "b", "c", "c"])).toStrictEqual([
+    [2, "a"],
+    [1, "b"],
+    [2, "c"],
+  ]);
+  expect(
+    encode(["a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"]),
+  ).toStrictEqual([
+    [4, "a"],
+    [1, "b"],
+    [2, "c"],
+    [2, "a"],
+    [1, "d"],
+    [4, "e"],
+  ]);
 });

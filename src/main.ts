@@ -152,18 +152,36 @@ export const compress = <A>(as: ReadonlyArray<A>): ReadonlyArray<A> => {
  *
  * Pack consecutive duplicates of list elements into sublists.
  */
-export const pack = <A>(as: ReadonlyArray<A>): ReadonlyArray<A> => {
+export const pack = (as: ReadonlyArray<string>): ReadonlyArray<string> => {
   if (as.length === 0) {
     return [];
   }
 
   const head = utils.hd(as);
 
-  const matches = utils.take_while((x: A) => x === head)(as);
+  const matches = utils.take_while((x: string) => x === head)(as);
   const matches_joined = Array.of(matches.join(""));
 
-  const chopped = utils.drop_while((x: A) => x === head)(utils.tail(as));
+  const chopped = utils.drop_while((x: string) => x === head)(utils.tail(as));
 
-  // forgive me... i don't feel like bending over backwards for the TS compiler
-  return [...matches_joined, ...pack(chopped)] as ReadonlyArray<A>;
+  return [...matches_joined, ...pack(chopped)];
+};
+
+/*
+ * Problem 10
+ *
+ * Runs the "run-length" encoding data compression algorithm.
+ * Consecutive duplicates of elements are encoded as lists (N E) where N is the number of duplicates of the element E..
+ */
+export const encode = (as: ReadonlyArray<string>): ReadonlyArray<[number, string]> => {
+  const packed = pack(as);
+
+  return packed.reduce(
+    (acc, val) => {
+      const head = utils.hd(val.split(""));
+
+      return [...acc, [val.length, head]];
+    },
+    [] as ReadonlyArray<[number, string]>,
+  );
 };
