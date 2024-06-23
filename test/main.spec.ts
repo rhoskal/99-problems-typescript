@@ -16,6 +16,7 @@ import {
   decode_modified,
   encode_direct,
   duplicate,
+  replicate,
 } from "../src/main";
 
 test("[1] Return the last element of a list", () => {
@@ -152,4 +153,19 @@ test("[14] Duplicate items in a list", () => {
     "d",
   ]);
   expect(duplicate([1, 2, 3])).toStrictEqual([1, 1, 2, 2, 3, 3]);
+});
+
+test("[15] Duplicate items in a list", () => {
+  expect(replicate(3)(["a", "b", "c"])).toStrictEqual([
+    "a",
+    "a",
+    "a",
+    "b",
+    "b",
+    "b",
+    "c",
+    "c",
+    "c",
+  ]);
+  expect(replicate(2)([1, 2, 3])).toStrictEqual([1, 1, 2, 2, 3, 3]);
 });

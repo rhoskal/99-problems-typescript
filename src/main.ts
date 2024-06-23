@@ -288,3 +288,21 @@ export const duplicate = <A>(as: ReadonlyArray<A>): ReadonlyArray<A> => {
     return [...acc, val, val];
   }, [] as ReadonlyArray<A>);
 };
+
+/*
+ * Problem 15
+ *
+ * Replicate each item in a given list n number of times.
+ */
+export const replicate = (n: number) => {
+  return <A>(as: ReadonlyArray<A>): ReadonlyArray<A> => {
+    return as.reduce((acc, val) => {
+      let repeated = [] as Array<A>;
+      for (let i = 0; i < n; i++) {
+        repeated.push(val);
+      }
+
+      return [...acc, ...(repeated as ReadonlyArray<A>)];
+    }, [] as ReadonlyArray<A>);
+  };
+};
