@@ -17,6 +17,7 @@ import {
   encode_direct,
   duplicate,
   replicate,
+  drop_every,
 } from "../src/main";
 
 test("[1] Return the last element of a list", () => {
@@ -168,4 +169,17 @@ test("[15] Duplicate items in a list", () => {
     "c",
   ]);
   expect(replicate(2)([1, 2, 3])).toStrictEqual([1, 1, 2, 2, 3, 3]);
+});
+
+test("[16] Drop every nth item from a list", () => {
+  expect(drop_every(3)(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"])).toStrictEqual([
+    "a",
+    "b",
+    "d",
+    "e",
+    "g",
+    "h",
+    "j",
+    "k",
+  ]);
 });

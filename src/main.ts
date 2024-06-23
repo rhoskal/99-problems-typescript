@@ -306,3 +306,25 @@ export const replicate = (n: number) => {
     }, [] as ReadonlyArray<A>);
   };
 };
+
+/*
+ * Problem 16
+ *
+ * Drop every nth item in a given list.
+ * Note: `n` is normalized to 0 if negative.
+ */
+export const drop_every = (n: number) => {
+  if (n < 0) {
+    n = 0;
+  }
+
+  return <A>(as: ReadonlyArray<A>): ReadonlyArray<A> => {
+    return as.reduce((acc, val, idx) => {
+      if ((idx + 1) % n === 0) {
+        return acc;
+      } else {
+        return [...acc, val];
+      }
+    }, [] as ReadonlyArray<A>);
+  };
+};
