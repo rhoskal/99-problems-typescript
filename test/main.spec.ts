@@ -12,6 +12,7 @@ import {
   compress,
   pack,
   encode,
+  encode_modified,
 } from "../src/main";
 
 test("[1] Return the last element of a list", () => {
@@ -92,5 +93,18 @@ test("[10] Encode duplicates", () => {
     [2, "a"],
     [1, "d"],
     [4, "e"],
+  ]);
+});
+
+test("[11] Encode duplicates but modified", () => {
+  expect(
+    encode_modified(["a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"]),
+  ).toStrictEqual([
+    { _kind: "multiple_encode", value: "a" },
+    { _kind: "single_encode", value: "b" },
+    { _kind: "multiple_encode", value: "c" },
+    { _kind: "multiple_encode", value: "a" },
+    { _kind: "single_encode", value: "d" },
+    { _kind: "multiple_encode", value: "e" },
   ]);
 });
