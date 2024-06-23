@@ -13,6 +13,7 @@ import {
   pack,
   encode,
   encode_modified,
+  decode_modified,
 } from "../src/main";
 
 test("[1] Return the last element of a list", () => {
@@ -107,4 +108,17 @@ test("[11] Encode duplicates but modified", () => {
     { _kind: "single_encode", value: "d" },
     { _kind: "multiple_encode", value: "e", count: 4 },
   ]);
+});
+
+test("[12] Decode encoded duplicates", () => {
+  expect(
+    decode_modified([
+      { _kind: "multiple_encode", value: "a", count: 4 },
+      { _kind: "single_encode", value: "b" },
+      { _kind: "multiple_encode", value: "c", count: 2 },
+      { _kind: "multiple_encode", value: "a", count: 2 },
+      { _kind: "single_encode", value: "d" },
+      { _kind: "multiple_encode", value: "e", count: 4 },
+    ]),
+  ).toStrictEqual("aaaabccaadeeee");
 });

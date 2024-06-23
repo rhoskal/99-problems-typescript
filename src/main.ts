@@ -223,3 +223,16 @@ interface SingleEncode<A> {
 }
 
 type Encoded<A> = MultipleEncode<A> | SingleEncode<A>;
+
+/*
+ * Problem 12
+ *
+ * Decodes the "run-length" encoding data compression algorithm from problem 11.
+ */
+export const decode_modified = (as: ReadonlyArray<Encoded<string>>): string => {
+  return as.reduce((acc, encoded) => {
+    const count = encoded._kind === "multiple_encode" ? encoded.count : 1;
+
+    return acc.concat(encoded.value.repeat(count));
+  }, "");
+};
