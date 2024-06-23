@@ -37,6 +37,15 @@ export const drop_right = (n: number) => {
   };
 };
 
+/**
+ * Take n elements from the start of a list dropping everything else.
+ */
+export const take_left = (n: number) => {
+  return <A>(as: ReadonlyArray<A>) => {
+    return as.slice(0, n);
+  };
+};
+
 interface Predicate<A> {
   // eslint-disable-next-line no-unused-vars
   (a: A): boolean;

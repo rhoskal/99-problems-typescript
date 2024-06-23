@@ -328,3 +328,19 @@ export const drop_every = (n: number) => {
     }, [] as ReadonlyArray<A>);
   };
 };
+
+/*
+ * Problem 17
+ *
+ * Splits a list into two parts; the length of the first part is given.
+ * Note: `n` is normalized to 0 if negative.
+ */
+export const split = (n: number) => {
+  if (n < 0) {
+    n = 0;
+  }
+
+  return <A>(as: ReadonlyArray<A>): { left: ReadonlyArray<A>; right: ReadonlyArray<A> } => {
+    return { left: utils.take_left(n)(as), right: utils.drop_left(n)(as) };
+  };
+};

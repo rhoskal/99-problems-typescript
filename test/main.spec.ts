@@ -18,6 +18,7 @@ import {
   duplicate,
   replicate,
   drop_every,
+  split,
 } from "../src/main";
 
 test("[1] Return the last element of a list", () => {
@@ -182,4 +183,11 @@ test("[16] Drop every nth item from a list", () => {
     "j",
     "k",
   ]);
+});
+
+test("[17] Split a given list into 2 parts", () => {
+  expect(split(3)(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"])).toStrictEqual({
+    left: ["a", "b", "c"],
+    right: ["d", "e", "f", "g", "h", "i", "j", "k"],
+  });
 });
