@@ -277,3 +277,14 @@ export const encode_direct_helper = (
 
   return encode_direct_helper(chopped, [...es, encoded]);
 };
+
+/*
+ * Problem 14
+ *
+ * Duplicate each item in a given list.
+ */
+export const duplicate = <A>(as: ReadonlyArray<A>): ReadonlyArray<A> => {
+  return as.reduce((acc, val) => {
+    return [...acc, val, val];
+  }, [] as ReadonlyArray<A>);
+};
