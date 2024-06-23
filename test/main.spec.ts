@@ -19,6 +19,7 @@ import {
   replicate,
   drop_every,
   split,
+  slice,
 } from "../src/main";
 
 test("[1] Return the last element of a list", () => {
@@ -190,4 +191,15 @@ test("[17] Split a given list into 2 parts", () => {
     left: ["a", "b", "c"],
     right: ["d", "e", "f", "g", "h", "i", "j", "k"],
   });
+});
+
+test("[18] Slice a list", () => {
+  expect(slice(3, 7)(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"])).toStrictEqual([
+    "c",
+    "d",
+    "e",
+    "f",
+    "g",
+  ]);
+  expect(slice(3, 5)([1, 2, 3, 4, 5])).toStrictEqual([3, 4, 5]);
 });

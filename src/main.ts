@@ -344,3 +344,29 @@ export const split = (n: number) => {
     return { left: utils.take_left(n)(as), right: utils.drop_left(n)(as) };
   };
 };
+
+/*
+ * Problem 18
+ *
+ * Given two indices, i and k, the slice is the list containing the elements between the i'th and k'th element of the original list (both limits included). Start counting the elements with 1.
+ * Note: both `start` & `end` are normalized to 0 if negative.
+ */
+export const slice = (start: number, end: number) => {
+  if (start < 0) {
+    start = 0;
+  }
+
+  if (end < 0) {
+    end = 0;
+  }
+
+  return <A>(as: ReadonlyArray<A>): ReadonlyArray<A> => {
+    return as.reduce((acc, a, idx) => {
+      if (idx + 1 >= start && idx + 1 <= end) {
+        return [...acc, a];
+      } else {
+        return acc;
+      }
+    }, [] as ReadonlyArray<A>);
+  };
+};
