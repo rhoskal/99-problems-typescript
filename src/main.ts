@@ -476,3 +476,13 @@ export const lotto_select = (start: number, end: number): ReadonlyArray<number> 
 
   return randoms;
 };
+
+/*
+ * Problem 25
+ *
+ * Generate a random permutation of the elements of a list.
+ * Note: this solution does not guarantee uniqueness (distinct elements) from `as`
+ */
+export const rnd_permutation = <A>(as: ReadonlyArray<A>): ReadonlyArray<A> => {
+  return rnd_select(as.length)(as);
+};
