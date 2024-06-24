@@ -26,7 +26,7 @@ import {
   range,
   rnd_select,
   lotto_select,
-  rnd_permutation,
+  permutation,
 } from "../src/main";
 
 test("[01] Return the last element of a list", () => {
@@ -272,7 +272,7 @@ test("[24] Lotto random selection", () => {
 });
 
 test("[25] Generate random permutation", () => {
-  const randoms = rnd_permutation(["a", "b", "c", "d", "e", "f"]);
+  const randoms = permutation(["a", "b", "c", "d", "e", "f"]);
 
   expect(randoms.length).toBe(6);
 });
