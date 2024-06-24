@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-// import * as fc from "fast-check";
+import * as fc from "fast-check";
 
 import {
   last,
@@ -247,7 +247,11 @@ test("[22] Range operator", () => {
 });
 
 test("[23] Random selection", () => {
-  const randoms = rnd_select(3)(["a", "b", "c", "d", "e", "f", "g", "h"]);
+  fc.assert(
+    fc.property(fc.integer({ min: 1, max: 20 }), (num) => {
+      const randoms = rnd_select(num)(["a", "b", "c", "d", "e", "f", "g", "h"]);
 
-  expect(randoms.length).toEqual(3);
+      expect(randoms.length).toEqual(num);
+    }),
+  );
 });
