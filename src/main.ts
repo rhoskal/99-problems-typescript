@@ -47,15 +47,11 @@ export const last_two = <A>(as: ReadonlyArray<A>): Nullable<ReadonlyArray<A>> =>
 /*
  * Problem 3
  *
- * Find the N'th element of a list.
+ * Find the nth element of a list. The first element in the list is number 1.
  */
-export const nth = <A>(n: number) => {
+export const element_at = <A>(n: number) => {
   return (as: ReadonlyArray<A>): Nullable<A> => {
-    if (n < 0) {
-      return null;
-    }
-
-    if (n > as.length) {
+    if (n < 0 || n > as.length) {
       return null;
     }
 

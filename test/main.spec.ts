@@ -4,7 +4,7 @@ import * as fc from "fast-check";
 import {
   last,
   last_two,
-  nth,
+  element_at,
   length,
   reverse,
   is_palindrome,
@@ -43,10 +43,10 @@ test("[02] Return the last two elements of a list", () => {
 });
 
 test("[03] Return nth element of a list", () => {
-  expect(nth(2)([])).toEqual(null);
-  expect(nth(2)([1, 2])).toEqual(2);
-  expect(nth(-2)([1, 2])).toEqual(null);
-  expect(nth(2)(["a", "b", "c", "d", "e"])).toEqual("b");
+  expect(element_at(2)([])).toEqual(null);
+  expect(element_at(2)([1, 2])).toEqual(2);
+  expect(element_at(-2)([1, 2])).toEqual(null);
+  expect(element_at(2)(["a", "b", "c", "d", "e"])).toEqual("b");
 });
 
 test("[04] Return the length of a list", () => {
