@@ -241,6 +241,6 @@ test("[21] Insert at nth position", () => {
   expect(insert_at("alfa")(5)(["a", "b", "c", "d"])).toStrictEqual(["a", "b", "c", "d", "alfa"]);
 });
 
-test.only("[22] Range operator", () => {
+test("[22] Range operator", () => {
   expect(range(4, 9)).toStrictEqual([4, 5, 6, 7, 8, 9]);
 });
