@@ -370,3 +370,23 @@ export const slice = (start: number, end: number) => {
     }, [] as ReadonlyArray<A>);
   };
 };
+
+/*
+ * Problem 19
+ *
+ * Rotate a list n places to the left.
+ */
+export const rotate = (n: number) => {
+  return <A>(as: ReadonlyArray<A>): ReadonlyArray<A> => {
+    const length = as.length;
+
+    return as.reduce(
+      (acc, a, idx) => {
+        acc[(length + idx - n) % 8] = a;
+
+        return acc;
+      },
+      Array.from({ length }) as Array<A>,
+    );
+  };
+};

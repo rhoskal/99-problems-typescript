@@ -20,6 +20,7 @@ import {
   drop_every,
   split,
   slice,
+  rotate,
 } from "../src/main";
 
 test("[01] Return the last element of a list", () => {
@@ -202,4 +203,27 @@ test("[18] Slice a list", () => {
     "g",
   ]);
   expect(slice(3, 5)([1, 2, 3, 4, 5])).toStrictEqual([3, 4, 5]);
+});
+
+test("[19] Rotate a list", () => {
+  expect(rotate(3)(["a", "b", "c", "d", "e", "f", "g", "h"])).toStrictEqual([
+    "d",
+    "e",
+    "f",
+    "g",
+    "h",
+    "a",
+    "b",
+    "c",
+  ]);
+  expect(rotate(-2)(["a", "b", "c", "d", "e", "f", "g", "h"])).toStrictEqual([
+    "g",
+    "h",
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+  ]);
 });
