@@ -24,6 +24,7 @@ import {
   remove_at,
   insert_at,
   range,
+  rnd_select,
 } from "../src/main";
 
 test("[01] Return the last element of a list", () => {
@@ -243,4 +244,10 @@ test("[21] Insert at nth position", () => {
 
 test("[22] Range operator", () => {
   expect(range(4, 9)).toStrictEqual([4, 5, 6, 7, 8, 9]);
+});
+
+test("[23] Random selection", () => {
+  const randoms = rnd_select(3)(["a", "b", "c", "d", "e", "f", "g", "h"]);
+
+  expect(randoms.length).toEqual(3);
 });

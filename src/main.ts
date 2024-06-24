@@ -438,3 +438,22 @@ export const range = (start: number, end: number): ReadonlyArray<number> => {
 
   return acc;
 };
+
+/*
+ * Problem 23
+ *
+ * Extract a given number of randomly selected elements from a list.
+ */
+export const rnd_select = (n: number) => {
+  return <A>(as: ReadonlyArray<A>): ReadonlyArray<A> => {
+    let randoms = [] as ReadonlyArray<A>;
+
+    for (let i = 0; i < n; i++) {
+      const random = Math.floor(Math.random() * n);
+
+      randoms = [...randoms, as[random]];
+    }
+
+    return randoms;
+  };
+};
