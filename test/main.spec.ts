@@ -21,6 +21,7 @@ import {
   split,
   slice,
   rotate,
+  remove_at,
 } from "../src/main";
 
 test("[01] Return the last element of a list", () => {
@@ -226,4 +227,9 @@ test("[19] Rotate a list", () => {
     "e",
     "f",
   ]);
+});
+
+test("[20] Remove nth element", () => {
+  expect(remove_at(1)(["a", "b", "c", "d"])).toStrictEqual(["a", "c", "d"]);
+  expect(remove_at(3)(["a", "b", "c", "d"])).toStrictEqual(["a", "b", "c"]);
 });

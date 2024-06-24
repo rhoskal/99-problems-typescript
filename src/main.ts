@@ -390,3 +390,18 @@ export const rotate = (n: number) => {
     );
   };
 };
+
+/*
+ * Problem 20
+ *
+ * Removes the nth element from a list.
+ */
+export const remove_at = (n: number) => {
+  if (n < 0) {
+    n = 0;
+  }
+
+  return <A>(as: ReadonlyArray<A>): ReadonlyArray<A> => {
+    return as.filter((_, idx) => idx !== n);
+  };
+};
