@@ -405,3 +405,21 @@ export const remove_at = (n: number) => {
     return as.filter((_, idx) => idx !== n);
   };
 };
+
+/*
+ * Problem 21
+ *
+ * Inserts an element at the nth position.
+ * Start counting list elements with 0. If the position is larger or equal to
+ * the length of the list, insert the element at the end.
+ * (The behavior is unspecified if the position is negative.)
+ */
+export const insert_at = <A>(val: A) => {
+  return (position: number) => {
+    return (as: ReadonlyArray<A>): ReadonlyArray<A> => {
+      const { left, right } = split(position)(as);
+
+      return [...left, val, ...right];
+    };
+  };
+};
