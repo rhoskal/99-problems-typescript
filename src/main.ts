@@ -457,3 +457,22 @@ export const rnd_select = (n: number) => {
     return randoms;
   };
 };
+
+/*
+ * Problem 24
+ *
+ * Extract n different random numbers from the set 1..M.
+ */
+export const lotto_select = (start: number, end: number): ReadonlyArray<number> => {
+  const sequential_nums = range(start, end);
+  const num_of_choices = Math.floor(1 + Math.random() * (end - start));
+
+  let randoms: ReadonlyArray<number> = [];
+  for (let i = 0; i < num_of_choices; i++) {
+    const random_idx = Math.floor(Math.random() * num_of_choices);
+
+    randoms = [...randoms, sequential_nums[random_idx]];
+  }
+
+  return randoms;
+};

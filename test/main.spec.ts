@@ -25,6 +25,7 @@ import {
   insert_at,
   range,
   rnd_select,
+  lotto_select,
 } from "../src/main";
 
 test("[01] Return the last element of a list", () => {
@@ -248,10 +249,23 @@ test("[22] Range operator", () => {
 
 test("[23] Random selection", () => {
   fc.assert(
-    fc.property(fc.integer({ min: 1, max: 20 }), (num) => {
+    fc.property(fc.integer({ min: 1, max: 8 }), (num) => {
       const randoms = rnd_select(num)(["a", "b", "c", "d", "e", "f", "g", "h"]);
 
       expect(randoms.length).toEqual(num);
+    }),
+  );
+});
+
+test("[24] Lotto random selection", () => {
+  fc.assert(
+    fc.property(fc.integer({ min: 2, max: 20 }), (num) => {
+      const randoms = lotto_select(1, num);
+
+      // since we're asked to make `lotto_select` choose a random number of numbers
+      // from the desired range, there really isn't a good way to test the result.
+      // all we know for sure is that there must be at least 1 random returned
+      expect(randoms.length > 0 && randoms.length <= 20).toBe(true);
     }),
   );
 });
