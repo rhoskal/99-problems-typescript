@@ -23,6 +23,7 @@ import {
   rotate,
   remove_at,
   insert_at,
+  range,
 } from "../src/main";
 
 test("[01] Return the last element of a list", () => {
@@ -235,7 +236,11 @@ test("[20] Remove nth element", () => {
   expect(remove_at(3)(["a", "b", "c", "d"])).toStrictEqual(["a", "b", "c"]);
 });
 
-test("[21] Insert at nth element", () => {
+test("[21] Insert at nth position", () => {
   expect(insert_at("alfa")(1)(["a", "b", "c", "d"])).toStrictEqual(["a", "alfa", "b", "c", "d"]);
   expect(insert_at("alfa")(5)(["a", "b", "c", "d"])).toStrictEqual(["a", "b", "c", "d", "alfa"]);
+});
+
+test.only("[22] Range operator", () => {
+  expect(range(4, 9)).toStrictEqual([4, 5, 6, 7, 8, 9]);
 });

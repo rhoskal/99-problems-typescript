@@ -423,3 +423,18 @@ export const insert_at = <A>(val: A) => {
     };
   };
 };
+
+/*
+ * Problem 22
+ *
+ * Create a list containing all integers within a given range.
+ */
+export const range = (start: number, end: number): ReadonlyArray<number> => {
+  let acc: Array<number> = [];
+
+  for (let i = 0; i <= end - start; i++) {
+    acc[i] = i + start;
+  }
+
+  return acc;
+};
