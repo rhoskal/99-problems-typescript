@@ -600,16 +600,15 @@ export const totient = (n: number): number => {
  * Returns a flat list containing the prime factors in ascending order.
  */
 export const prime_factors = (n: number): ReadonlyArray<number> => {
-  let i = 2;
-  let j = n;
   let factors: ReadonlyArray<number> = [];
+  let divisor = 2;
 
-  while (j !== 1) {
-    if (j % i === 0) {
-      factors = [...factors, i];
-      j = j / i;
+  while (n !== 1) {
+    if (n % divisor === 0) {
+      factors = [...factors, divisor];
+      n = n / divisor;
     } else {
-      i = i + 1;
+      divisor = divisor + 1;
     }
   }
 
