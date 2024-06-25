@@ -585,7 +585,7 @@ export const coprime = (a: number, b: number): boolean => {
  *
  * Calculate Euler's totient function phi(m).
  */
-export const phi = (n: number): number => {
+export const totient_phi = (n: number): number => {
   return range(1, n).reduce((acc, a) => {
     if (coprime(n, a)) {
       return 1 + acc;
@@ -651,7 +651,7 @@ export const prime_factors_mult = (n: number): ReadonlyArray<[number, number]> =
  *
  * Calculate Euler's totient function phi(m) - improved.
  */
-export const phi_improved = (n: number): number => {
+export const phi = (n: number): number => {
   const primes_with_multiplicities = prime_factors_mult(n);
 
   const helper = (ps: ReadonlyArray<[number, number]>): number => {
@@ -753,9 +753,10 @@ export const goldbach_list = (
 /*
  * Problem 46
  *
- * Truth tables for logical expressions.
+ * Truth table for logical expressions.
+ * I'd rather return a value than print table to the console.
  */
-export const table = (expr: LogicalExpression): BoolTable => {
+export const table = (expr: BoolExpression): BoolTable => {
   return [
     [true, true, expr(true, true)],
     [true, false, expr(true, false)],
@@ -765,6 +766,6 @@ export const table = (expr: LogicalExpression): BoolTable => {
 };
 
 // eslint-disable-next-line no-unused-vars
-type LogicalExpression = (a: boolean, b: boolean) => boolean;
+type BoolExpression = (a: boolean, b: boolean) => boolean;
 type BoolTable = [Triple, Triple, Triple, Triple];
 type Triple = [boolean, boolean, boolean];

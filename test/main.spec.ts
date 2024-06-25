@@ -31,10 +31,10 @@ import {
   is_prime,
   gcd,
   coprime,
-  phi,
+  totient_phi,
   prime_factors,
   prime_factors_mult,
-  phi_improved,
+  phi,
   timeit,
   all_primes,
   goldbach,
@@ -326,9 +326,9 @@ test("[33] Should return true if two numbers are coprime", () => {
 });
 
 test("[34] Should return the totient", () => {
-  expect(phi(10)).toBe(4);
-  expect(phi(9)).toBe(6);
-  expect(phi(20)).toBe(8);
+  expect(totient_phi(10)).toBe(4);
+  expect(totient_phi(9)).toBe(6);
+  expect(totient_phi(20)).toBe(8);
 });
 
 test("[35] Should calculate the prime factors", () => {
@@ -351,15 +351,15 @@ test("[36] Should calculate the prime factors and multiplicities", () => {
 });
 
 test("[37] Should return the totient using improved method", () => {
-  expect(phi_improved(10)).toBe(4);
-  expect(phi_improved(13)).toBe(12);
-  expect(phi_improved(9)).toBe(6);
-  expect(phi_improved(20)).toBe(8);
+  expect(phi(10)).toBe(4);
+  expect(phi(13)).toBe(12);
+  expect(phi(9)).toBe(6);
+  expect(phi(20)).toBe(8);
 });
 
 test("[38] Should time both phi functions", () => {
   // useless test but I still want to have a sanity check
-  expect(timeit(phi)(10090)).toBeGreaterThan(timeit(phi_improved)(10090));
+  expect(timeit(totient_phi)(10090)).toBeGreaterThan(timeit(phi)(10090));
 });
 
 test("[39] Should return a list of primes within a range", () => {
