@@ -386,7 +386,7 @@ test("[41] Should return a list of all even numbers and their Goldbach compositi
   // ^ causes `RangeError: Maximum call stack size exceeded`
 });
 
-test("[42] Should return a boolean table", () => {
+test("[46] Should return a boolean table", () => {
   // a ∧ (a ∨ b)
   expect(table((a, b) => Bool.and(a, Bool.or(a, b)))).toStrictEqual([
     [true, true, true],

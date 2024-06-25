@@ -751,7 +751,7 @@ export const goldbach_list = (
 };
 
 /*
- * Problem 42
+ * Problem 46
  *
  * Truth tables for logical expressions.
  */
