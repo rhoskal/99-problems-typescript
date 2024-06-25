@@ -37,6 +37,7 @@ import {
   phi_improved,
   timeit,
   all_primes,
+  goldbach,
 } from "../src/main";
 
 test("[01] Should return the last element of a list", () => {
@@ -362,4 +363,9 @@ test("[39] Should return a list of primes within a range", () => {
   expect(all_primes(10, 20)).toStrictEqual([11, 13, 17, 19]);
   expect(all_primes(50, 100)).toStrictEqual([53, 59, 61, 67, 71, 73, 79, 83, 89, 97]);
   expect(all_primes(2, 7920)).toHaveLength(1000);
+});
+
+test("[40] Should return two primes that sum to the given even number", () => {
+  expect(goldbach(2)).toBe(null);
+  expect(goldbach(28)).toStrictEqual([5, 23]);
 });

@@ -693,3 +693,31 @@ export const all_primes = (lower: number, upper: number): ReadonlyArray<number> 
 
   return possible_primes.filter(is_prime);
 };
+
+/*
+ * Problem 40
+ *
+ * Goldbach's conjecture - finds two prime numbers that sum up to a given even integer.
+ */
+export const goldbach = (n: number): Nullable<ReadonlyArray<number>> => {
+  if (n <= 2) {
+    return null;
+  }
+
+  const helper = (ps: ReadonlyArray<number>) => {
+    const head = utils.hd(ps);
+    const tail = utils.tail(ps);
+
+    const summation_match = primes.filter((p) => p + head === n)[0];
+
+    if (summation_match === undefined) {
+      return helper(tail);
+    } else {
+      return [head, summation_match];
+    }
+  };
+
+  const primes = all_primes(3, n);
+
+  return helper(primes);
+};
