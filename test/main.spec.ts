@@ -33,6 +33,7 @@ import {
   coprime,
   totient,
   prime_factors,
+  prime_factors_mult,
 } from "../src/main";
 
 test("[01] Should return the last element of a list", () => {
@@ -327,4 +328,17 @@ test("[35] Should calculate the prime factors", () => {
   expect(prime_factors(315)).toStrictEqual([3, 3, 5, 7]);
   expect(prime_factors(35)).toStrictEqual([5, 7]);
   expect(prime_factors(820)).toStrictEqual([2, 2, 5, 41]);
+});
+
+test("[36] Should calculate the prime factors and multiplicities", () => {
+  expect(prime_factors_mult(315)).toStrictEqual([
+    [3, 2],
+    [5, 1],
+    [7, 1],
+  ]);
+  expect(prime_factors_mult(820)).toStrictEqual([
+    [2, 2],
+    [5, 1],
+    [41, 1],
+  ]);
 });
