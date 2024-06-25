@@ -682,3 +682,14 @@ export const timeit = <F extends Function>(f: F) => {
     return stop_time - start_time;
   };
 };
+
+/*
+ * Problem 39
+ *
+ * Given a range of integers by its lower and upper limit, construct a list of all prime numbers in that range.
+ */
+export const all_primes = (lower: number, upper: number): ReadonlyArray<number> => {
+  const possible_primes = range(lower, upper);
+
+  return possible_primes.filter(is_prime);
+};

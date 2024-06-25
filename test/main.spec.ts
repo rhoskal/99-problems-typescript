@@ -36,6 +36,7 @@ import {
   prime_factors_mult,
   phi_improved,
   timeit,
+  all_primes,
 } from "../src/main";
 
 test("[01] Should return the last element of a list", () => {
@@ -355,4 +356,9 @@ test("[37] Should return the totient using improved method", () => {
 test("[38] Should time both phi functions", () => {
   // useless test but I still want to have a sanity check
   expect(timeit(phi)(10090)).toBeGreaterThan(timeit(phi_improved)(10090));
+});
+
+test("[39] Should return a list of primes within a range", () => {
+  expect(all_primes(10, 20)).toStrictEqual([11, 13, 17, 19]);
+  expect(all_primes(50, 100)).toStrictEqual([53, 59, 61, 67, 71, 73, 79, 83, 89, 97]);
 });
