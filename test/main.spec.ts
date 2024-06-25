@@ -26,7 +26,7 @@ import {
   range,
   rnd_select,
   lotto_select,
-  permutation,
+  rnd_permutation,
   combination,
   is_prime,
   gcd,
@@ -286,7 +286,7 @@ test("[24] Should get random lotto selection", () => {
 });
 
 test("[25] Should generate random permutation", () => {
-  const randoms = permutation(["a", "b", "c", "d", "e", "f"]);
+  const randoms = rnd_permutation(["a", "b", "c", "d", "e", "f"]);
 
   expect(randoms.length).toBe(6);
 });

@@ -253,27 +253,27 @@ export const decode_modified = (as: ReadonlyArray<Encoded<string>>): string => {
  * by replacing the singleton lists (1 X) by X.
  */
 export const encode_direct = (as: ReadonlyArray<string>): ReadonlyArray<Encoded<string>> => {
+  const encode_direct_helper = (
+    as: ReadonlyArray<string>,
+    es: ReadonlyArray<Encoded<string>>,
+  ): ReadonlyArray<Encoded<string>> => {
+    if (as.length === 0) {
+      return es;
+    }
+
+    const head = utils.hd(as);
+
+    const matches = utils.take_while((x: string) => x === head)(as);
+
+    const encoded =
+      matches.length === 1 ? mkSingleEncode(head) : mkMultipleEncode(head, matches.length);
+
+    const chopped = utils.drop_while((x: string) => x === head)(utils.tail(as));
+
+    return encode_direct_helper(chopped, [...es, encoded]);
+  };
+
   return encode_direct_helper(as, []);
-};
-
-export const encode_direct_helper = (
-  as: ReadonlyArray<string>,
-  es: ReadonlyArray<Encoded<string>>,
-): ReadonlyArray<Encoded<string>> => {
-  if (as.length === 0) {
-    return es;
-  }
-
-  const head = utils.hd(as);
-
-  const matches = utils.take_while((x: string) => x === head)(as);
-
-  const encoded =
-    matches.length === 1 ? mkSingleEncode(head) : mkMultipleEncode(head, matches.length);
-
-  const chopped = utils.drop_while((x: string) => x === head)(utils.tail(as));
-
-  return encode_direct_helper(chopped, [...es, encoded]);
 };
 
 /*
@@ -481,7 +481,7 @@ export const lotto_select = (start: number, end: number): ReadonlyArray<number> 
  * Generate a random permutation of the elements of a list.
  * Note: this solution does not guarantee uniqueness (distinct elements) from `as`
  */
-export const permutation = <A>(as: ReadonlyArray<A>): ReadonlyArray<A> => {
+export const rnd_permutation = <A>(as: ReadonlyArray<A>): ReadonlyArray<A> => {
   return rnd_select(as.length)(as);
 };
 
