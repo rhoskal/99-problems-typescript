@@ -35,39 +35,39 @@ import {
   prime_factors,
 } from "../src/main";
 
-test("[01] Return the last element of a list", () => {
+test("[01] Should return the last element of a list", () => {
   expect(last([])).toEqual(null);
   expect(last(["a"])).toEqual("a");
   expect(last([1, 2, 3])).toEqual(3);
 });
 
-test("[02] Return the last two elements of a list", () => {
+test("[02] Should return the last two elements of a list", () => {
   expect(last_two([])).toEqual(null);
   expect(last_two([true])).toEqual(null);
   expect(last_two(["a", 1])).toEqual(["a", 1]);
   expect(last_two([1, 2, 3])).toEqual([2, 3]);
 });
 
-test("[03] Return nth element of a list", () => {
+test("[03] Should return nth element of a list", () => {
   expect(element_at(2)([])).toEqual(null);
   expect(element_at(2)([1, 2])).toEqual(2);
   expect(element_at(-2)([1, 2])).toEqual(null);
   expect(element_at(2)(["a", "b", "c", "d", "e"])).toEqual("b");
 });
 
-test("[04] Return the length of a list", () => {
+test("[04] Should return the length of a list", () => {
   expect(length([])).toEqual(0);
   expect(length([1])).toEqual(1);
   expect(length(["a", "b", "c", "d", "e"])).toEqual(5);
 });
 
-test("[05] Return the items of a list reversed", () => {
+test("[05] Should return the items of a list reversed", () => {
   expect(reverse([])).toEqual([]);
   expect(reverse([1])).toEqual([1]);
   expect(reverse([1, 2, 3])).toEqual([3, 2, 1]);
 });
 
-test("[06] Return the items of a list reversed", () => {
+test("[06] Should return the items of a list reversed", () => {
   expect(is_palindrome([])).toBe(true);
   expect(is_palindrome([1])).toBe(true);
   expect(is_palindrome([1, 2, 3])).toBe(false);
@@ -77,28 +77,28 @@ test("[06] Return the items of a list reversed", () => {
   expect(is_palindrome([1, 2, 4, 8, 16, 8, 4, 2, 1])).toBe(true);
 });
 
-test("[07] Return a flattened list", () => {
+test("[07] Should return a flattened list", () => {
   expect(flatten([1, [2, 3]])).toStrictEqual([1, 2, 3]);
   expect(flatten([[2, 3], 1])).toStrictEqual([2, 3, 1]);
   expect(flatten(["a", ["b", ["c", "d"], "e"]])).toStrictEqual(["a", "b", "c", "d", "e"]);
   expect(flatten([[["a"]]])).toStrictEqual(["a"]);
 });
 
-test("[08] Remove consecutive duplicates", () => {
+test("[08] Should remove consecutive duplicates", () => {
   expect(compress(["a", "a", "b", "c", "c"])).toStrictEqual(["a", "b", "c"]);
   expect(
     compress(["a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"]),
   ).toStrictEqual(["a", "b", "c", "a", "d", "e"]);
 });
 
-test("[09] Pack/combine duplicates", () => {
+test("[09] Should pack/combine duplicates", () => {
   expect(pack(["a", "a", "b", "c", "c"])).toStrictEqual(["aa", "b", "cc"]);
   expect(
     pack(["a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"]),
   ).toStrictEqual(["aaaa", "b", "cc", "aa", "d", "eeee"]);
 });
 
-test("[10] Encode duplicates", () => {
+test("[10] Should encode duplicates", () => {
   expect(encode(["a", "a", "b", "c", "c"])).toStrictEqual([
     [2, "a"],
     [1, "b"],
@@ -116,7 +116,7 @@ test("[10] Encode duplicates", () => {
   ]);
 });
 
-test("[11] Encode duplicates but modified", () => {
+test("[11] Should encode duplicates but modified", () => {
   expect(
     encode_modified(["a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"]),
   ).toStrictEqual([
@@ -129,7 +129,7 @@ test("[11] Encode duplicates but modified", () => {
   ]);
 });
 
-test("[12] Decode encoded duplicates", () => {
+test("[12] Should decode encoded duplicates", () => {
   expect(
     decode_modified([
       { _kind: "multiple_encode", value: "a", count: 4 },
@@ -142,7 +142,7 @@ test("[12] Decode encoded duplicates", () => {
   ).toStrictEqual("aaaabccaadeeee");
 });
 
-test("[13] Encode duplicates directly", () => {
+test("[13] Should encode duplicates directly", () => {
   expect(
     encode_direct(["a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"]),
   ).toStrictEqual([
@@ -155,7 +155,7 @@ test("[13] Encode duplicates directly", () => {
   ]);
 });
 
-test("[14] Duplicate items in a list", () => {
+test("[14] Should duplicate items in a list", () => {
   expect(duplicate(["a", "b", "c", "c", "d"])).toStrictEqual([
     "a",
     "a",
@@ -171,7 +171,7 @@ test("[14] Duplicate items in a list", () => {
   expect(duplicate([1, 2, 3])).toStrictEqual([1, 1, 2, 2, 3, 3]);
 });
 
-test("[15] Duplicate items in a list", () => {
+test("[15] Should duplicate items in a list", () => {
   expect(replicate(3)(["a", "b", "c"])).toStrictEqual([
     "a",
     "a",
@@ -186,7 +186,7 @@ test("[15] Duplicate items in a list", () => {
   expect(replicate(2)([1, 2, 3])).toStrictEqual([1, 1, 2, 2, 3, 3]);
 });
 
-test("[16] Drop every nth item from a list", () => {
+test("[16] Should drop every nth item from a list", () => {
   expect(drop_every(3)(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"])).toStrictEqual([
     "a",
     "b",
@@ -199,14 +199,14 @@ test("[16] Drop every nth item from a list", () => {
   ]);
 });
 
-test("[17] Split a given list into 2 parts", () => {
+test("[17] Should split a given list into 2 parts", () => {
   expect(split(3)(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"])).toStrictEqual({
     left: ["a", "b", "c"],
     right: ["d", "e", "f", "g", "h", "i", "j", "k"],
   });
 });
 
-test("[18] Slice a list", () => {
+test("[18] Should slice a list given a range", () => {
   expect(slice(3, 7)(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"])).toStrictEqual([
     "c",
     "d",
@@ -217,7 +217,7 @@ test("[18] Slice a list", () => {
   expect(slice(3, 5)([1, 2, 3, 4, 5])).toStrictEqual([3, 4, 5]);
 });
 
-test("[19] Rotate a list", () => {
+test("[19] Should rotate a list", () => {
   expect(rotate(3)(["a", "b", "c", "d", "e", "f", "g", "h"])).toStrictEqual([
     "d",
     "e",
@@ -240,21 +240,21 @@ test("[19] Rotate a list", () => {
   ]);
 });
 
-test("[20] Remove nth element", () => {
+test("[20] Should remove nth element", () => {
   expect(remove_at(1)(["a", "b", "c", "d"])).toStrictEqual(["a", "c", "d"]);
   expect(remove_at(3)(["a", "b", "c", "d"])).toStrictEqual(["a", "b", "c"]);
 });
 
-test("[21] Insert at nth position", () => {
+test("[21] Should insert at nth position", () => {
   expect(insert_at("alfa")(1)(["a", "b", "c", "d"])).toStrictEqual(["a", "alfa", "b", "c", "d"]);
   expect(insert_at("alfa")(5)(["a", "b", "c", "d"])).toStrictEqual(["a", "b", "c", "d", "alfa"]);
 });
 
-test("[22] Range operator", () => {
+test("[22] Should create an array with sequential elements given range", () => {
   expect(range(4, 9)).toStrictEqual([4, 5, 6, 7, 8, 9]);
 });
 
-test("[23] Random selection", () => {
+test("[23] Should get random selection", () => {
   fc.assert(
     fc.property(fc.integer({ min: 1, max: 8 }), (num) => {
       const randoms = rnd_select(num)(["a", "b", "c", "d", "e", "f", "g", "h"]);
@@ -264,7 +264,7 @@ test("[23] Random selection", () => {
   );
 });
 
-test("[24] Lotto random selection", () => {
+test("[24] Should get random lotto selection", () => {
   fc.assert(
     fc.property(fc.integer({ min: 2, max: 20 }), (num) => {
       const randoms = lotto_select(1, num);
@@ -277,13 +277,13 @@ test("[24] Lotto random selection", () => {
   );
 });
 
-test("[25] Generate random permutation", () => {
+test("[25] Should generate random permutation", () => {
   const randoms = permutation(["a", "b", "c", "d", "e", "f"]);
 
   expect(randoms.length).toBe(6);
 });
 
-test.skip("[26] Generate combinations", () => {
+test.skip("[26] Should generate combinations", () => {
   expect(combination(1)(["a", "b", "c", "d"])).toStrictEqual(["a", "b", "c", "d"]);
   expect(combination(2)(["a", "b", "c", "d"])).toStrictEqual([]);
 });
