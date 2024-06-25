@@ -751,7 +751,7 @@ export const timeit = <F extends Function>(f: F) => {
 };
 
 /*
- * Problem 42a
+ * Problem 42
  *
  * Truth table for logical expressions.
  * I'd rather return a value than print table to the console.
@@ -769,3 +769,19 @@ export const table = (expr: BoolExpression): BoolTable => {
 type BoolExpression = (a: boolean, b: boolean) => boolean;
 type BoolTable = [Triple, Triple, Triple, Triple];
 type Triple = [boolean, boolean, boolean];
+
+/*
+ * Problem 43
+ *
+ * Truth tables for logical expressions.
+ * Same as Problem 46 but using more natural expression syntax.
+ */
+// export const table2 = (expr: BoolExpression): BoolTable => {};
+
+/*
+ * Problem 44
+ *
+ * Truth tables for logical expressions.
+ * Same as Problem 46 but using more natural expression syntax.
+ */
+// export const table3 = (expr: BoolExpression): BoolTable => {};

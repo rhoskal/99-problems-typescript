@@ -414,3 +414,7 @@ test("[42] Should return a boolean table", () => {
     [false, false, false],
   ]);
 });
+
+test.skip("[43]", () => {});
+
+test.skip("[44]", () => {});
