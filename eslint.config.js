@@ -13,7 +13,7 @@ export default [
   {
     files: ["**/*.{js,ts,mjs,mts}"],
     rules: {
-      "no-unused-vars": "error",
+      "no-unused-vars": ["error", { args: "all", argsIgnorePattern: "^_" }],
       "no-undef": "error",
     },
   },

@@ -1,3 +1,5 @@
+import { performance } from "perf_hooks"; // nodejs package
+
 import * as utils from "./utils";
 
 // ===================
@@ -664,4 +666,19 @@ export const phi_improved = (n: number): number => {
   };
 
   return helper(primes_with_multiplicities);
+};
+
+/*
+ * Problem 38
+ *
+ * Calculate Euler's totient function phi(m) - improved.
+ */
+export const timeit = <F extends Function>(f: F) => {
+  return (a: number): number => {
+    const start_time = performance.now();
+    f(a);
+    const stop_time = performance.now();
+
+    return stop_time - start_time;
+  };
 };

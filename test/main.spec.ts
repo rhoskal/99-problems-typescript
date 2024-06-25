@@ -35,6 +35,7 @@ import {
   prime_factors,
   prime_factors_mult,
   phi_improved,
+  timeit,
 } from "../src/main";
 
 test("[01] Should return the last element of a list", () => {
@@ -349,4 +350,9 @@ test("[37] Should return the totient using improved method", () => {
   expect(phi_improved(13)).toBe(12);
   expect(phi_improved(9)).toBe(6);
   expect(phi_improved(20)).toBe(8);
+});
+
+test("[38] Should time both phi functions", () => {
+  // useless test but I still want to have a sanity check
+  expect(timeit(phi)(10090)).toBeGreaterThan(timeit(phi_improved)(10090));
 });
