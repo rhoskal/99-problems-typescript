@@ -501,21 +501,21 @@ export const combination = (n: number) => {
 };
 
 /*
- * Problem 27a
+ * Problem 27
  *
  * Group the elements of a set into 3 disjoint subsets.
  */
 export const group3 = () => {};
 
 /*
- * Problem 27b
+ * Problem 28
  *
  * Generalized `group3` specifying a list of group sizes and the predicate will return a list of groups.
  */
 export const group = () => {};
 
 /*
- * Problem 28a
+ * Problem 29
  *
  * sort the elements of this list according to their length.
  * e.g. short lists first, longer lists later, or vice versa.
@@ -523,7 +523,7 @@ export const group = () => {};
 export const lsort = () => {};
 
 /*
- * Problem 28b
+ * Problem 30
  *
  * sort the elements of this list according to their length frequency;
  * e.g. in the default, where sorting is done ascendingly, lists with rare
@@ -751,7 +751,7 @@ export const timeit = <F extends Function>(f: F) => {
 };
 
 /*
- * Problem 42
+ * Problem 42a
  *
  * Truth table for logical expressions.
  * I'd rather return a value than print table to the console.

@@ -28,6 +28,10 @@ import {
   lotto_select,
   rnd_permutation,
   combination,
+  group3,
+  group,
+  lsort,
+  lfsort,
   is_prime,
   gcd,
   coprime,
@@ -296,13 +300,21 @@ test.skip("[26] Should generate combinations", () => {
   expect(combination(2)(["a", "b", "c", "d"])).toStrictEqual([]);
 });
 
-test.skip("[27a]", () => {});
+test.skip("[27]", () => {
+  expect(group3()).toStrictEqual([]);
+});
 
-test.skip("[27b]", () => {});
+test.skip("[28]", () => {
+  expect(group()).toStrictEqual([]);
+});
 
-test.skip("[28a]", () => {});
+test.skip("[29]", () => {
+  expect(lsort()).toStrictEqual([]);
+});
 
-test.skip("[28b]", () => {});
+test.skip("[30]", () => {
+  expect(lfsort()).toStrictEqual([]);
+});
 
 test("[31] Should return true if given number is prime", () => {
   expect(is_prime(4)).toBe(false);
