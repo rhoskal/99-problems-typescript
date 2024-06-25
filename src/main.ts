@@ -577,3 +577,18 @@ export const gcd = (a: number, b: number): number => {
 export const coprime = (a: number, b: number): boolean => {
   return gcd(a, b) === 1;
 };
+
+/*
+ * Problem 34
+ *
+ * Calculate Euler's totient function phi(m).
+ */
+export const totient = (n: number): number => {
+  return range(1, n).reduce((acc, a) => {
+    if (coprime(n, a)) {
+      return 1 + acc;
+    } else {
+      return acc;
+    }
+  }, 0);
+};

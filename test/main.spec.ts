@@ -31,6 +31,7 @@ import {
   is_prime,
   gcd,
   coprime,
+  totient,
 } from "../src/main";
 
 test("[01] Return the last element of a list", () => {
@@ -313,4 +314,10 @@ test("[33] Should return true if two numbers are coprime", () => {
   expect(coprime(15, 8)).toBe(true);
   expect(coprime(3, 20)).toBe(true);
   expect(coprime(5, 12)).toBe(true);
+});
+
+test("[34] Should return the totient", () => {
+  expect(totient(10)).toBe(4);
+  expect(totient(9)).toBe(6);
+  expect(totient(20)).toBe(8);
 });
