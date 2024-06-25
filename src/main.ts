@@ -583,7 +583,7 @@ export const coprime = (a: number, b: number): boolean => {
  *
  * Calculate Euler's totient function phi(m).
  */
-export const totient = (n: number): number => {
+export const phi = (n: number): number => {
   return range(1, n).reduce((acc, a) => {
     if (coprime(n, a)) {
       return 1 + acc;

@@ -31,7 +31,7 @@ import {
   is_prime,
   gcd,
   coprime,
-  totient,
+  phi,
   prime_factors,
   prime_factors_mult,
 } from "../src/main";
@@ -319,9 +319,9 @@ test("[33] Should return true if two numbers are coprime", () => {
 });
 
 test("[34] Should return the totient", () => {
-  expect(totient(10)).toBe(4);
-  expect(totient(9)).toBe(6);
-  expect(totient(20)).toBe(8);
+  expect(phi(10)).toBe(4);
+  expect(phi(9)).toBe(6);
+  expect(phi(20)).toBe(8);
 });
 
 test("[35] Should calculate the prime factors", () => {
