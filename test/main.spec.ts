@@ -28,6 +28,7 @@ import {
   lotto_select,
   permutation,
   combination,
+  is_prime,
 } from "../src/main";
 
 test("[01] Return the last element of a list", () => {
@@ -290,3 +291,10 @@ test.skip("[27b]", () => {});
 test.skip("[28a]", () => {});
 
 test.skip("[28b]", () => {});
+
+test("[31] Should return true if given number is prime", () => {
+  expect(is_prime(4)).toBe(false);
+  expect(is_prime(7)).toBe(true);
+  expect(is_prime(17)).toBe(true);
+  expect(is_prime(47)).toBe(true);
+});

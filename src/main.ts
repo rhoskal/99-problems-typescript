@@ -528,3 +528,28 @@ export const lsort = () => {};
  * lengths are placed first, others with a more frequent length come later.
  */
 export const lfsort = () => {};
+
+/*
+ * Problem 31
+ *
+ * Determine whether a given number is prime.
+ * Note: uses "trivial division" which is the most basic algo.
+ */
+export const is_prime = (n: number): boolean => {
+  const possible_primes = range(2, Math.sqrt(n));
+
+  return is_prime_helper(n)(possible_primes);
+};
+
+const is_prime_helper = (n: number) => {
+  return (as: ReadonlyArray<number>): boolean => {
+    const head = utils.hd(as);
+    const tail = utils.tail(as);
+
+    if (tail.length === 0) {
+      return n % head !== 0;
+    } else {
+      return n % head !== 0 && is_prime_helper(n)(tail);
+    }
+  };
+};
