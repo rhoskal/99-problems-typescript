@@ -3,7 +3,7 @@
 - [x] Questions 1 to 10: Lists
 - [x] Questions 11 to 20: Lists, continued
 - [] Questions 21 to 28: Lists again
-- [] Questions 31 to 41: Arithmetic
+- [x] Questions 31 to 41: Arithmetic
 - [] Questions 46 to 50: Logic and codes
 - [] Questions 54A to 60: Binary trees
 - [] Questions 61 to 69: Binary trees, continued

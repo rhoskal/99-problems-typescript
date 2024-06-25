@@ -38,6 +38,7 @@ import {
   timeit,
   all_primes,
   goldbach,
+  goldbach_list,
 } from "../src/main";
 
 test("[01] Should return the last element of a list", () => {
@@ -368,4 +369,17 @@ test("[39] Should return a list of primes within a range", () => {
 test("[40] Should return two primes that sum to the given even number", () => {
   expect(goldbach(2)).toBe(null);
   expect(goldbach(28)).toStrictEqual([5, 23]);
+});
+
+test("[41] Should return a list of all even numbers and their Goldbach composition", () => {
+  expect(goldbach_list(9, 20)).toStrictEqual([
+    [10, [3, 7]],
+    [12, [5, 7]],
+    [14, [3, 11]],
+    [16, [3, 13]],
+    [18, [5, 13]],
+    [20, [3, 17]],
+  ]);
+  // expect(goldbach_list(3, 3000)).toStrictEqual([]);
+  // ^ causes `RangeError: Maximum call stack size exceeded`
 });
