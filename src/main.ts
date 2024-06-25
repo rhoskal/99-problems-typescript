@@ -699,7 +699,9 @@ export const all_primes = (lower: number, upper: number): ReadonlyArray<number> 
  *
  * Goldbach's conjecture - finds two prime numbers that sum up to a given even integer.
  */
-export const goldbach = (n: number): Nullable<ReadonlyArray<number>> => {
+type GoldbachPair = [number, number];
+
+export const goldbach = (n: number): Nullable<GoldbachPair> => {
   if (n <= 2) {
     return null;
   }
@@ -713,7 +715,7 @@ export const goldbach = (n: number): Nullable<ReadonlyArray<number>> => {
     if (summation_match === undefined) {
       return helper(tail);
     } else {
-      return [head, summation_match];
+      return [head, summation_match] as GoldbachPair;
     }
   };
 
