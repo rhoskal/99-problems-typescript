@@ -34,6 +34,7 @@ import {
   phi,
   prime_factors,
   prime_factors_mult,
+  phi_improved,
 } from "../src/main";
 
 test("[01] Should return the last element of a list", () => {
@@ -341,4 +342,11 @@ test("[36] Should calculate the prime factors and multiplicities", () => {
     [5, 1],
     [41, 1],
   ]);
+});
+
+test("[37] Should return the totient using improved method", () => {
+  expect(phi_improved(10)).toBe(4);
+  expect(phi_improved(13)).toBe(12);
+  expect(phi_improved(9)).toBe(6);
+  expect(phi_improved(20)).toBe(8);
 });

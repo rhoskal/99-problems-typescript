@@ -643,3 +643,25 @@ export const prime_factors_mult = (n: number): ReadonlyArray<[number, number]> =
 
   return helper(primes)([]);
 };
+
+/*
+ * Problem 37
+ *
+ * Calculate Euler's totient function phi(m) - improved.
+ */
+export const phi_improved = (n: number): number => {
+  const primes_with_multiplicities = prime_factors_mult(n);
+
+  const helper = (ps: ReadonlyArray<[number, number]>): number => {
+    if (ps.length === 0) {
+      return 1;
+    } else {
+      const [prime, multiplicity] = utils.hd(ps);
+      const rest = utils.tail(ps);
+
+      return (prime - 1) * Math.pow(prime, multiplicity - 1) * helper(rest);
+    }
+  };
+
+  return helper(primes_with_multiplicities);
+};
