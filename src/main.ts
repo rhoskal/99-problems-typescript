@@ -559,45 +559,6 @@ export const is_prime = (n: number): boolean => {
 /*
  * Problem 32
  *
- * Determine the greatest common divisor of two positive numbers.
- * Note: uses Euclid's algo
- */
-export const gcd = (a: number, b: number): number => {
-  if (a === 0) {
-    return b;
-  }
-
-  return gcd(Math.abs(b) % Math.abs(a), Math.abs(a));
-};
-
-/*
- * Problem 33
- *
- * Determine whether two positive integer numbers are coprime.
- * Note: two numbers are coprime if their greatest common divisor equals 1.
- */
-export const coprime = (a: number, b: number): boolean => {
-  return gcd(a, b) === 1;
-};
-
-/*
- * Problem 34
- *
- * Calculate Euler's totient function phi(m).
- */
-export const totient_phi = (n: number): number => {
-  return range(1, n).reduce((acc, a) => {
-    if (coprime(n, a)) {
-      return 1 + acc;
-    } else {
-      return acc;
-    }
-  }, 0);
-};
-
-/*
- * Problem 35
- *
  * Determine the prime factors of a given positive integer.
  * Returns a flat list containing the prime factors in ascending order.
  */
@@ -618,7 +579,7 @@ export const prime_factors = (n: number): ReadonlyArray<number> => {
 };
 
 /*
- * Problem 36
+ * Problem 33
  *
  * Determine the prime factors and their multiplicities of a given positive integer.
  */
@@ -647,55 +608,18 @@ export const prime_factors_mult = (n: number): ReadonlyArray<[number, number]> =
 };
 
 /*
- * Problem 37
- *
- * Calculate Euler's totient function phi(m) - improved.
- */
-export const phi = (n: number): number => {
-  const primes_with_multiplicities = prime_factors_mult(n);
-
-  const helper = (ps: ReadonlyArray<[number, number]>): number => {
-    if (ps.length === 0) {
-      return 1;
-    } else {
-      const [prime, multiplicity] = utils.hd(ps);
-      const rest = utils.tail(ps);
-
-      return (prime - 1) * Math.pow(prime, multiplicity - 1) * helper(rest);
-    }
-  };
-
-  return helper(primes_with_multiplicities);
-};
-
-/*
- * Problem 38
- *
- * Calculate Euler's totient function phi(m) - improved.
- */
-export const timeit = <F extends Function>(f: F) => {
-  return (a: number): number => {
-    const start_time = performance.now();
-    f(a);
-    const stop_time = performance.now();
-
-    return stop_time - start_time;
-  };
-};
-
-/*
- * Problem 39
+ * Problem 34
  *
  * Given a range of integers by its lower and upper limit, construct a list of all prime numbers in that range.
  */
-export const all_primes = (lower: number, upper: number): ReadonlyArray<number> => {
+export const primes_from = (lower: number, upper: number): ReadonlyArray<number> => {
   const possible_primes = range(lower, upper);
 
   return possible_primes.filter(is_prime);
 };
 
 /*
- * Problem 40
+ * Problem 35
  *
  * Goldbach's conjecture - finds two prime numbers that sum up to a given even integer.
  */
@@ -717,7 +641,7 @@ export const goldbach = (n: number): Nullable<GoldbachPair> => {
     }
   };
 
-  const primes = all_primes(3, n);
+  const primes = primes_from(3, n);
 
   return helper(primes);
 };
@@ -725,7 +649,7 @@ export const goldbach = (n: number): Nullable<GoldbachPair> => {
 type GoldbachPair = [number, number];
 
 /*
- * Problem 41
+ * Problem 36
  *
  * Given a range of integers by its lower and upper limit, print a list of
  * all even numbers and their Goldbach composition.
@@ -751,7 +675,83 @@ export const goldbach_list = (
 };
 
 /*
- * Problem 46
+ * Problem 37
+ *
+ * Determine the greatest common divisor of two positive numbers.
+ * Note: uses Euclid's algo
+ */
+export const gcd = (a: number, b: number): number => {
+  if (a === 0) {
+    return b;
+  }
+
+  return gcd(Math.abs(b) % Math.abs(a), Math.abs(a));
+};
+
+/*
+ * Problem 38
+ *
+ * Determine whether two positive integer numbers are coprime.
+ * Note: two numbers are coprime if their greatest common divisor equals 1.
+ */
+export const coprime = (a: number, b: number): boolean => {
+  return gcd(a, b) === 1;
+};
+
+/*
+ * Problem 39
+ *
+ * Calculate Euler's totient function phi(m).
+ */
+export const totient_phi = (n: number): number => {
+  return range(1, n).reduce((acc, a) => {
+    if (coprime(n, a)) {
+      return 1 + acc;
+    } else {
+      return acc;
+    }
+  }, 0);
+};
+
+/*
+ * Problem 40
+ *
+ * Calculate Euler's totient function phi(m) - improved.
+ */
+export const phi = (n: number): number => {
+  const primes_with_multiplicities = prime_factors_mult(n);
+
+  const helper = (ps: ReadonlyArray<[number, number]>): number => {
+    if (ps.length === 0) {
+      return 1;
+    } else {
+      const [prime, multiplicity] = utils.hd(ps);
+      const rest = utils.tail(ps);
+
+      return (prime - 1) * Math.pow(prime, multiplicity - 1) * helper(rest);
+    }
+  };
+
+  return helper(primes_with_multiplicities);
+};
+
+/*
+ * Problem 41
+ *
+ * Calculate Euler's totient function phi(m) - improved.
+ */
+export const timeit = <F extends Function>(f: F) => {
+  return (a: number): number => {
+    const start_time = performance.now();
+    f(a);
+    const stop_time = performance.now();
+
+    return stop_time - start_time;
+  };
+};
+
+/*
+ * Problem 42
  *
  * Truth table for logical expressions.
  * I'd rather return a value than print table to the console.

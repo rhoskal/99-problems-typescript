@@ -36,7 +36,7 @@ import {
   prime_factors_mult,
   phi,
   timeit,
-  all_primes,
+  primes_from,
   goldbach,
   goldbach_list,
   table,
@@ -311,33 +311,13 @@ test("[31] Should return true if given number is prime", () => {
   expect(is_prime(47)).toBe(true);
 });
 
-test("[32] Should return the gcd of two numbers", () => {
-  expect(gcd(36, 63)).toBe(9);
-  expect(gcd(-3, -6)).toBe(3);
-  expect(gcd(-3, 6)).toBe(3);
-  expect(gcd(234, 42)).toBe(6);
-});
-
-test("[33] Should return true if two numbers are coprime", () => {
-  expect(coprime(35, 64)).toBe(true);
-  expect(coprime(15, 8)).toBe(true);
-  expect(coprime(3, 20)).toBe(true);
-  expect(coprime(5, 12)).toBe(true);
-});
-
-test("[34] Should return the totient", () => {
-  expect(totient_phi(10)).toBe(4);
-  expect(totient_phi(9)).toBe(6);
-  expect(totient_phi(20)).toBe(8);
-});
-
-test("[35] Should calculate the prime factors", () => {
+test("[32] Should calculate the prime factors", () => {
   expect(prime_factors(315)).toStrictEqual([3, 3, 5, 7]);
   expect(prime_factors(35)).toStrictEqual([5, 7]);
   expect(prime_factors(820)).toStrictEqual([2, 2, 5, 41]);
 });
 
-test("[36] Should calculate the prime factors and multiplicities", () => {
+test("[33] Should calculate the prime factors and multiplicities", () => {
   expect(prime_factors_mult(315)).toStrictEqual([
     [3, 2],
     [5, 1],
@@ -350,30 +330,18 @@ test("[36] Should calculate the prime factors and multiplicities", () => {
   ]);
 });
 
-test("[37] Should return the totient using improved method", () => {
-  expect(phi(10)).toBe(4);
-  expect(phi(13)).toBe(12);
-  expect(phi(9)).toBe(6);
-  expect(phi(20)).toBe(8);
+test("[34] Should return a list of primes within a range", () => {
+  expect(primes_from(10, 20)).toStrictEqual([11, 13, 17, 19]);
+  expect(primes_from(50, 100)).toStrictEqual([53, 59, 61, 67, 71, 73, 79, 83, 89, 97]);
+  expect(primes_from(2, 7920)).toHaveLength(1000);
 });
 
-test("[38] Should time both phi functions", () => {
-  // useless test but I still want to have a sanity check
-  expect(timeit(totient_phi)(10090)).toBeGreaterThan(timeit(phi)(10090));
-});
-
-test("[39] Should return a list of primes within a range", () => {
-  expect(all_primes(10, 20)).toStrictEqual([11, 13, 17, 19]);
-  expect(all_primes(50, 100)).toStrictEqual([53, 59, 61, 67, 71, 73, 79, 83, 89, 97]);
-  expect(all_primes(2, 7920)).toHaveLength(1000);
-});
-
-test("[40] Should return two primes that sum to the given even number", () => {
+test("[35] Should return two primes that sum to the given even number", () => {
   expect(goldbach(2)).toBe(null);
   expect(goldbach(28)).toStrictEqual([5, 23]);
 });
 
-test("[41] Should return a list of all even numbers and their Goldbach composition", () => {
+test("[36] Should return a list of all even numbers and their Goldbach composition", () => {
   expect(goldbach_list(9, 20)).toStrictEqual([
     [10, [3, 7]],
     [12, [5, 7]],
@@ -386,7 +354,39 @@ test("[41] Should return a list of all even numbers and their Goldbach compositi
   // ^ causes `RangeError: Maximum call stack size exceeded`
 });
 
-test("[46] Should return a boolean table", () => {
+test("[37] Should return the gcd of two numbers", () => {
+  expect(gcd(36, 63)).toBe(9);
+  expect(gcd(-3, -6)).toBe(3);
+  expect(gcd(-3, 6)).toBe(3);
+  expect(gcd(234, 42)).toBe(6);
+});
+
+test("[38] Should return true if two numbers are coprime", () => {
+  expect(coprime(35, 64)).toBe(true);
+  expect(coprime(15, 8)).toBe(true);
+  expect(coprime(3, 20)).toBe(true);
+  expect(coprime(5, 12)).toBe(true);
+});
+
+test("[39] Should return the totient", () => {
+  expect(totient_phi(10)).toBe(4);
+  expect(totient_phi(9)).toBe(6);
+  expect(totient_phi(20)).toBe(8);
+});
+
+test("[40] Should return the totient using improved method", () => {
+  expect(phi(10)).toBe(4);
+  expect(phi(13)).toBe(12);
+  expect(phi(9)).toBe(6);
+  expect(phi(20)).toBe(8);
+});
+
+test("[41] Should time both phi functions", () => {
+  // useless test but I still want to have a sanity check
+  expect(timeit(totient_phi)(10090)).toBeGreaterThan(timeit(phi)(10090));
+});
+
+test("[42] Should return a boolean table", () => {
   // a ∧ (a ∨ b)
   expect(table((a, b) => Bool.and(a, Bool.or(a, b)))).toStrictEqual([
     [true, true, true],
