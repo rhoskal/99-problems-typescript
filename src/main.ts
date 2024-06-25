@@ -482,3 +482,49 @@ export const lotto_select = (start: number, end: number): ReadonlyArray<number> 
 export const permutation = <A>(as: ReadonlyArray<A>): ReadonlyArray<A> => {
   return rnd_select(as.length)(as);
 };
+
+/*
+ * Problem 26
+ *
+ * Generate combinations of k distinct objects chosen from the n elements of a list.
+ */
+export const combination = (n: number) => {
+  return <A>(as: ReadonlyArray<A>) => {
+    if (n < 0) {
+      return as;
+    }
+
+    return as;
+  };
+};
+
+/*
+ * Problem 27a
+ *
+ * Group the elements of a set into 3 disjoint subsets.
+ */
+export const group3 = () => {};
+
+/*
+ * Problem 27b
+ *
+ * Generalized `group3` specifying a list of group sizes and the predicate will return a list of groups.
+ */
+export const group = () => {};
+
+/*
+ * Problem 28a
+ *
+ * sort the elements of this list according to their length.
+ * e.g. short lists first, longer lists later, or vice versa.
+ */
+export const lsort = () => {};
+
+/*
+ * Problem 28b
+ *
+ * sort the elements of this list according to their length frequency;
+ * e.g. in the default, where sorting is done ascendingly, lists with rare
+ * lengths are placed first, others with a more frequent length come later.
+ */
+export const lfsort = () => {};

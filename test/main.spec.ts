@@ -27,6 +27,7 @@ import {
   rnd_select,
   lotto_select,
   permutation,
+  combination,
 } from "../src/main";
 
 test("[01] Return the last element of a list", () => {
@@ -276,3 +277,16 @@ test("[25] Generate random permutation", () => {
 
   expect(randoms.length).toBe(6);
 });
+
+test.skip("[26] Generate combinations", () => {
+  expect(combination(1)(["a", "b", "c", "d"])).toStrictEqual(["a", "b", "c", "d"]);
+  expect(combination(2)(["a", "b", "c", "d"])).toStrictEqual([]);
+});
+
+test.skip("[27a]", () => {});
+
+test.skip("[27b]", () => {});
+
+test.skip("[28a]", () => {});
+
+test.skip("[28b]", () => {});
