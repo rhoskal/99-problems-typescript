@@ -621,20 +621,20 @@ export const prime_factors = (n: number): ReadonlyArray<number> => {
  * Determine the prime factors and their multiplicities of a given positive integer.
  */
 export const prime_factors_mult = (n: number): ReadonlyArray<[number, number]> => {
-  // could have used `encode` from problem 10 but it's not generic
+  // could have used `encode` from problem 10 but it's not parametrically polymorphic
 
   const helper = (primes: ReadonlyArray<number>) => {
     return (
-      factors_with_counts: ReadonlyArray<[number, number]>,
+      primes_with_multiplicities: ReadonlyArray<[number, number]>,
     ): ReadonlyArray<[number, number]> => {
       if (primes.length === 0) {
-        return factors_with_counts;
+        return primes_with_multiplicities;
       } else {
-        const head = utils.hd(primes);
-        const count = utils.take_while((a) => a === head)(primes).length;
-        const chopped = utils.drop_left(count)(primes);
+        const prime = utils.hd(primes);
+        const multiplicities = utils.take_while((a) => a === prime)(primes).length;
+        const chopped = utils.drop_left(multiplicities)(primes);
 
-        return helper(chopped)([...factors_with_counts, [head, count]]);
+        return helper(chopped)([...primes_with_multiplicities, [prime, multiplicities]]);
       }
     };
   };
