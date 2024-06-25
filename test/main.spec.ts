@@ -361,4 +361,5 @@ test("[38] Should time both phi functions", () => {
 test("[39] Should return a list of primes within a range", () => {
   expect(all_primes(10, 20)).toStrictEqual([11, 13, 17, 19]);
   expect(all_primes(50, 100)).toStrictEqual([53, 59, 61, 67, 71, 73, 79, 83, 89, 97]);
+  expect(all_primes(2, 7920)).toHaveLength(1000);
 });
