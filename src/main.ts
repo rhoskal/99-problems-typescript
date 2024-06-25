@@ -536,20 +536,20 @@ export const lfsort = () => {};
  * Note: uses "trivial division" which is the most basic algo.
  */
 export const is_prime = (n: number): boolean => {
+  const is_prime_helper = (n: number) => {
+    return (as: ReadonlyArray<number>): boolean => {
+      const head = utils.hd(as);
+      const tail = utils.tail(as);
+
+      if (tail.length === 0) {
+        return n % head !== 0;
+      } else {
+        return n % head !== 0 && is_prime_helper(n)(tail);
+      }
+    };
+  };
+
   const possible_primes = range(2, Math.sqrt(n));
 
   return is_prime_helper(n)(possible_primes);
-};
-
-const is_prime_helper = (n: number) => {
-  return (as: ReadonlyArray<number>): boolean => {
-    const head = utils.hd(as);
-    const tail = utils.tail(as);
-
-    if (tail.length === 0) {
-      return n % head !== 0;
-    } else {
-      return n % head !== 0 && is_prime_helper(n)(tail);
-    }
-  };
 };
