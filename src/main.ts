@@ -749,3 +749,22 @@ export const goldbach_list = (
     [] as ReadonlyArray<[number, GoldbachPair]>,
   );
 };
+
+/*
+ * Problem 42
+ *
+ * Truth tables for logical expressions.
+ */
+export const table = (expr: LogicalExpression): BoolTable => {
+  return [
+    [true, true, expr(true, true)],
+    [true, false, expr(true, false)],
+    [false, true, expr(false, true)],
+    [false, false, expr(false, false)],
+  ];
+};
+
+// eslint-disable-next-line no-unused-vars
+type LogicalExpression = (a: boolean, b: boolean) => boolean;
+type BoolTable = [Triple, Triple, Triple, Triple];
+type Triple = [boolean, boolean, boolean];

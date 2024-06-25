@@ -39,7 +39,9 @@ import {
   all_primes,
   goldbach,
   goldbach_list,
+  table,
 } from "../src/main";
+import * as Bool from "../src/bool";
 
 test("[01] Should return the last element of a list", () => {
   expect(last([])).toEqual(null);
@@ -382,4 +384,21 @@ test("[41] Should return a list of all even numbers and their Goldbach compositi
   ]);
   // expect(goldbach_list(3, 3000)).toStrictEqual([]);
   // ^ causes `RangeError: Maximum call stack size exceeded`
+});
+
+test("[42] Should return a boolean table", () => {
+  // a ∧ (a ∨ b)
+  expect(table((a, b) => Bool.and(a, Bool.or(a, b)))).toStrictEqual([
+    [true, true, true],
+    [true, false, true],
+    [false, true, false],
+    [false, false, false],
+  ]);
+  // (a ∨ b) ∧ (a ∧ b)
+  expect(table((a, b) => Bool.and(Bool.or(a, b), Bool.and(a, b)))).toStrictEqual([
+    [true, true, true],
+    [true, false, false],
+    [false, true, false],
+    [false, false, false],
+  ]);
 });
