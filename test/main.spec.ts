@@ -32,6 +32,7 @@ import {
   gcd,
   coprime,
   totient,
+  prime_factors,
 } from "../src/main";
 
 test("[01] Return the last element of a list", () => {
@@ -320,4 +321,10 @@ test("[34] Should return the totient", () => {
   expect(totient(10)).toBe(4);
   expect(totient(9)).toBe(6);
   expect(totient(20)).toBe(8);
+});
+
+test("[35] Should calculate the prime factors", () => {
+  expect(prime_factors(315)).toStrictEqual([3, 3, 5, 7]);
+  expect(prime_factors(35)).toStrictEqual([5, 7]);
+  expect(prime_factors(820)).toStrictEqual([2, 2, 5, 41]);
 });

@@ -592,3 +592,26 @@ export const totient = (n: number): number => {
     }
   }, 0);
 };
+
+/*
+ * Problem 35
+ *
+ * Determine the prime factors of a given positive integer.
+ * Returns a flat list containing the prime factors in ascending order.
+ */
+export const prime_factors = (n: number): ReadonlyArray<number> => {
+  let i = 2;
+  let j = n;
+  let factors: ReadonlyArray<number> = [];
+
+  while (j !== 1) {
+    if (j % i === 0) {
+      factors = [...factors, i];
+      j = j / i;
+    } else {
+      i = i + 1;
+    }
+  }
+
+  return factors;
+};
