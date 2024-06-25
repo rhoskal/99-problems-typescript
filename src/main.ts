@@ -553,3 +553,17 @@ export const is_prime = (n: number): boolean => {
 
   return is_prime_helper(n)(possible_primes);
 };
+
+/*
+ * Problem 32
+ *
+ * Determine the greatest common divisor of two positive numbers.
+ * Note: uses Euclid's algo
+ */
+export const gcd = (a: number, b: number): number => {
+  if (a === 0) {
+    return b;
+  }
+
+  return gcd(Math.abs(b) % Math.abs(a), Math.abs(a));
+};

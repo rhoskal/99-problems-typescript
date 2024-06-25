@@ -29,6 +29,7 @@ import {
   permutation,
   combination,
   is_prime,
+  gcd,
 } from "../src/main";
 
 test("[01] Return the last element of a list", () => {
@@ -297,4 +298,11 @@ test("[31] Should return true if given number is prime", () => {
   expect(is_prime(7)).toBe(true);
   expect(is_prime(17)).toBe(true);
   expect(is_prime(47)).toBe(true);
+});
+
+test("[32] Should return the gcd of two numbers", () => {
+  expect(gcd(36, 63)).toBe(9);
+  expect(gcd(-3, -6)).toBe(3);
+  expect(gcd(-3, 6)).toBe(3);
+  expect(gcd(234, 42)).toBe(6);
 });
