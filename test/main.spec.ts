@@ -30,6 +30,7 @@ import {
   combination,
   is_prime,
   gcd,
+  coprime,
 } from "../src/main";
 
 test("[01] Return the last element of a list", () => {
@@ -305,4 +306,11 @@ test("[32] Should return the gcd of two numbers", () => {
   expect(gcd(-3, -6)).toBe(3);
   expect(gcd(-3, 6)).toBe(3);
   expect(gcd(234, 42)).toBe(6);
+});
+
+test("[33] Should return true if two numbers are coprime", () => {
+  expect(coprime(35, 64)).toBe(true);
+  expect(coprime(15, 8)).toBe(true);
+  expect(coprime(3, 20)).toBe(true);
+  expect(coprime(5, 12)).toBe(true);
 });

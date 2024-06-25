@@ -567,3 +567,13 @@ export const gcd = (a: number, b: number): number => {
 
   return gcd(Math.abs(b) % Math.abs(a), Math.abs(a));
 };
+
+/*
+ * Problem 33
+ *
+ * Determine whether two positive integer numbers are coprime.
+ * Note: two numbers are coprime if their greatest common divisor equals 1.
+ */
+export const coprime = (a: number, b: number): boolean => {
+  return gcd(a, b) === 1;
+};
