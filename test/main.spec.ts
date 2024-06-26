@@ -340,8 +340,23 @@ test.skip("[28]", () => {
   expect(group()).toStrictEqual([]);
 });
 
-test.skip("[29]", () => {
-  expect(lsort()).toStrictEqual([]);
+test("[29] Should return elements sorted by length", () => {
+  expect(lsort(["abc", "de", "fgh", "de", "ijkl", "mn", "o"])).toStrictEqual([
+    "o",
+    "de",
+    "de",
+    "mn",
+    "abc",
+    "fgh",
+    "ijkl",
+  ]);
+  expect(lsort(["asdf", "a", "bc", "foobar", "foo"])).toStrictEqual([
+    "a",
+    "bc",
+    "foo",
+    "asdf",
+    "foobar",
+  ]);
 });
 
 test.skip("[30]", () => {

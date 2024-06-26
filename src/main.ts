@@ -521,10 +521,20 @@ export const group = () => {};
 /*
  * Problem 29
  *
- * sort the elements of this list according to their length.
- * e.g. short lists first, longer lists later, or vice versa.
+ * Sort the elements of a list according to their length.
+ * e.g. short lists first, longer lists later.
  */
-export const lsort = () => {};
+export const lsort = (as: ReadonlyArray<string>): ReadonlyArray<string> => {
+  const lengths_ = as.reduce((acc, a) => [...acc, a.length], [] as Array<number>).sort();
+  const lengths = utils.uniques(lengths_);
+
+  let sorted: ReadonlyArray<string> = [];
+  for (let i = 0; i < as.length; i++) {
+    sorted = [...sorted, ...as.filter((a) => a.length === lengths[i])];
+  }
+
+  return sorted;
+};
 
 /*
  * Problem 30

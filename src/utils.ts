@@ -99,3 +99,7 @@ export const prepend = <A>(a: A) => {
     return [a, ...as];
   };
 };
+
+export const uniques = <A>(as: ReadonlyArray<A>): ReadonlyArray<A> => {
+  return [...new Set(as)];
+};
