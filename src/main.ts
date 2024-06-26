@@ -785,3 +785,18 @@ type Triple = [boolean, boolean, boolean];
  * Same as Problem 46 but using more natural expression syntax.
  */
 // export const table3 = (expr: BoolExpression): BoolTable => {};
+
+/*
+ *  Problem 45
+ *
+ * An n-bit Gray code is a sequence of n-bit strings constructed according to certain rules
+ */
+export const gray = (n: number): ReadonlyArray<string> => {
+  if (n === 0) {
+    return [""];
+  } else {
+    const bits = gray(n - 1);
+
+    return [...bits.map((b) => "0" + b), ...reverse(bits).map((b) => "1" + b)];
+  }
+};

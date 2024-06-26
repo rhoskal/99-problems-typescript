@@ -44,6 +44,7 @@ import {
   goldbach,
   goldbach_list,
   table,
+  gray,
 } from "../src/main";
 import * as Bool from "../src/bool";
 
@@ -418,3 +419,9 @@ test("[42] Should return a boolean table", () => {
 test.skip("[43]", () => {});
 
 test.skip("[44]", () => {});
+
+test("[45] Should return gray codes", () => {
+  expect(gray(1)).toStrictEqual(["0", "1"]);
+  expect(gray(2)).toStrictEqual(["00", "01", "11", "10"]);
+  expect(gray(3)).toStrictEqual(["000", "001", "011", "010", "110", "111", "101", "100"]);
+});
