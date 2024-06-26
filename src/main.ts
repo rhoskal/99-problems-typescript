@@ -1,12 +1,7 @@
 import { performance } from "perf_hooks"; // nodejs package
 
+import { List, Nullable } from "./types";
 import * as utils from "./utils";
-
-// ===================
-//       Types
-// ===================
-
-type Nullable<A> = A | null;
 
 // ===================
 //      Problems
@@ -15,9 +10,9 @@ type Nullable<A> = A | null;
 /*
  * Problem 1
  *
- * Write a function `last(xs: [A]) => A` that returns the last element of a list
+ * Return the last element of a list.
  */
-export const last = <A>(as: ReadonlyArray<A>): Nullable<A> => {
+export const last = <A>(as: List<A>): Nullable<A> => {
   if (as.length === 0) {
     return null;
   }
@@ -34,7 +29,7 @@ export const last = <A>(as: ReadonlyArray<A>): Nullable<A> => {
  *
  * Find the last two (last and penultimate) elements of a list.
  */
-export const last_two = <A>(as: ReadonlyArray<A>): Nullable<ReadonlyArray<A>> => {
+export const last_two = <A>(as: List<A>): Nullable<List<A>> => {
   if (as.length === 0 || as.length === 1) {
     return null;
   }
@@ -52,7 +47,7 @@ export const last_two = <A>(as: ReadonlyArray<A>): Nullable<ReadonlyArray<A>> =>
  * Find the nth element of a list. The first element in the list is number 1.
  */
 export const element_at = <A>(n: number) => {
-  return (as: ReadonlyArray<A>): Nullable<A> => {
+  return (as: List<A>): Nullable<A> => {
     if (n < 0 || n > as.length) {
       return null;
     }
@@ -66,7 +61,7 @@ export const element_at = <A>(n: number) => {
  *
  * Find the number of elements of a list.
  */
-export const length = <A>(as: ReadonlyArray<A>): number => {
+export const length = <A>(as: List<A>): number => {
   if (as.length === 0) {
     return 0;
   }
@@ -79,7 +74,7 @@ export const length = <A>(as: ReadonlyArray<A>): number => {
  *
  * Reverse the elements of a list.
  */
-export const reverse = <A>(as: ReadonlyArray<A>): ReadonlyArray<A> => {
+export const reverse = <A>(as: List<A>): List<A> => {
   if (as.length < 2) {
     return as;
   }
@@ -94,7 +89,7 @@ export const reverse = <A>(as: ReadonlyArray<A>): ReadonlyArray<A> => {
  *
  * Determine if a list is a palindrome.
  */
-export const is_palindrome = <A>(as: ReadonlyArray<A>): boolean => {
+export const is_palindrome = <A>(as: List<A>): boolean => {
   if (as.length < 2) {
     return true;
   }
@@ -109,7 +104,7 @@ export const is_palindrome = <A>(as: ReadonlyArray<A>): boolean => {
  *
  * Flatten a nested list structure.
  */
-export const flatten = (possiblyNested: ReadonlyArray<unknown>): ReadonlyArray<unknown> => {
+export const flatten = (possiblyNested: List<unknown>): List<unknown> => {
   if (Array.isArray(possiblyNested)) {
     if (possiblyNested.length === 0) {
       return possiblyNested;
@@ -129,7 +124,7 @@ export const flatten = (possiblyNested: ReadonlyArray<unknown>): ReadonlyArray<u
  *
  * Eliminate consecutive duplicates of list elements.
  */
-export const compress = <A>(as: ReadonlyArray<A>): ReadonlyArray<A> => {
+export const compress = <A>(as: List<A>): List<A> => {
   return as.reduce((acc, _val, idx) => {
     const a = as[idx];
     const b = as[idx + 1];
@@ -139,7 +134,7 @@ export const compress = <A>(as: ReadonlyArray<A>): ReadonlyArray<A> => {
     } else {
       return [...acc, a];
     }
-  }, [] as ReadonlyArray<A>);
+  }, [] as List<A>);
 };
 
 /*
@@ -147,7 +142,7 @@ export const compress = <A>(as: ReadonlyArray<A>): ReadonlyArray<A> => {
  *
  * Pack consecutive duplicates of list elements into sublists.
  */
-export const pack = (as: ReadonlyArray<string>): ReadonlyArray<string> => {
+export const pack = (as: List<string>): List<string> => {
   if (as.length === 0) {
     return [];
   }
@@ -168,7 +163,7 @@ export const pack = (as: ReadonlyArray<string>): ReadonlyArray<string> => {
  * Runs the "run-length" encoding data compression algorithm.
  * Consecutive duplicates of elements are encoded as lists (N E) where N is the number of duplicates of the element E..
  */
-export const encode = (as: ReadonlyArray<string>): ReadonlyArray<[number, string]> => {
+export const encode = (as: List<string>): List<[number, string]> => {
   const packed = pack(as);
 
   return packed.reduce(
@@ -177,7 +172,7 @@ export const encode = (as: ReadonlyArray<string>): ReadonlyArray<[number, string
 
       return [...acc, [val.length, head]];
     },
-    [] as ReadonlyArray<[number, string]>,
+    [] as List<[number, string]>,
   );
 };
 
@@ -187,7 +182,7 @@ export const encode = (as: ReadonlyArray<string>): ReadonlyArray<[number, string
  * Runs the "run-length" encoding data compression algorithm.
  * Consecutive duplicates of elements are encoded as lists (N E) where N is the number of duplicates of the element E..
  */
-export const encode_modified = (as: ReadonlyArray<string>): ReadonlyArray<Encoded<string>> => {
+export const encode_modified = (as: List<string>): List<Encoded<string>> => {
   const packed = pack(as);
 
   return packed.reduce(
@@ -199,7 +194,7 @@ export const encode_modified = (as: ReadonlyArray<string>): ReadonlyArray<Encode
 
       return [...acc, encoded];
     },
-    [] as ReadonlyArray<Encoded<string>>,
+    [] as List<Encoded<string>>,
   );
 };
 
@@ -232,7 +227,7 @@ const mkSingleEncode = (value: string): SingleEncode<string> => ({
  *
  * Decodes the "run-length" encoding data compression algorithm from problem 11.
  */
-export const decode_modified = (as: ReadonlyArray<Encoded<string>>): string => {
+export const decode_modified = (as: List<Encoded<string>>): string => {
   return as.reduce((acc, encoded) => {
     const count = encoded._kind === "multiple_encode" ? encoded.count : 1;
 
@@ -249,11 +244,11 @@ export const decode_modified = (as: ReadonlyArray<Encoded<string>>): string => {
  * problem 9, but only count them. As in problem P11, simplify the result list
  * by replacing the singleton lists (1 X) by X.
  */
-export const encode_direct = (as: ReadonlyArray<string>): ReadonlyArray<Encoded<string>> => {
+export const encode_direct = (as: List<string>): List<Encoded<string>> => {
   const encode_direct_helper = (
-    as: ReadonlyArray<string>,
-    es: ReadonlyArray<Encoded<string>>,
-  ): ReadonlyArray<Encoded<string>> => {
+    as: List<string>,
+    es: List<Encoded<string>>,
+  ): List<Encoded<string>> => {
     if (as.length === 0) {
       return es;
     }
@@ -278,10 +273,10 @@ export const encode_direct = (as: ReadonlyArray<string>): ReadonlyArray<Encoded<
  *
  * Duplicate each item in a given list.
  */
-export const duplicate = <A>(as: ReadonlyArray<A>): ReadonlyArray<A> => {
+export const duplicate = <A>(as: List<A>): List<A> => {
   return as.reduce((acc, val) => {
     return [...acc, val, val];
-  }, [] as ReadonlyArray<A>);
+  }, [] as List<A>);
 };
 
 /*
@@ -290,15 +285,15 @@ export const duplicate = <A>(as: ReadonlyArray<A>): ReadonlyArray<A> => {
  * Replicate each item in a given list n number of times.
  */
 export const replicate = (n: number) => {
-  return <A>(as: ReadonlyArray<A>): ReadonlyArray<A> => {
+  return <A>(as: List<A>): List<A> => {
     return as.reduce((acc, val) => {
       let repeated = [] as Array<A>;
       for (let i = 0; i < n; i++) {
         repeated.push(val);
       }
 
-      return [...acc, ...(repeated as ReadonlyArray<A>)];
-    }, [] as ReadonlyArray<A>);
+      return [...acc, ...(repeated as List<A>)];
+    }, [] as List<A>);
   };
 };
 
@@ -313,14 +308,14 @@ export const drop_every = (n: number) => {
     n = 0;
   }
 
-  return <A>(as: ReadonlyArray<A>): ReadonlyArray<A> => {
+  return <A>(as: List<A>): List<A> => {
     return as.reduce((acc, val, idx) => {
       if ((idx + 1) % n === 0) {
         return acc;
       } else {
         return [...acc, val];
       }
-    }, [] as ReadonlyArray<A>);
+    }, [] as List<A>);
   };
 };
 
@@ -335,7 +330,7 @@ export const split = (n: number) => {
     n = 0;
   }
 
-  return <A>(as: ReadonlyArray<A>): { left: ReadonlyArray<A>; right: ReadonlyArray<A> } => {
+  return <A>(as: List<A>): { left: List<A>; right: List<A> } => {
     return { left: utils.take_left(n)(as), right: utils.drop_left(n)(as) };
   };
 };
@@ -355,14 +350,14 @@ export const slice = (start: number, end: number) => {
     end = 0;
   }
 
-  return <A>(as: ReadonlyArray<A>): ReadonlyArray<A> => {
+  return <A>(as: List<A>): List<A> => {
     return as.reduce((acc, a, idx) => {
       if (idx + 1 >= start && idx + 1 <= end) {
         return [...acc, a];
       } else {
         return acc;
       }
-    }, [] as ReadonlyArray<A>);
+    }, [] as List<A>);
   };
 };
 
@@ -372,7 +367,7 @@ export const slice = (start: number, end: number) => {
  * Rotate a list n places to the left.
  */
 export const rotate = (n: number) => {
-  return <A>(as: ReadonlyArray<A>): ReadonlyArray<A> => {
+  return <A>(as: List<A>): List<A> => {
     const length = as.length;
 
     return as.reduce(
@@ -396,7 +391,7 @@ export const remove_at = (n: number) => {
     n = 0;
   }
 
-  return <A>(as: ReadonlyArray<A>): ReadonlyArray<A> => {
+  return <A>(as: List<A>): List<A> => {
     return as.filter((_, idx) => idx !== n);
   };
 };
@@ -411,7 +406,7 @@ export const remove_at = (n: number) => {
  */
 export const insert_at = <A>(val: A) => {
   return (position: number) => {
-    return (as: ReadonlyArray<A>): ReadonlyArray<A> => {
+    return (as: List<A>): List<A> => {
       const { left, right } = split(position)(as);
 
       return [...left, val, ...right];
@@ -424,7 +419,7 @@ export const insert_at = <A>(val: A) => {
  *
  * Create a list containing all integers within a given range.
  */
-export const range = (start: number, end: number): ReadonlyArray<number> => {
+export const range = (start: number, end: number): List<number> => {
   let acc: Array<number> = [];
 
   for (let i = 0; i <= end - start; i++) {
@@ -440,8 +435,8 @@ export const range = (start: number, end: number): ReadonlyArray<number> => {
  * Extract a given number of randomly selected elements from a list.
  */
 export const rnd_select = (n: number) => {
-  return <A>(as: ReadonlyArray<A>): ReadonlyArray<A> => {
-    let randoms = [] as ReadonlyArray<A>;
+  return <A>(as: List<A>): List<A> => {
+    let randoms = [] as List<A>;
 
     for (let i = 0; i < n; i++) {
       const random = Math.floor(Math.random() * n);
@@ -458,11 +453,11 @@ export const rnd_select = (n: number) => {
  *
  * Extract n different random numbers from the set 1..M.
  */
-export const lotto_select = (start: number, end: number): ReadonlyArray<number> => {
+export const lotto_select = (start: number, end: number): List<number> => {
   const sequential_nums = range(start, end);
   const num_of_choices = Math.floor(1 + Math.random() * (end - start));
 
-  let randoms: ReadonlyArray<number> = [];
+  let randoms: List<number> = [];
   for (let i = 0; i < num_of_choices; i++) {
     const random_idx = Math.floor(Math.random() * num_of_choices);
 
@@ -478,7 +473,7 @@ export const lotto_select = (start: number, end: number): ReadonlyArray<number> 
  * Generate a random permutation of the elements of a list.
  * Note: this solution does not guarantee uniqueness (distinct elements) from `as`
  */
-export const rnd_permutations = <A>(as: ReadonlyArray<A>): ReadonlyArray<A> => {
+export const rnd_permutations = <A>(as: List<A>): List<A> => {
   return rnd_select(as.length)(as);
 };
 
@@ -488,7 +483,7 @@ export const rnd_permutations = <A>(as: ReadonlyArray<A>): ReadonlyArray<A> => {
  * Generate combinations of k distinct objects chosen from the n elements of a list.
  */
 export const combinations = (n: number) => {
-  return <A>(as: ReadonlyArray<A>) => {
+  return <A>(as: List<A>) => {
     if (n <= 0) {
       return [];
     }
@@ -524,11 +519,11 @@ export const group = () => {};
  * Sort the elements of a list according to their length.
  * e.g. short lists first, longer lists later.
  */
-export const lsort = (as: ReadonlyArray<string>): ReadonlyArray<string> => {
+export const lsort = (as: List<string>): List<string> => {
   const lengths_ = as.reduce((acc, a) => [...acc, a.length], [] as Array<number>).sort();
   const lengths = utils.uniques(lengths_);
 
-  let sorted: ReadonlyArray<string> = [];
+  let sorted: List<string> = [];
   for (let i = 0; i < as.length; i++) {
     sorted = [...sorted, ...as.filter((a) => a.length === lengths[i])];
   }
@@ -553,7 +548,7 @@ export const lfsort = () => {};
  */
 export const is_prime = (n: number): boolean => {
   const is_prime_helper = (n: number) => {
-    return (as: ReadonlyArray<number>): boolean => {
+    return (as: List<number>): boolean => {
       const head = utils.hd(as);
       const tail = utils.tail(as);
 
@@ -576,8 +571,8 @@ export const is_prime = (n: number): boolean => {
  * Determine the prime factors of a given positive integer.
  * Returns a flat list containing the prime factors in ascending order.
  */
-export const prime_factors = (n: number): ReadonlyArray<number> => {
-  let factors: ReadonlyArray<number> = [];
+export const prime_factors = (n: number): List<number> => {
+  let factors: List<number> = [];
   let divisor = 2;
 
   while (n !== 1) {
@@ -597,13 +592,11 @@ export const prime_factors = (n: number): ReadonlyArray<number> => {
  *
  * Determine the prime factors and their multiplicities of a given positive integer.
  */
-export const prime_factors_mult = (n: number): ReadonlyArray<[number, number]> => {
+export const prime_factors_mult = (n: number): List<[number, number]> => {
   // could have used `encode` from problem 10 but it's not parametrically polymorphic
 
-  const helper = (primes: ReadonlyArray<number>) => {
-    return (
-      primes_with_multiplicities: ReadonlyArray<[number, number]>,
-    ): ReadonlyArray<[number, number]> => {
+  const helper = (primes: List<number>) => {
+    return (primes_with_multiplicities: List<[number, number]>): List<[number, number]> => {
       if (primes.length === 0) {
         return primes_with_multiplicities;
       } else {
@@ -626,7 +619,7 @@ export const prime_factors_mult = (n: number): ReadonlyArray<[number, number]> =
  *
  * Given a range of integers by its lower and upper limit, construct a list of all prime numbers in that range.
  */
-export const primes_from = (lower: number, upper: number): ReadonlyArray<number> => {
+export const primes_from = (lower: number, upper: number): List<number> => {
   const possible_primes = range(lower, upper);
 
   return possible_primes.filter(is_prime);
@@ -642,7 +635,7 @@ export const goldbach = (n: number): Nullable<GoldbachPair> => {
     return null;
   }
 
-  const helper = (ps: ReadonlyArray<number>) => {
+  const helper = (ps: List<number>) => {
     const head = utils.hd(ps);
     const tail = utils.tail(ps);
 
@@ -668,14 +661,11 @@ type GoldbachPair = [number, number];
  * Given a range of integers by its lower and upper limit, print a list of
  * all even numbers and their Goldbach composition.
  */
-export const goldbach_list = (
-  lower: number,
-  upper: number,
-): ReadonlyArray<[number, GoldbachPair]> => {
+export const goldbach_list = (lower: number, upper: number): List<[number, GoldbachPair]> => {
   const evens = range(lower, upper).filter((p) => p % 2 === 0);
 
   return evens.reduce(
-    (acc, even): ReadonlyArray<[number, GoldbachPair]> => {
+    (acc, even): List<[number, GoldbachPair]> => {
       const gb_pair = goldbach(even);
 
       if (gb_pair === null) {
@@ -684,7 +674,7 @@ export const goldbach_list = (
         return [...acc, [even, gb_pair]];
       }
     },
-    [] as ReadonlyArray<[number, GoldbachPair]>,
+    [] as List<[number, GoldbachPair]>,
   );
 };
 
@@ -735,7 +725,7 @@ export const totient_phi = (n: number): number => {
 export const phi = (n: number): number => {
   const primes_with_multiplicities = prime_factors_mult(n);
 
-  const helper = (ps: ReadonlyArray<[number, number]>): number => {
+  const helper = (ps: List<[number, number]>): number => {
     if (ps.length === 0) {
       return 1;
     } else {
@@ -815,7 +805,7 @@ type Triple = [boolean, boolean, boolean];
  *   xs: [ '00', '01' ]
  *   ys: [ '11', '10' ]
  */
-export const gray = (n: number): ReadonlyArray<string> => {
+export const gray = (n: number): List<string> => {
   if (n === 0) {
     return [""];
   } else {
@@ -830,6 +820,6 @@ export const gray = (n: number): ReadonlyArray<string> => {
  *
  * Constructs the Huffman code table for the frequency table `fs`
  */
-export const huffman = (_fs: ReadonlyArray<[string, number]>): ReadonlyArray<[string, string]> => {
+export const huffman = (_fs: List<[string, number]>): List<[string, string]> => {
   return [];
 };
