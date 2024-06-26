@@ -790,6 +790,16 @@ type Triple = [boolean, boolean, boolean];
  *  Problem 45
  *
  * An n-bit Gray code is a sequence of n-bit strings constructed according to certain rules
+ * Algo in-action:
+ *   n: 2
+ *   n: 1
+ *   n: 0
+ *   bits1: [ '' ]
+ *   xs: [ '0' ]
+ *   ys: [ '1' ]
+ *   bits2: [ '0', '1' ]
+ *   xs: [ '00', '01' ]
+ *   ys: [ '11', '10' ]
  */
 export const gray = (n: number): ReadonlyArray<string> => {
   if (n === 0) {
