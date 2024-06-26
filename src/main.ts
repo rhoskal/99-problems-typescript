@@ -534,11 +534,52 @@ export const lsort = (as: List<string>): List<string> => {
 /*
  * Problem 30
  *
- * sort the elements of this list according to their length frequency;
+ * Sort the elements of a list according to their length frequency.
  * e.g. in the default, where sorting is done ascendingly, lists with rare
  * lengths are placed first, others with a more frequent length come later.
  */
-export const lfsort = () => {};
+export const lfsort = (as: List<string>): List<string> => {
+  const lengths_ = as.reduce((acc, a) => [...acc, a.length], [] as Array<number>).sort();
+  const lengths = utils.uniques(lengths_);
+
+  let withCounts_: Array<[number, number]> = [];
+  for (let i = 0; i < lengths.length; i++) {
+    const counts = as.filter((a) => a.length === lengths[i]).length;
+
+    withCounts_ = [...withCounts_, [counts, lengths[i]]];
+  }
+
+  const byLeastFrequency = (a: [number, number], b: [number, number]): -1 | 0 | 1 => {
+    const [a1, b1] = a;
+    const [a2, b2] = b;
+
+    if (a1 < a2) {
+      return -1;
+    } else if (a2 < a1) {
+      return 1;
+    } else {
+      if (b2 < b1) {
+        return -1;
+      } else if (b1 < b2) {
+        return 1;
+      } else {
+        return 0;
+      }
+    }
+  };
+
+  const withCounts = withCounts_.sort(byLeastFrequency);
+
+  let sorted: List<string> = [];
+  for (let i = 0; i < withCounts.length; i++) {
+    // eslint-disable-next-line no-unused-vars
+    const [_count, len] = withCounts[i];
+
+    sorted = [...sorted, ...as.filter((a) => a.length === len)];
+  }
+
+  return sorted;
+};
 
 /*
  * Problem 31

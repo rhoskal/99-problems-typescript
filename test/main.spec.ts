@@ -359,8 +359,16 @@ test("[29] Should return elements sorted by length", () => {
   ]);
 });
 
-test.skip("[30]", () => {
-  expect(lfsort()).toStrictEqual([]);
+test("[30] Should return elements sorted by least frequency lengths first", () => {
+  expect(lfsort(["abc", "de", "fgh", "de", "ijkl", "mn", "o"])).toStrictEqual([
+    "ijkl",
+    "o",
+    "abc",
+    "fgh",
+    "de",
+    "de",
+    "mn",
+  ]);
 });
 
 test("[31] Should return true if given number is prime", () => {
