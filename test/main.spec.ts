@@ -26,8 +26,8 @@ import {
   range,
   rnd_select,
   lotto_select,
-  rnd_permutation,
-  combination,
+  rnd_permutations,
+  combinations,
   group3,
   group,
   lsort,
@@ -45,6 +45,7 @@ import {
   goldbach_list,
   table,
   gray,
+  huffman,
 } from "../src/main";
 import * as Bool from "../src/bool";
 
@@ -291,14 +292,44 @@ test("[24] Should get random lotto selection", () => {
 });
 
 test("[25] Should generate random permutation", () => {
-  const randoms = rnd_permutation(["a", "b", "c", "d", "e", "f"]);
+  const randoms = rnd_permutations(["a", "b", "c", "d", "e", "f"]);
 
   expect(randoms.length).toBe(6);
 });
 
 test.skip("[26] Should generate combinations", () => {
-  expect(combination(1)(["a", "b", "c", "d"])).toStrictEqual(["a", "b", "c", "d"]);
-  expect(combination(2)(["a", "b", "c", "d"])).toStrictEqual([]);
+  expect(combinations(0)(["a", "b", "c", "d"])).toStrictEqual([]);
+  expect(combinations(1)(["a", "b", "c", "d"])).toStrictEqual(["a", "b", "c", "d"]);
+  expect(combinations(2)([1, 2, 3, 4])).toStrictEqual([
+    [1, 2],
+    [1, 3],
+    [1, 4],
+    [2, 3],
+    [2, 4],
+    [3, 4],
+  ]);
+  expect(combinations(3)(["a", "b", "c", "d", "e", "f"])).toStrictEqual([
+    ["a", "b", "c"],
+    ["a", "b", "d"],
+    ["a", "b", "e"],
+    ["a", "b", "f"],
+    ["a", "c", "d"],
+    ["a", "c", "e"],
+    ["a", "c", "f"],
+    ["a", "d", "e"],
+    ["a", "d", "f"],
+    ["a", "e", "f"],
+    ["b", "c", "d"],
+    ["b", "c", "e"],
+    ["b", "c", "f"],
+    ["b", "d", "e"],
+    ["b", "d", "f"],
+    ["b", "e", "f"],
+    ["c", "d", "e"],
+    ["c", "d", "f"],
+    ["c", "e", "f"],
+    ["d", "e", "f"],
+  ]);
 });
 
 test.skip("[27]", () => {
@@ -424,4 +455,23 @@ test("[45] Should return gray codes", () => {
   expect(gray(1)).toStrictEqual(["0", "1"]);
   expect(gray(2)).toStrictEqual(["00", "01", "11", "10"]);
   expect(gray(3)).toStrictEqual(["000", "001", "011", "010", "110", "111", "101", "100"]);
+});
+
+test.skip("[45] Should return huffman code table", () => {
+  const frequencies: ReadonlyArray<[string, number]> = [
+    ["a", 45],
+    ["b", 13],
+    ["c", 12],
+    ["d", 16],
+    ["e", 9],
+    ["f", 5],
+  ];
+  expect(huffman(frequencies)).toStrictEqual([
+    ["a", "0"],
+    ["c", "100"],
+    ["b", "101"],
+    ["f", "1100"],
+    ["e", "1101"],
+    ["d", "111"],
+  ]);
 });

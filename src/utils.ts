@@ -93,3 +93,9 @@ export const take_while = <A>(predicate: Predicate<A>) => {
     return matched;
   };
 };
+
+export const prepend = <A>(a: A) => {
+  return (as: ReadonlyArray<A>): ReadonlyArray<A> => {
+    return [a, ...as];
+  };
+};

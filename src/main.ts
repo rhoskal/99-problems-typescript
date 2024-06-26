@@ -99,12 +99,9 @@ export const is_palindrome = <A>(as: ReadonlyArray<A>): boolean => {
     return true;
   }
 
-  const first_el = utils.hd(as);
-  const last_el = utils.last(as);
-
   const slice = utils.drop_right(1)(utils.drop_left(1)(as));
 
-  return (first_el === last_el) === is_palindrome(slice);
+  return (utils.hd(as) === utils.last(as)) === is_palindrome(slice);
 };
 
 /*
@@ -481,7 +478,7 @@ export const lotto_select = (start: number, end: number): ReadonlyArray<number> 
  * Generate a random permutation of the elements of a list.
  * Note: this solution does not guarantee uniqueness (distinct elements) from `as`
  */
-export const rnd_permutation = <A>(as: ReadonlyArray<A>): ReadonlyArray<A> => {
+export const rnd_permutations = <A>(as: ReadonlyArray<A>): ReadonlyArray<A> => {
   return rnd_select(as.length)(as);
 };
 
@@ -490,13 +487,20 @@ export const rnd_permutation = <A>(as: ReadonlyArray<A>): ReadonlyArray<A> => {
  *
  * Generate combinations of k distinct objects chosen from the n elements of a list.
  */
-export const combination = (n: number) => {
+export const combinations = (n: number) => {
   return <A>(as: ReadonlyArray<A>) => {
-    if (n < 0) {
-      return as;
+    if (n <= 0) {
+      return [];
     }
 
-    return as;
+    let xs = [];
+    for (let i = 0; i < as.length; i++) {
+      for (let j = i + 1; j < as.length; j++) {
+        xs.push([as[i], as[j]]);
+      }
+    }
+
+    return xs;
   };
 };
 
@@ -809,4 +813,13 @@ export const gray = (n: number): ReadonlyArray<string> => {
 
     return [...bits.map((b) => "0" + b), ...reverse(bits).map((b) => "1" + b)];
   }
+};
+
+/*
+ * Problem 46
+ *
+ * Constructs the Huffman code table for the frequency table `fs`
+ */
+export const huffman = (_fs: ReadonlyArray<[string, number]>): ReadonlyArray<[string, string]> => {
+  return [];
 };
