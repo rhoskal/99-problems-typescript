@@ -500,20 +500,20 @@ test.skip("[46] Should return huffman code table", () => {
   ]);
 });
 
-test.only("[47] Should return true if given a valid binary tree", () => {
-  expect(is_tree({ _kind: "empty", value: 1 })).toBe(true);
+test("[47] Should return true if given a valid binary tree", () => {
+  expect(is_tree({ _kind: "empty", data: 1 })).toBe(true);
   expect(
     is_tree({
       _kind: "node",
-      left: { _kind: "empty", value: 1 },
-      right: { _kind: "empty", value: 2 },
+      left: { _kind: "empty", data: 1 },
+      right: { _kind: "empty", data: 2 },
     }),
   ).toBe(true);
   expect(
     is_tree({
       _kind: "node",
       left: null, // invalid
-      right: { _kind: "empty", value: 42 },
+      right: { _kind: "empty", data: 42 },
     }),
   ).toBe(false);
   expect(
@@ -521,12 +521,12 @@ test.only("[47] Should return true if given a valid binary tree", () => {
       _kind: "node",
       left: {
         _kind: "node",
-        left: { _kind: "empty", value: 2 },
-        right: { _kind: "empty", value: 3 },
-        value: 0,
+        left: { _kind: "empty", data: 2 },
+        right: { _kind: "empty", data: 3 },
+        data: 0,
       },
-      right: { _kind: "empty", value: undefined }, // invalid
-      value: 1,
+      right: { _kind: "empty", data: undefined }, // invalid
+      data: 1,
     }),
   ).toBe(false);
 });

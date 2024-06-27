@@ -867,14 +867,14 @@ export const huffman = (_fs: List<[string, number]>): List<[string, string]> => 
 
 interface Node<A> {
   _kind: "node";
-  value: A;
+  data: A;
   left: Node<A>;
   right: Node<A>;
 }
 
 interface Empty<A> {
   _kind: "empty";
-  value: A;
+  data: A;
 }
 
 // eslint-disable-next-line no-unused-vars
@@ -885,8 +885,8 @@ const eq_empty_node = (a: unknown): boolean => {
     if (a !== null) {
       if ("_kind" in a) {
         if (a._kind === "empty") {
-          if ("value" in a) {
-            return a.value !== undefined;
+          if ("data" in a) {
+            return a.data !== undefined;
           }
         }
       }
@@ -905,12 +905,12 @@ const eq_node = (a: unknown): boolean => {
             if (eq_empty_node(a.left) && eq_empty_node(a.right)) {
               return true;
             } else if (eq_empty_node(a.left) && !eq_empty_node(a.right)) {
-              if ("value" in a) {
-                return a.value !== undefined;
+              if ("data" in a) {
+                return a.data !== undefined;
               }
             } else if (eq_empty_node(a.right) && !eq_empty_node(a.left)) {
-              if ("value" in a) {
-                return a.value !== undefined;
+              if ("data" in a) {
+                return a.data !== undefined;
               }
             }
           }
