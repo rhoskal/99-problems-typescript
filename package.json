@@ -11,11 +11,9 @@
   "type": "module",
   "main": "src/main.ts",
   "scripts": {
-    "build": "building...",
-    "format": "prettier --write 'src/**/*.ts'",
-    "lint": "eslint 'src/**/*.ts'",
-    "lint:fix": "eslint --fix 'src/**/*.ts'",
-    "run": "running...",
+    "format": "prettier --write '{src,test}/**/*.ts'",
+    "lint": "eslint '{src,test}/**/*.ts'",
+    "lint:fix": "eslint --fix '{src,test}/**/*.ts'",
     "test": "vitest --dir test --run",
     "test:watch": "vitest --dir test",
     "prepare": "is-ci || husky install"
