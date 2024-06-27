@@ -530,3 +530,16 @@ test("[47] Should return true if given a valid binary tree", () => {
     }),
   ).toBe(false);
 });
+
+test.only("[48] Should return true if given a valid binary tree", () => {
+  // print_tree(
+  //   mkNode(4, mkNode(2, mkEmptyNode(1), mkEmptyNode(3)), mkNode(6, mkEmptyNode(5), mkEmptyNode(7))),
+  // );
+  // expect(complete_binary_tree(2)).toStrictEqual({ _kind: "empty", data: "x" });
+});
+
+test.skip("[49] Should return a symmetric binary tree", () => {});
+
+test.skip("[50] Should return true if given is valid symmetic binary tree", () => {});
+
+test.skip("[51]", () => {});

@@ -865,28 +865,43 @@ export const huffman = (_fs: List<[string, number]>): List<[string, string]> => 
   return [];
 };
 
-interface Node<A> {
-  _kind: "node";
-  data: A;
-  left: Node<A>;
-  right: Node<A>;
-}
-
 interface Empty<A> {
   _kind: "empty";
   data: A;
 }
 
-// eslint-disable-next-line no-unused-vars
+interface Node<A> {
+  _kind: "node";
+  data: A;
+  left: Tree<A>;
+  right: Tree<A>;
+}
+
 type Tree<A> = Empty<A> | Node<A>;
 
-const eq_empty_node = (a: unknown): boolean => {
-  if (typeof a === "object") {
-    if (a !== null) {
-      if ("_kind" in a) {
-        if (a._kind === "empty") {
-          if ("data" in a) {
-            return a.data !== undefined;
+export const mkEmptyNode = <A>(a: A): Empty<A> => {
+  return {
+    _kind: "empty",
+    data: a,
+  };
+};
+
+export const mkNode = <A>(a: A, left: Tree<A>, right: Tree<A>): Node<A> => {
+  return {
+    _kind: "node",
+    data: a,
+    left,
+    right,
+  };
+};
+
+const eq_empty_node = <A>(x: unknown): x is Empty<A> => {
+  if (typeof x === "object") {
+    if (x !== null) {
+      if ("_kind" in x) {
+        if (x._kind === "empty") {
+          if ("data" in x) {
+            return x.data !== undefined;
           }
         }
       }
@@ -896,21 +911,21 @@ const eq_empty_node = (a: unknown): boolean => {
   return false;
 };
 
-const eq_node = (a: unknown): boolean => {
-  if (typeof a === "object") {
-    if (a !== null) {
-      if ("_kind" in a) {
-        if (a._kind === "node") {
-          if ("left" in a && "right" in a) {
-            if (eq_empty_node(a.left) && eq_empty_node(a.right)) {
+const eq_node = <A>(x: unknown): x is Node<A> => {
+  if (typeof x === "object") {
+    if (x !== null) {
+      if ("_kind" in x) {
+        if (x._kind === "node") {
+          if ("left" in x && "right" in x) {
+            if (eq_empty_node(x.left) && eq_empty_node(x.right)) {
               return true;
-            } else if (eq_empty_node(a.left) && !eq_empty_node(a.right)) {
-              if ("data" in a) {
-                return a.data !== undefined;
+            } else if (eq_empty_node(x.left) && !eq_empty_node(x.right)) {
+              if ("data" in x) {
+                return x.data !== undefined;
               }
-            } else if (eq_empty_node(a.right) && !eq_empty_node(a.left)) {
-              if ("data" in a) {
-                return a.data !== undefined;
+            } else if (eq_empty_node(x.right) && !eq_empty_node(x.left)) {
+              if ("data" in x) {
+                return x.data !== undefined;
               }
             }
           }
@@ -927,14 +942,94 @@ const eq_node = (a: unknown): boolean => {
  *
  * Check whether a given term represents a binary tree.
  */
-export const is_tree = (t: unknown): boolean => {
-  if (eq_empty_node(t)) {
+export const is_tree = <A>(x: unknown): x is Tree<A> => {
+  if (eq_empty_node(x)) {
     return true;
   }
 
-  if (eq_node(t)) {
+  if (eq_node(x)) {
     return true;
   }
 
   return false;
 };
+
+/*
+ * Problem 48
+ *
+ * Construct completely balanced binary tree for a given number of nodes.
+ * In a completely balanced binary tree, the following property holds for every node:
+ * The number of nodes in its left subtree and the number of nodes in its right subtree
+ * are almost equal, which means their difference is not greater than one.
+ * Note: use "x" as the data & generate all solutions via backtracking.
+ */
+// export const create_complete_tree = (n: number): List<Tree<"x">> => {};
+
+/*
+ * Helps with debugging.
+ * Note: uses depth-first search
+ * Output: 4 2 1 3 6 5 7
+ */
+export const print_tree = <A>(t: Tree<A>): void => {
+  const helper = <A>(t: Tree<A>): List<A> => {
+    if (eq_empty_node(t)) {
+      return [t.data];
+    } else {
+      return [t.data, ...helper(t.left), ...helper(t.right)];
+    }
+  };
+
+  console.log(helper(t).join(" "));
+};
+
+// Backtracking is a problem-solving algorithmic technique that involves
+// finding a solution incrementally by trying different options and undoing
+// them if they lead to a dead end.
+// A backtracking algorithm works by recursively exploring all possible
+// solutions to a problem. It starts by choosing an initial solution, and then
+// it explores all possible extensions of that solution. If an extension leads
+// to a solution, the algorithm returns that solution. If an extension does not
+// lead to a solution, the algorithm backtracks to the previous solution and
+// tries a different extension.
+
+// ======
+// Example: Finding the shortest path through a maze
+// Input: A maze represented as a 2D array, where 0 represents an open space and 1 represents a wall.
+
+// Algorithm:
+// Start at the starting point.
+// For each of the four possible directions (up, down, left, right), try moving in that direction.
+// If moving in that direction leads to the ending point, return the path taken.
+// If moving in that direction does not lead to the ending point, backtrack to the previous position and try a different direction.
+// Repeat steps 2-4 until the ending point is reached or all possible paths have been explored.
+
+// https://en.wikipedia.org/wiki/Binary_tree
+// https://www.freecodecamp.org/news/binary-tree-algorithms-for-javascript-beginners/
+// https://stackoverflow.com/questions/39054253/display-binary-search-tree-traversal-on-javascript-recursive-way#39054650
+
+/*
+ * Problem 49
+ *
+ * Check whether a given binary tree is symmetric.
+ */
+// export const create_symmetric_tree = (as: List<number>): Tree<number> => {};
+
+/*
+ * Problem 50
+ *
+ * Check whether a given binary tree is symmetric.
+ */
+export const is_symmetric_tree = <A>(x: unknown): x is Node<A> => {
+  return false;
+};
+
+// const insert_depth_first = <A>(a: A): Tree<A> => {};
+
+// const insert_breadth_first = <A>(a: A): Tree<A> => {};
+
+/*
+ * Problem 51
+ *
+ * Check whether a given binary tree is symmetric.
+ */
+// export const create_complete_balanced_tree = <A>(): Tree<A> => {};
