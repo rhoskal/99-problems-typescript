@@ -864,3 +864,77 @@ export const gray = (n: number): List<string> => {
 export const huffman = (_fs: List<[string, number]>): List<[string, string]> => {
   return [];
 };
+
+interface Node<A> {
+  _kind: "node";
+  value: A;
+  left: Node<A>;
+  right: Node<A>;
+}
+
+interface Empty<A> {
+  _kind: "empty";
+  value: A;
+}
+
+// eslint-disable-next-line no-unused-vars
+type Tree<A> = Empty<A> | Node<A>;
+
+const eq_empty_node = (a: unknown): boolean => {
+  if (typeof a === "object") {
+    if (a !== null) {
+      if ("_kind" in a) {
+        if (a._kind === "empty") {
+          if ("value" in a) {
+            return a.value !== undefined;
+          }
+        }
+      }
+    }
+  }
+
+  return false;
+};
+
+const eq_node = (a: unknown): boolean => {
+  if (typeof a === "object") {
+    if (a !== null) {
+      if ("_kind" in a) {
+        if (a._kind === "node") {
+          if ("left" in a && "right" in a) {
+            if (eq_empty_node(a.left) && eq_empty_node(a.right)) {
+              return true;
+            } else if (eq_empty_node(a.left) && !eq_empty_node(a.right)) {
+              if ("value" in a) {
+                return a.value !== undefined;
+              }
+            } else if (eq_empty_node(a.right) && !eq_empty_node(a.left)) {
+              if ("value" in a) {
+                return a.value !== undefined;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  return false;
+};
+
+/*
+ * Problem 47
+ *
+ * Check whether a given term represents a binary tree.
+ */
+export const is_tree = (t: unknown): boolean => {
+  if (eq_empty_node(t)) {
+    return true;
+  }
+
+  if (eq_node(t)) {
+    return true;
+  }
+
+  return false;
+};

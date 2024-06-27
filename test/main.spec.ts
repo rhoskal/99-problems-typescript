@@ -46,6 +46,7 @@ import {
   table,
   gray,
   huffman,
+  is_tree,
 } from "../src/main";
 import * as Bool from "../src/bool";
 
@@ -480,7 +481,7 @@ test("[45] Should return gray codes", () => {
   expect(gray(3)).toStrictEqual(["000", "001", "011", "010", "110", "111", "101", "100"]);
 });
 
-test.skip("[45] Should return huffman code table", () => {
+test.skip("[46] Should return huffman code table", () => {
   const frequencies: ReadonlyArray<[string, number]> = [
     ["a", 45],
     ["b", 13],
@@ -497,4 +498,35 @@ test.skip("[45] Should return huffman code table", () => {
     ["e", "1101"],
     ["d", "111"],
   ]);
+});
+
+test.only("[47] Should return true if given a valid binary tree", () => {
+  expect(is_tree({ _kind: "empty", value: 1 })).toBe(true);
+  expect(
+    is_tree({
+      _kind: "node",
+      left: { _kind: "empty", value: 1 },
+      right: { _kind: "empty", value: 2 },
+    }),
+  ).toBe(true);
+  expect(
+    is_tree({
+      _kind: "node",
+      left: null, // invalid
+      right: { _kind: "empty", value: 42 },
+    }),
+  ).toBe(false);
+  expect(
+    is_tree({
+      _kind: "node",
+      left: {
+        _kind: "node",
+        left: { _kind: "empty", value: 2 },
+        right: { _kind: "empty", value: 3 },
+        value: 0,
+      },
+      right: { _kind: "empty", value: undefined }, // invalid
+      value: 1,
+    }),
+  ).toBe(false);
 });
