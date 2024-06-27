@@ -1,9 +1,13 @@
 import eslintTsParser from "@typescript-eslint/parser";
 import pluginPrettier from "eslint-plugin-prettier";
+import globals from "globals";
 
 export default [
   {
     languageOptions: {
+      globals: {
+        ...globals.node,
+      },
       parser: eslintTsParser,
     },
     plugins: {
