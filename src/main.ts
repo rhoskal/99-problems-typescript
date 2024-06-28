@@ -1,6 +1,6 @@
 import { performance } from "perf_hooks"; // nodejs package
 
-import { List, Nullable } from "./types";
+import { List, LoL, Nullable } from "./types";
 import * as utils from "./utils";
 
 // ===================
@@ -483,19 +483,35 @@ export const rnd_permutations = <A>(as: List<A>): List<A> => {
  * Generate combinations of k distinct objects chosen from the n elements of a list.
  */
 export const combinations = (n: number) => {
-  return <A>(as: List<A>) => {
-    if (n <= 0) {
-      return [];
+  const combinations_helper = <A>(n: number, as: List<A>, acc: List<A>): LoL<A> => {
+    if (n === 0) {
+      return [acc];
     }
 
-    let xs = [];
-    for (let i = 0; i < as.length; i++) {
-      for (let j = i + 1; j < as.length; j++) {
-        xs.push([as[i], as[j]]);
-      }
+    let result: LoL<A> = [];
+
+    // Recursive Case 1: Include current element
+    if (as.length > 0) {
+      const head = utils.hd(as);
+      const tail = utils.tail(as);
+
+      let included_combos = combinations_helper(n - 1, tail, acc.concat(head));
+      result = result.concat(included_combos);
     }
 
-    return xs;
+    // Recursive Case 2: Skip current element
+    if (as.length > 0) {
+      const tail = utils.tail(as);
+
+      let skipped_combos = combinations_helper(n, tail, acc);
+      result = result.concat(skipped_combos);
+    }
+
+    return result;
+  };
+
+  return <A>(as: List<A>): LoL<A> => {
+    return combinations_helper(n, as, []);
   };
 };
 

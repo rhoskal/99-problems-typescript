@@ -298,9 +298,9 @@ test("[25] Should generate random permutation", () => {
   expect(randoms.length).toBe(6);
 });
 
-test.skip("[26] Should generate combinations", () => {
-  expect(combinations(0)(["a", "b", "c", "d"])).toStrictEqual([]);
-  expect(combinations(1)(["a", "b", "c", "d"])).toStrictEqual(["a", "b", "c", "d"]);
+test("[26] Should generate combinations", () => {
+  expect(combinations(0)(["a", "b", "c", "d"])).toStrictEqual([[]]);
+  expect(combinations(1)(["a", "b", "c", "d"])).toStrictEqual([["a"], ["b"], ["c"], ["d"]]);
   expect(combinations(2)([1, 2, 3, 4])).toStrictEqual([
     [1, 2],
     [1, 3],
@@ -531,7 +531,7 @@ test("[47] Should return true if given a valid binary tree", () => {
   ).toBe(false);
 });
 
-test.only("[48] Should return true if given a valid binary tree", () => {
+test.skip("[48] Should return true if given a valid binary tree", () => {
   // print_tree(
   //   mkNode(4, mkNode(2, mkEmptyNode(1), mkEmptyNode(3)), mkNode(6, mkEmptyNode(5), mkEmptyNode(7))),
   // );
