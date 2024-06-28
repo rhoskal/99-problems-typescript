@@ -30,15 +30,13 @@ export const last = <A>(as: List<A>): Nullable<A> => {
  * Find the last two (last and penultimate) elements of a list.
  */
 export const last_two = <A>(as: List<A>): Nullable<List<A>> => {
-  if (as.length === 0 || as.length === 1) {
+  if (as.length < 2) {
     return null;
-  }
-
-  if (as.length === 2) {
+  } else if (as.length === 2) {
     return as;
+  } else {
+    return last_two(utils.tail(as));
   }
-
-  return last_two(utils.tail(as));
 };
 
 /*
@@ -48,11 +46,13 @@ export const last_two = <A>(as: List<A>): Nullable<List<A>> => {
  */
 export const element_at = <A>(n: number) => {
   return (as: List<A>): Nullable<A> => {
-    if (n < 0 || n > as.length) {
+    if (n <= 0) {
       return null;
+    } else if (n > as.length) {
+      return null;
+    } else {
+      return as[n - 1];
     }
-
-    return as[n - 1];
   };
 };
 
@@ -79,9 +79,9 @@ export const reverse = <A>(as: List<A>): List<A> => {
     return as;
   }
 
-  const last = as[as.length - 1];
+  const last = utils.last(as);
 
-  return [last, ...reverse(as.slice(0, -1))];
+  return [last].concat(...reverse(as.slice(0, -1)));
 };
 
 /*
@@ -94,7 +94,7 @@ export const is_palindrome = <A>(as: List<A>): boolean => {
     return true;
   }
 
-  const slice = utils.drop_right(1)(utils.drop_left(1)(as));
+  const slice = utils.drop_right(1)(utils.tail(as));
 
   return (utils.hd(as) === utils.last(as)) === is_palindrome(slice);
 };
@@ -113,9 +113,9 @@ export const flatten = (possiblyNested: List<unknown>): List<unknown> => {
     const head = utils.hd(possiblyNested);
     const tail = utils.tail(possiblyNested);
 
-    return [...flatten(head), ...flatten(tail)];
+    return ([] as List<unknown>).concat(...flatten(head), ...flatten(tail));
   } else {
-    return [possiblyNested];
+    return ([] as List<unknown>).concat(possiblyNested);
   }
 };
 
@@ -125,14 +125,13 @@ export const flatten = (possiblyNested: List<unknown>): List<unknown> => {
  * Eliminate consecutive duplicates of list elements.
  */
 export const compress = <A>(as: List<A>): List<A> => {
-  return as.reduce((acc, _val, idx) => {
-    const a = as[idx];
+  return as.reduce((acc, a, idx) => {
     const b = as[idx + 1];
 
     if (a === b) {
       return acc;
     } else {
-      return [...acc, a];
+      return acc.concat(a);
     }
   }, [] as List<A>);
 };
@@ -154,7 +153,7 @@ export const pack = (as: List<string>): List<string> => {
 
   const chopped = utils.drop_while((x: string) => x === head)(utils.tail(as));
 
-  return [...matches_joined, ...pack(chopped)];
+  return matches_joined.concat(pack(chopped));
 };
 
 /*
@@ -164,9 +163,7 @@ export const pack = (as: List<string>): List<string> => {
  * Consecutive duplicates of elements are encoded as lists (N E) where N is the number of duplicates of the element E..
  */
 export const encode = (as: List<string>): List<[number, string]> => {
-  const packed = pack(as);
-
-  return packed.reduce(
+  return pack(as).reduce(
     (acc, val) => {
       const head = utils.hd(val.split(""));
 
@@ -183,16 +180,14 @@ export const encode = (as: List<string>): List<[number, string]> => {
  * Consecutive duplicates of elements are encoded as lists (N E) where N is the number of duplicates of the element E..
  */
 export const encode_modified = (as: List<string>): List<Encoded<string>> => {
-  const packed = pack(as);
-
-  return packed.reduce(
+  return pack(as).reduce(
     (acc, val) => {
       const head = utils.hd(val.split(""));
       const len = val.length;
 
       const encoded = len === 1 ? mkSingleEncode(head) : mkMultipleEncode(head, len);
 
-      return [...acc, encoded];
+      return acc.concat(encoded);
     },
     [] as List<Encoded<string>>,
   );
@@ -262,7 +257,7 @@ export const encode_direct = (as: List<string>): List<Encoded<string>> => {
 
     const chopped = utils.drop_while((x: string) => x === head)(utils.tail(as));
 
-    return encode_direct_helper(chopped, [...es, encoded]);
+    return encode_direct_helper(chopped, es.concat(encoded));
   };
 
   return encode_direct_helper(as, []);
@@ -274,8 +269,8 @@ export const encode_direct = (as: List<string>): List<Encoded<string>> => {
  * Duplicate each item in a given list.
  */
 export const duplicate = <A>(as: List<A>): List<A> => {
-  return as.reduce((acc, val) => {
-    return [...acc, val, val];
+  return as.reduce((acc, a) => {
+    return acc.concat(a, a);
   }, [] as List<A>);
 };
 
@@ -286,13 +281,10 @@ export const duplicate = <A>(as: List<A>): List<A> => {
  */
 export const replicate = (n: number) => {
   return <A>(as: List<A>): List<A> => {
-    return as.reduce((acc, val) => {
-      let repeated = [] as Array<A>;
-      for (let i = 0; i < n; i++) {
-        repeated.push(val);
-      }
+    return as.reduce((acc, a) => {
+      const repeated = Array.from({ length: n }, () => a);
 
-      return [...acc, ...(repeated as List<A>)];
+      return acc.concat(repeated);
     }, [] as List<A>);
   };
 };
@@ -309,11 +301,11 @@ export const drop_every = (n: number) => {
   }
 
   return <A>(as: List<A>): List<A> => {
-    return as.reduce((acc, val, idx) => {
+    return as.reduce((acc, a, idx) => {
       if ((idx + 1) % n === 0) {
         return acc;
       } else {
-        return [...acc, val];
+        return acc.concat(a);
       }
     }, [] as List<A>);
   };
@@ -353,7 +345,7 @@ export const slice = (start: number, end: number) => {
   return <A>(as: List<A>): List<A> => {
     return as.reduce((acc, a, idx) => {
       if (idx + 1 >= start && idx + 1 <= end) {
-        return [...acc, a];
+        return acc.concat(a);
       } else {
         return acc;
       }
@@ -409,7 +401,7 @@ export const insert_at = <A>(val: A) => {
     return (as: List<A>): List<A> => {
       const { left, right } = split(position)(as);
 
-      return [...left, val, ...right];
+      return ([] as List<A>).concat(...left, val, ...right);
     };
   };
 };
@@ -441,7 +433,7 @@ export const rnd_select = (n: number) => {
     for (let i = 0; i < n; i++) {
       const random = Math.floor(Math.random() * n);
 
-      randoms = [...randoms, as[random]];
+      randoms = randoms.concat(as[random]);
     }
 
     return randoms;
@@ -461,7 +453,7 @@ export const lotto_select = (start: number, end: number): List<number> => {
   for (let i = 0; i < num_of_choices; i++) {
     const random_idx = Math.floor(Math.random() * num_of_choices);
 
-    randoms = [...randoms, sequential_nums[random_idx]];
+    randoms = randoms.concat(sequential_nums[random_idx]);
   }
 
   return randoms;
@@ -520,7 +512,9 @@ export const combinations = (n: number) => {
  *
  * Group the elements of a set into 3 disjoint subsets.
  */
-export const group3 = () => {};
+export const group3 = <A>(_groups: List<number>, as: List<A>): LoL<A> => {
+  return [as];
+};
 
 /*
  * Problem 28
@@ -536,12 +530,12 @@ export const group = () => {};
  * e.g. short lists first, longer lists later.
  */
 export const lsort = (as: List<string>): List<string> => {
-  const lengths_ = as.reduce((acc, a) => [...acc, a.length], [] as Array<number>).sort();
+  const lengths_ = as.reduce((acc, a) => acc.concat(a.length), [] as Array<number>).sort();
   const lengths = utils.uniques(lengths_);
 
   let sorted: List<string> = [];
   for (let i = 0; i < as.length; i++) {
-    sorted = [...sorted, ...as.filter((a) => a.length === lengths[i])];
+    sorted = sorted.concat(...as.filter((a) => a.length === lengths[i]));
   }
 
   return sorted;
@@ -555,7 +549,7 @@ export const lsort = (as: List<string>): List<string> => {
  * lengths are placed first, others with a more frequent length come later.
  */
 export const lfsort = (as: List<string>): List<string> => {
-  const lengths_ = as.reduce((acc, a) => [...acc, a.length], [] as Array<number>).sort();
+  const lengths_ = as.reduce((acc, a) => acc.concat(acc, a.length), [] as Array<number>).sort();
   const lengths = utils.uniques(lengths_);
 
   let withCounts_: Array<[number, number]> = [];
@@ -591,7 +585,7 @@ export const lfsort = (as: List<string>): List<string> => {
     // eslint-disable-next-line no-unused-vars
     const [_count, len] = withCounts[i];
 
-    sorted = [...sorted, ...as.filter((a) => a.length === len)];
+    sorted = sorted.concat(...as.filter((a) => a.length === len));
   }
 
   return sorted;
@@ -630,11 +624,11 @@ export const is_prime = (n: number): boolean => {
  */
 export const prime_factors = (n: number): List<number> => {
   let factors: List<number> = [];
-  let divisor = 2;
+  let divisor: number = 2;
 
   while (n !== 1) {
     if (n % divisor === 0) {
-      factors = [...factors, divisor];
+      factors = factors.concat(divisor);
       n = n / divisor;
     } else {
       divisor = divisor + 1;
@@ -696,7 +690,7 @@ export const goldbach = (n: number): Nullable<GoldbachPair> => {
     const head = utils.hd(ps);
     const tail = utils.tail(ps);
 
-    const summation_match = primes.filter((p) => p + head === n)[0];
+    const summation_match = utils.hd(primes.filter((p) => p + head === n));
 
     if (summation_match === undefined) {
       return helper(tail);
@@ -868,7 +862,10 @@ export const gray = (n: number): List<string> => {
   } else {
     const bits = gray(n - 1);
 
-    return [...bits.map((b) => "0" + b), ...reverse(bits).map((b) => "1" + b)];
+    return ([] as List<string>).concat(
+      ...bits.map((b) => "0" + b),
+      ...reverse(bits).map((b) => "1" + b),
+    );
   }
 };
 

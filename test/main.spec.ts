@@ -64,9 +64,10 @@ test("[02] Should return the last two elements of a list", () => {
 });
 
 test("[03] Should return nth element of a list", () => {
+  expect(element_at(-2)([1, 2])).toEqual(null);
+  expect(element_at(0)([1, 2])).toEqual(null);
   expect(element_at(2)([])).toEqual(null);
   expect(element_at(2)([1, 2])).toEqual(2);
-  expect(element_at(-2)([1, 2])).toEqual(null);
   expect(element_at(2)(["a", "b", "c", "d", "e"])).toEqual("b");
 });
 
@@ -333,8 +334,13 @@ test("[26] Should generate combinations", () => {
   ]);
 });
 
-test.skip("[27]", () => {
-  expect(group3()).toStrictEqual([]);
+test.skip("[27] ASDF", () => {
+  // expect(
+  //   group3([2, 3, 4], ["aldo", "beat", "carla", "david", "evi", "flip", "gary", "hugo", "ida"]),
+  // ).toHaveLength(1120);
+  expect(
+    group3([2, 2, 5], ["aldo", "beat", "carla", "david", "evi", "flip", "gary", "hugo", "ida"]),
+  ).toHaveLength(756);
 });
 
 test.skip("[28]", () => {
