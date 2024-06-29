@@ -512,8 +512,8 @@ export const combinations = (n: number) => {
  *
  * Group the elements of a set into 3 disjoint subsets.
  */
-export const group3 = <A>(_groups: List<number>, as: List<A>): LoL<A> => {
-  return [as];
+export const group3 = <A>(_as: List<A>): LoL<A> => {
+  return [];
 };
 
 /*
@@ -521,7 +521,11 @@ export const group3 = <A>(_groups: List<number>, as: List<A>): LoL<A> => {
  *
  * Generalized `group3` specifying a list of group sizes and the predicate will return a list of groups.
  */
-export const group = () => {};
+export const group = <A>(_group_size: List<number>, _as: List<A>): List<Combination<A>> => {
+  return [];
+};
+
+type Combination<T> = [List<T>, List<T>];
 
 /*
  * Problem 29

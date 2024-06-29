@@ -334,17 +334,28 @@ test("[26] Should generate combinations", () => {
   ]);
 });
 
-test.skip("[27] ASDF", () => {
-  // expect(
-  //   group3([2, 3, 4], ["aldo", "beat", "carla", "david", "evi", "flip", "gary", "hugo", "ida"]),
-  // ).toHaveLength(1120);
+test.skip("[27] Should return combinations of lenght 3", () => {
   expect(
-    group3([2, 2, 5], ["aldo", "beat", "carla", "david", "evi", "flip", "gary", "hugo", "ida"]),
-  ).toHaveLength(756);
+    group3(["aldo", "beat", "carla", "david", "evi", "flip", "gary", "hugo", "ida"]),
+  ).toStrictEqual([]);
+  expect(
+    group3(["aldo", "beat", "carla", "david", "evi", "flip", "gary", "hugo", "ida"]),
+  ).toStrictEqual([]);
 });
 
-test.skip("[28]", () => {
-  expect(group()).toStrictEqual([]);
+test.skip("[28] Should handle a generalized `group3`", () => {
+  expect(group([2, 3], ["a", "b", "c", "d", "e"])).toStrictEqual([
+    [
+      ["a", "b"],
+      ["c", "d", "e"],
+    ],
+  ]);
+  expect(
+    group([2, 3, 4], ["aldo", "beat", "carla", "david", "evi", "flip", "gary", "hugo", "ida"]),
+  ).toHaveLength(1260);
+  expect(
+    group([2, 2, 5], ["aldo", "beat", "carla", "david", "evi", "flip", "gary", "hugo", "ida"]),
+  ).toHaveLength(756);
 });
 
 test("[29] Should return elements sorted by length", () => {

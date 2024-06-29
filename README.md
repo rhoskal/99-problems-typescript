@@ -19,3 +19,4 @@
 - [P99 Haskell](https://wiki.haskell.org/H-99:_Ninety-Nine_Haskell_Problems)
 - [P99 Ocaml](https://ocaml.org/exercises#1)
 - [P99 Prolog](https://kalabovi.org/pitel:flp:99pl)
+- [P99 Python](https://wiki.python.org/moin/ProblemSets/99%20Prolog%20Problems%20Solutions)
