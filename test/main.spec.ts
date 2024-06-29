@@ -334,20 +334,60 @@ test("[26] Should generate combinations", () => {
   ]);
 });
 
-test.skip("[27] Should return combinations of lenght 3", () => {
+test("[27] Should return combinations of lenght 3", () => {
   expect(
     group3(["aldo", "beat", "carla", "david", "evi", "flip", "gary", "hugo", "ida"]),
-  ).toStrictEqual([]);
-  expect(
-    group3(["aldo", "beat", "carla", "david", "evi", "flip", "gary", "hugo", "ida"]),
-  ).toStrictEqual([]);
+  ).toHaveLength(84);
+  expect(group3([1, 2, 3, 4, 5, 6])).toHaveLength(20);
+  expect(group3([1, 2, 3, 4])).toStrictEqual([
+    [[1, 2, 3], [4]],
+    [[1, 2, 4], [3]],
+    [[1, 3, 4], [2]],
+    [[2, 3, 4], [1]],
+  ]);
 });
 
-test.skip("[28] Should handle a generalized `group3`", () => {
+test("[28] Should handle a generalized `group3`", () => {
   expect(group([2, 3], ["a", "b", "c", "d", "e"])).toStrictEqual([
     [
       ["a", "b"],
       ["c", "d", "e"],
+    ],
+    [
+      ["a", "c"],
+      ["b", "d", "e"],
+    ],
+    [
+      ["a", "d"],
+      ["b", "c", "e"],
+    ],
+    [
+      ["a", "e"],
+      ["b", "c", "d"],
+    ],
+    [
+      ["b", "c"],
+      ["a", "d", "e"],
+    ],
+    [
+      ["b", "d"],
+      ["a", "c", "e"],
+    ],
+    [
+      ["b", "e"],
+      ["a", "c", "d"],
+    ],
+    [
+      ["c", "d"],
+      ["a", "b", "e"],
+    ],
+    [
+      ["c", "e"],
+      ["a", "b", "d"],
+    ],
+    [
+      ["d", "e"],
+      ["a", "b", "c"],
     ],
   ]);
   expect(

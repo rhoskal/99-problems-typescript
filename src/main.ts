@@ -512,8 +512,8 @@ export const combinations = (n: number) => {
  *
  * Group the elements of a set into 3 disjoint subsets.
  */
-export const group3 = <A>(_as: List<A>): LoL<A> => {
-  return [];
+export const group3 = <T>(xs: List<T>): List<Combination<T>> => {
+  return combination(3, xs);
 };
 
 /*
@@ -521,11 +521,44 @@ export const group3 = <A>(_as: List<A>): LoL<A> => {
  *
  * Generalized `group3` specifying a list of group sizes and the predicate will return a list of groups.
  */
-export const group = <A>(_group_size: List<number>, _as: List<A>): List<Combination<A>> => {
-  return [];
+export const group = <T>(group_sizes: List<number>, xs: List<T>): List<Combination<T>> => {
+  if (group_sizes.length === 0) {
+    // @ts-ignore --> forgive me...
+    return [[]];
+  }
+
+  const g = utils.hd(group_sizes);
+  const gs = utils.tail(group_sizes);
+  const combinations = combination(g, xs);
+
+  const helper = <T>(as: List<T>, bs: List<T>) => {
+    return group(gs, bs).map((group) => [as, ...group]);
+  };
+
+  // Map each combination to its grouped form and flatten the result
+  return combinations.flatMap(([as, bs]) => helper(as, bs));
 };
 
 type Combination<T> = [List<T>, List<T>];
+
+const combination = <T>(n: number, xs: List<T>): List<Combination<T>> => {
+  if (n === 0) {
+    return [[[], xs]];
+  } else if (xs.length === 0) {
+    return [];
+  } else {
+    const head = utils.hd(xs);
+    const tail = utils.tail(xs);
+
+    const ts: List<Combination<T>> = combination(n - 1, tail).map(([ys, zs]) => [
+      [head, ...ys],
+      zs,
+    ]);
+    const ds: List<Combination<T>> = combination(n, tail).map(([ys, zs]) => [ys, [head, ...zs]]);
+
+    return [...ts, ...ds];
+  }
+};
 
 /*
  * Problem 29
