@@ -529,23 +529,21 @@ export const group3 = <T>(xs: List<T>): List<Combination<T>> => {
  */
 export const group = <T>(group_sizes: List<number>, xs: List<T>): List<Combination<T>> => {
   if (group_sizes.length === 0) {
-    // @ts-ignore --> forgive me...
     return [[]];
   }
 
-  const g = utils.hd(group_sizes);
-  const gs = utils.tail(group_sizes);
-  const combinations = combinations_prime(g, xs);
+  const n = utils.hd(group_sizes);
+  const restNs = utils.tail(group_sizes);
+  const combos = combinations_prime(n, xs);
 
   const helper = <T>(as: List<T>, bs: List<T>) => {
-    return group(gs, bs).map((group) => [as, ...group]);
+    return group(restNs, bs).map((g) => [as, ...g]);
   };
 
-  // Map each combination to its grouped form and flatten the result
-  return combinations.flatMap(([as, bs]) => helper(as, bs));
+  return combos.flatMap(([as, bs]) => helper(as, bs));
 };
 
-type Combination<T> = [List<T>, List<T>];
+type Combination<T> = List<List<T>>;
 
 const combinations_prime = <T>(n: number, xs: List<T>): List<Combination<T>> => {
   if (n === 0) {
@@ -563,7 +561,7 @@ const combinations_prime = <T>(n: number, xs: List<T>): List<Combination<T>> => 
       return [ys, [head, ...zs]];
     });
 
-    return [...selected, ...remaining];
+    return selected.concat(remaining);
   }
 };
 
