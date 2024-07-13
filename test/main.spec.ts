@@ -303,6 +303,7 @@ test("[25] Should generate random permutation", () => {
 test("[26] Should generate combinations", () => {
   expect(combinations(0)(["a", "b", "c", "d"])).toStrictEqual([[]]);
   expect(combinations(1)(["a", "b", "c", "d"])).toStrictEqual([["a"], ["b"], ["c"], ["d"]]);
+  expect(combinations(1)([1, 2, 3, 4])).toStrictEqual([[1], [2], [3], [4]]);
   expect(combinations(2)([1, 2, 3, 4])).toStrictEqual([
     [1, 2],
     [1, 3],
@@ -340,12 +341,7 @@ test("[27] Should return combinations of length 3", () => {
     group3(["aldo", "beat", "carla", "david", "evi", "flip", "gary", "hugo", "ida"]),
   ).toHaveLength(84);
   expect(group3([1, 2, 3, 4, 5, 6])).toHaveLength(20);
-  expect(group3([1, 2, 3, 4])).toStrictEqual([
-    [[1, 2, 3], [4]],
-    [[1, 2, 4], [3]],
-    [[1, 3, 4], [2]],
-    [[2, 3, 4], [1]],
-  ]);
+  expect(group3([1, 2, 3, 4])).toStrictEqual([[[1, 2, 3]], [[1, 2, 4]], [[1, 3, 4]], [[2, 3, 4]]]);
 });
 
 test("[28] Should handle a generalized `group3`", () => {

@@ -519,7 +519,7 @@ export const combinations = (n: number) => {
  * Group the elements of a set into 3 disjoint subsets.
  */
 export const group3 = <T>(xs: List<T>): List<Combination<T>> => {
-  return combination(3, xs);
+  return group([3], xs);
 };
 
 /*
