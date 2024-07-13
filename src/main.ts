@@ -3,10 +3,6 @@ import { performance } from "perf_hooks"; // nodejs package
 import { List, LoL, Nullable } from "./types";
 import * as utils from "./utils";
 
-// ===================
-//      Problems
-// ===================
-
 /*
  * Problem 1
  *
@@ -269,10 +265,21 @@ export const encode_direct = (as: List<string>): List<Encoded<string>> => {
  * Duplicate each item in a given list.
  */
 export const duplicate = <A>(as: List<A>): List<A> => {
-  return as.reduce((acc, a) => {
-    return acc.concat(a, a);
-  }, [] as List<A>);
+  if (as.length === 0) {
+    return [];
+  } else {
+    const head = utils.hd(as);
+    const tail = utils.tail(as);
+
+    return [head, head].concat(duplicate(tail));
+  }
 };
+
+// export const duplicate = <A>(as: List<A>): List<A> => {
+//   return as.reduce((acc, a) => {
+//     return acc.concat(a, a);
+//   }, [] as List<A>);
+// };
 
 /*
  * Problem 15
@@ -293,37 +300,42 @@ export const replicate = (n: number) => {
  * Problem 16
  *
  * Drop every nth item in a given list.
- * Note: `n` is normalized to 0 if negative.
  */
 export const drop_every = (n: number) => {
-  if (n < 0) {
-    n = 0;
-  }
-
   return <A>(as: List<A>): List<A> => {
-    return as.reduce((acc, a, idx) => {
-      if ((idx + 1) % n === 0) {
-        return acc;
-      } else {
-        return acc.concat(a);
-      }
-    }, [] as List<A>);
+    if (as.length === 0) {
+      return [];
+    } else {
+      return utils
+        .take_left(n - 1)(as)
+        .concat(drop_every(n)(utils.drop_left(n)(as)));
+    }
   };
 };
+
+// export const drop_every = (n: number) => {
+//   return <A>(as: List<A>): List<A> => {
+//     return as.reduce((acc, a, idx) => {
+//       if ((idx + 1) % n === 0) {
+//         return acc;
+//       } else {
+//         return acc.concat(a);
+//       }
+//     }, [] as List<A>);
+//   };
+// };
 
 /*
  * Problem 17
  *
  * Splits a list into two parts; the length of the first part is given.
- * Note: `n` is normalized to 0 if negative.
  */
 export const split = (n: number) => {
-  if (n < 0) {
-    n = 0;
-  }
-
   return <A>(as: List<A>): { left: List<A>; right: List<A> } => {
-    return { left: utils.take_left(n)(as), right: utils.drop_left(n)(as) };
+    return {
+      left: utils.take_left(n)(as),
+      right: utils.drop_left(n)(as),
+    };
   };
 };
 
@@ -331,27 +343,28 @@ export const split = (n: number) => {
  * Problem 18
  *
  * Given two indices, i and k, the slice is the list containing the elements between the i'th and k'th element of the original list (both limits included). Start counting the elements with 1.
- * Note: both `start` & `end` are normalized to 0 if negative.
  */
 export const slice = (start: number, end: number) => {
-  if (start < 0) {
-    start = 0;
-  }
-
-  if (end < 0) {
-    end = 0;
-  }
-
   return <A>(as: List<A>): List<A> => {
-    return as.reduce((acc, a, idx) => {
-      if (idx + 1 >= start && idx + 1 <= end) {
-        return acc.concat(a);
-      } else {
-        return acc;
-      }
-    }, [] as List<A>);
+    if (end < start) {
+      return [];
+    } else {
+      return utils.take_left(end - start + 1)(utils.drop_left(start - 1)(as));
+    }
   };
 };
+
+// export const slice = (start: number, end: number) => {
+//   return <A>(as: List<A>): List<A> => {
+//     return as.reduce((acc, a, idx) => {
+//       if (idx + 1 >= start && idx + 1 <= end) {
+//         return acc.concat(a);
+//       } else {
+//         return acc;
+//       }
+//     }, [] as List<A>);
+//   };
+// };
 
 /*
  * Problem 19
@@ -360,18 +373,30 @@ export const slice = (start: number, end: number) => {
  */
 export const rotate = (n: number) => {
   return <A>(as: List<A>): List<A> => {
-    const length = as.length;
-
-    return as.reduce(
-      (acc, a, idx) => {
-        acc[(length + idx - n) % 8] = a;
-
-        return acc;
-      },
-      Array.from({ length }) as Array<A>,
-    );
+    if (n < 0) {
+      return utils
+        .drop_left(n + as.length)(as)
+        .concat(utils.take_left(n + as.length)(as));
+    } else {
+      return utils.drop_left(n)(as).concat(utils.take_left(n)(as));
+    }
   };
 };
+
+// export const rotate = (n: number) => {
+//   return <A>(as: List<A>): List<A> => {
+//     const length = as.length;
+
+//     return as.reduce(
+//       (acc, a, idx) => {
+//         acc[(length + idx - n) % 8] = a;
+
+//         return acc;
+//       },
+//       Array.from({ length }) as Array<A>,
+//     );
+//   };
+// };
 
 /*
  * Problem 20
@@ -379,14 +404,26 @@ export const rotate = (n: number) => {
  * Removes the nth element from a list.
  */
 export const remove_at = (n: number) => {
-  if (n < 0) {
-    n = 0;
-  }
-
   return <A>(as: List<A>): List<A> => {
-    return as.filter((_, idx) => idx !== n);
+    if (n < 0) {
+      return as;
+    } else {
+      return utils
+        .take_left(n - 1)(as)
+        .concat(utils.drop_left(n)(as));
+    }
   };
 };
+
+// export const remove_at = (n: number) => {
+//   return <A>(as: List<A>): List<A> => {
+//     if (n < 0) {
+//       return as;
+//     } else {
+//       return as.filter((_, idx) => idx !== n);
+//     }
+//   };
+// };
 
 /*
  * Problem 21
@@ -399,12 +436,28 @@ export const remove_at = (n: number) => {
 export const insert_at = <A>(val: A) => {
   return (position: number) => {
     return (as: List<A>): List<A> => {
-      const { left, right } = split(position)(as);
-
-      return ([] as List<A>).concat(...left, val, ...right);
+      if (position < 0) {
+        return as;
+      } else if (position >= as.length) {
+        return as.concat(val);
+      } else {
+        return utils
+          .take_left(position - 1)(as)
+          .concat(val, utils.drop_left(position - 1)(as));
+      }
     };
   };
 };
+
+// export const insert_at = <A>(val: A) => {
+//   return (position: number) => {
+//     return (as: List<A>): List<A> => {
+//       const { left, right } = split(position)(as);
+
+//       return ([] as List<A>).concat(...left, val, ...right);
+//     };
+//   };
+// };
 
 /*
  * Problem 22
@@ -412,14 +465,22 @@ export const insert_at = <A>(val: A) => {
  * Create a list containing all integers within a given range.
  */
 export const range = (start: number, end: number): List<number> => {
-  let acc: Array<number> = [];
-
-  for (let i = 0; i <= end - start; i++) {
-    acc[i] = i + start;
+  if (end < start) {
+    return [];
+  } else {
+    return [start].concat(range(start + 1, end));
   }
-
-  return acc;
 };
+
+// export const range = (start: number, end: number): List<number> => {
+//   let acc: Array<number> = [];
+
+//   for (let i = 0; i <= end - start; i++) {
+//     acc[i] = i + start;
+//   }
+
+//   return acc;
+// };
 
 /*
  * Problem 23
@@ -635,23 +696,35 @@ export const lfsort = (as: List<string>): List<string> => {
  * Note: uses "trivial division" which is the most basic algo.
  */
 export const is_prime = (n: number): boolean => {
-  const is_prime_helper = (n: number) => {
-    return (as: List<number>): boolean => {
-      const head = utils.hd(as);
-      const tail = utils.tail(as);
+  if (n < 2) {
+    return false;
+  } else {
+    const candidates = [2].concat(range(3, Math.sqrt(n)).filter((x) => x % 2 != 0));
 
-      if (tail.length === 0) {
-        return n % head !== 0;
-      } else {
-        return n % head !== 0 && is_prime_helper(n)(tail);
-      }
-    };
-  };
-
-  const possible_primes = range(2, Math.sqrt(n));
-
-  return is_prime_helper(n)(possible_primes);
+    return utils
+      .take_while((c: number) => c * c <= n)(candidates)
+      .every((x) => n % x != 0);
+  }
 };
+
+// export const is_prime = (n: number): boolean => {
+//   const is_prime_helper = (n: number) => {
+//     return (as: List<number>): boolean => {
+//       const head = utils.hd(as);
+//       const tail = utils.tail(as);
+
+//       if (tail.length === 0) {
+//         return n % head !== 0;
+//       } else {
+//         return n % head !== 0 && is_prime_helper(n)(tail);
+//       }
+//     };
+//   };
+
+//   const candidates = range(2, Math.sqrt(n));
+
+//   return is_prime_helper(n)(candidates);
+// };
 
 /*
  * Problem 32
@@ -660,20 +733,34 @@ export const is_prime = (n: number): boolean => {
  * Returns a flat list containing the prime factors in ascending order.
  */
 export const prime_factors = (n: number): List<number> => {
-  let factors: List<number> = [];
-  let divisor: number = 2;
-
-  while (n !== 1) {
-    if (n % divisor === 0) {
-      factors = factors.concat(divisor);
-      n = n / divisor;
+  const prime_factors_prime = (num: number, divisor: number): List<number> => {
+    if (num === 1) {
+      return [];
+    } else if (num % divisor == 0) {
+      return [divisor].concat(prime_factors_prime(num / divisor, divisor));
     } else {
-      divisor = divisor + 1;
+      return prime_factors_prime(num, divisor + 1);
     }
-  }
+  };
 
-  return factors;
+  return prime_factors_prime(n, 2);
 };
+
+// export const prime_factors = (n: number): List<number> => {
+//   let factors: List<number> = [];
+//   let divisor: number = 2;
+
+//   while (n !== 1) {
+//     if (n % divisor === 0) {
+//       factors = factors.concat(divisor);
+//       n = n / divisor;
+//     } else {
+//       divisor = divisor + 1;
+//     }
+//   }
+
+//   return factors;
+// };
 
 /*
  * Problem 33
@@ -708,9 +795,7 @@ export const prime_factors_mult = (n: number): List<[number, number]> => {
  * Given a range of integers by its lower and upper limit, construct a list of all prime numbers in that range.
  */
 export const primes_from = (lower: number, upper: number): List<number> => {
-  const possible_primes = range(lower, upper);
-
-  return possible_primes.filter(is_prime);
+  return range(lower, upper).filter(is_prime);
 };
 
 /*
@@ -796,13 +881,7 @@ export const coprime = (a: number, b: number): boolean => {
  * Calculate Euler's totient function phi(m).
  */
 export const totient_phi = (n: number): number => {
-  return range(1, n).reduce((acc, a) => {
-    if (coprime(n, a)) {
-      return 1 + acc;
-    } else {
-      return acc;
-    }
-  }, 0);
+  return range(1, n).filter((i) => coprime(n, i)).length;
 };
 
 /*
@@ -811,20 +890,7 @@ export const totient_phi = (n: number): number => {
  * Calculate Euler's totient function phi(m) - improved.
  */
 export const phi = (n: number): number => {
-  const primes_with_multiplicities = prime_factors_mult(n);
-
-  const helper = (ps: List<[number, number]>): number => {
-    if (ps.length === 0) {
-      return 1;
-    } else {
-      const [prime, multiplicity] = utils.hd(ps);
-      const rest = utils.tail(ps);
-
-      return (prime - 1) * Math.pow(prime, multiplicity - 1) * helper(rest);
-    }
-  };
-
-  return helper(primes_with_multiplicities);
+  return prime_factors_mult(n).reduce((acc, [p, m]) => acc * (p - 1) * Math.pow(p, m - 1), 1);
 };
 
 /*

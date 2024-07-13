@@ -74,13 +74,13 @@ test("[03] Should return nth element of a list", () => {
 test("[04] Should return the length of a list", () => {
   expect(length([])).toEqual(0);
   expect(length([1])).toEqual(1);
-  expect(length(["a", "b", "c", "d", "e"])).toEqual(5);
+  expect(length([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])).toEqual(10);
 });
 
 test("[05] Should return the items of a list reversed", () => {
   expect(reverse([])).toEqual([]);
-  expect(reverse([1])).toEqual([1]);
-  expect(reverse([1, 2, 3])).toEqual([3, 2, 1]);
+  expect(reverse([1, 2, 3, 4, 5])).toEqual([5, 4, 3, 2, 1]);
+  expect(reverse(["Big", "Bang", "Theory", "!"])).toEqual(["!", "Theory", "Bang", "Big"]);
 });
 
 test("[06] Should return the items of a list reversed", () => {
@@ -257,13 +257,14 @@ test("[19] Should rotate a list", () => {
 });
 
 test("[20] Should remove nth element", () => {
-  expect(remove_at(1)(["a", "b", "c", "d"])).toStrictEqual(["a", "c", "d"]);
-  expect(remove_at(3)(["a", "b", "c", "d"])).toStrictEqual(["a", "b", "c"]);
+  expect(remove_at(2)(["a", "b", "c", "d"])).toStrictEqual(["a", "c", "d"]);
+  expect(remove_at(-1)(["a", "b", "c", "d"])).toStrictEqual(["a", "b", "c", "d"]);
 });
 
 test("[21] Should insert at nth position", () => {
-  expect(insert_at("alfa")(1)(["a", "b", "c", "d"])).toStrictEqual(["a", "alfa", "b", "c", "d"]);
-  expect(insert_at("alfa")(5)(["a", "b", "c", "d"])).toStrictEqual(["a", "b", "c", "d", "alfa"]);
+  expect(insert_at("X")(2)(["a", "b", "c", "d"])).toStrictEqual(["a", "X", "b", "c", "d"]);
+  expect(insert_at("X")(-1)(["a", "b", "c", "d"])).toStrictEqual(["a", "b", "c", "d"]);
+  expect(insert_at("X")(99)(["a", "b", "c", "d"])).toStrictEqual(["a", "b", "c", "d", "X"]);
 });
 
 test("[22] Should create an array with sequential elements given range", () => {
@@ -334,7 +335,7 @@ test("[26] Should generate combinations", () => {
   ]);
 });
 
-test("[27] Should return combinations of lenght 3", () => {
+test("[27] Should return combinations of length 3", () => {
   expect(
     group3(["aldo", "beat", "carla", "david", "evi", "flip", "gary", "hugo", "ida"]),
   ).toHaveLength(84);
@@ -499,7 +500,7 @@ test("[39] Should return the totient", () => {
   expect(totient_phi(20)).toBe(8);
 });
 
-test("[40] Should return the totient using improved method", () => {
+test("[40] Should return the totient using the improved method", () => {
   expect(phi(10)).toBe(4);
   expect(phi(13)).toBe(12);
   expect(phi(9)).toBe(6);
