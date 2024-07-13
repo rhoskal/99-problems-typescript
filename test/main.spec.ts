@@ -39,7 +39,6 @@ import {
   prime_factors,
   prime_factors_mult,
   phi,
-  timeit,
   primes_from,
   goldbach,
   goldbach_list,
