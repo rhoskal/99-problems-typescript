@@ -275,12 +275,6 @@ export const duplicate = <A>(as: List<A>): List<A> => {
   }
 };
 
-// export const duplicate = <A>(as: List<A>): List<A> => {
-//   return as.reduce((acc, a) => {
-//     return acc.concat(a, a);
-//   }, [] as List<A>);
-// };
-
 /*
  * Problem 15
  *
@@ -313,18 +307,6 @@ export const drop_every = (n: number) => {
   };
 };
 
-// export const drop_every = (n: number) => {
-//   return <A>(as: List<A>): List<A> => {
-//     return as.reduce((acc, a, idx) => {
-//       if ((idx + 1) % n === 0) {
-//         return acc;
-//       } else {
-//         return acc.concat(a);
-//       }
-//     }, [] as List<A>);
-//   };
-// };
-
 /*
  * Problem 17
  *
@@ -354,18 +336,6 @@ export const slice = (start: number, end: number) => {
   };
 };
 
-// export const slice = (start: number, end: number) => {
-//   return <A>(as: List<A>): List<A> => {
-//     return as.reduce((acc, a, idx) => {
-//       if (idx + 1 >= start && idx + 1 <= end) {
-//         return acc.concat(a);
-//       } else {
-//         return acc;
-//       }
-//     }, [] as List<A>);
-//   };
-// };
-
 /*
  * Problem 19
  *
@@ -383,21 +353,6 @@ export const rotate = (n: number) => {
   };
 };
 
-// export const rotate = (n: number) => {
-//   return <A>(as: List<A>): List<A> => {
-//     const length = as.length;
-
-//     return as.reduce(
-//       (acc, a, idx) => {
-//         acc[(length + idx - n) % 8] = a;
-
-//         return acc;
-//       },
-//       Array.from({ length }) as Array<A>,
-//     );
-//   };
-// };
-
 /*
  * Problem 20
  *
@@ -414,16 +369,6 @@ export const remove_at = (n: number) => {
     }
   };
 };
-
-// export const remove_at = (n: number) => {
-//   return <A>(as: List<A>): List<A> => {
-//     if (n < 0) {
-//       return as;
-//     } else {
-//       return as.filter((_, idx) => idx !== n);
-//     }
-//   };
-// };
 
 /*
  * Problem 21
@@ -706,25 +651,6 @@ export const is_prime = (n: number): boolean => {
       .every((x) => n % x != 0);
   }
 };
-
-// export const is_prime = (n: number): boolean => {
-//   const is_prime_helper = (n: number) => {
-//     return (as: List<number>): boolean => {
-//       const head = utils.hd(as);
-//       const tail = utils.tail(as);
-
-//       if (tail.length === 0) {
-//         return n % head !== 0;
-//       } else {
-//         return n % head !== 0 && is_prime_helper(n)(tail);
-//       }
-//     };
-//   };
-
-//   const candidates = range(2, Math.sqrt(n));
-
-//   return is_prime_helper(n)(candidates);
-// };
 
 /*
  * Problem 32
