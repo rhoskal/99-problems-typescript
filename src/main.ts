@@ -535,7 +535,7 @@ export const group = <T>(group_sizes: List<number>, xs: List<T>): List<Combinati
 
   const g = utils.hd(group_sizes);
   const gs = utils.tail(group_sizes);
-  const combinations = combination(g, xs);
+  const combinations = combinations_prime(g, xs);
 
   const helper = <T>(as: List<T>, bs: List<T>) => {
     return group(gs, bs).map((group) => [as, ...group]);
@@ -547,7 +547,7 @@ export const group = <T>(group_sizes: List<number>, xs: List<T>): List<Combinati
 
 type Combination<T> = [List<T>, List<T>];
 
-const combination = <T>(n: number, xs: List<T>): List<Combination<T>> => {
+const combinations_prime = <T>(n: number, xs: List<T>): List<Combination<T>> => {
   if (n === 0) {
     return [[[], xs]];
   } else if (xs.length === 0) {
@@ -556,13 +556,14 @@ const combination = <T>(n: number, xs: List<T>): List<Combination<T>> => {
     const head = utils.hd(xs);
     const tail = utils.tail(xs);
 
-    const ts: List<Combination<T>> = combination(n - 1, tail).map(([ys, zs]) => [
-      [head, ...ys],
-      zs,
-    ]);
-    const ds: List<Combination<T>> = combination(n, tail).map(([ys, zs]) => [ys, [head, ...zs]]);
+    const selected: List<Combination<T>> = combinations_prime(n - 1, tail).map(([ys, zs]) => {
+      return [[head, ...ys], zs];
+    });
+    const remaining: List<Combination<T>> = combinations_prime(n, tail).map(([ys, zs]) => {
+      return [ys, [head, ...zs]];
+    });
 
-    return [...ts, ...ds];
+    return [...selected, ...remaining];
   }
 };
 
