@@ -47,6 +47,7 @@ import {
   huffman,
   is_tree,
 } from "../src/main";
+import * as BT from "../src/binary_tree";
 import * as Bool from "../src/bool";
 
 test("[01] Should return the last element of a list", () => {
@@ -556,32 +557,41 @@ test.skip("[46] Should return huffman code table", () => {
 });
 
 test("[47] Should return true if given a valid binary tree", () => {
-  expect(is_tree({ _kind: "empty", data: 1 })).toBe(true);
+  //     x
+  //    / \
+  //   x   x
+  //        \
+  //         x
+  const t1: BT.BinaryTree<string> = BT.mkBranch(
+    "x",
+    BT.mkLeaf("x"),
+    BT.mkBranch("x", BT.mkEmpty(), BT.mkLeaf("x")),
+  );
+  expect(is_tree(t1)).toBe(true);
+
+  //     x
+  //    / \
+  //   x   x
+  //  /     \
+  // x       x
+  const t2: BT.BinaryTree<string> = BT.mkBranch(
+    "x",
+    BT.mkBranch("x", BT.mkLeaf("x"), BT.mkEmpty()),
+    BT.mkBranch("x", BT.mkEmpty(), BT.mkLeaf("x")),
+  );
+  expect(is_tree(t2)).toBe(true);
+
   expect(
     is_tree({
-      _kind: "node",
-      left: { _kind: "empty", data: 1 },
-      right: { _kind: "empty", data: 2 },
-    }),
-  ).toBe(true);
-  expect(
-    is_tree({
-      _kind: "node",
-      left: null, // invalid
-      right: { _kind: "empty", data: 42 },
+      _kind: "empty",
+      data: 1, // invalid
     }),
   ).toBe(false);
   expect(
     is_tree({
-      _kind: "node",
-      left: {
-        _kind: "node",
-        left: { _kind: "empty", data: 2 },
-        right: { _kind: "empty", data: 3 },
-        data: 0,
-      },
-      right: { _kind: "empty", data: undefined }, // invalid
-      data: 1,
+      _kind: "branch",
+      left: null, // invalid
+      right: { _kind: "empty" },
     }),
   ).toBe(false);
 });

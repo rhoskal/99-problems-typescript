@@ -1,5 +1,7 @@
 import { performance } from "perf_hooks"; // nodejs package
 
+import { BinaryTree } from "./binary_tree";
+import * as B from "./binary_tree";
 import { List, LoL, Nullable } from "./types";
 import * as utils from "./utils";
 
@@ -906,93 +908,19 @@ export const huffman = (_fs: List<[string, number]>): List<[string, string]> => 
   return [];
 };
 
-interface Empty<A> {
-  _kind: "empty";
-  data: A;
-}
-
-interface Node<A> {
-  _kind: "node";
-  data: A;
-  left: Tree<A>;
-  right: Tree<A>;
-}
-
-type Tree<A> = Empty<A> | Node<A>;
-
-export const mkEmptyNode = <A>(a: A): Empty<A> => {
-  return {
-    _kind: "empty",
-    data: a,
-  };
-};
-
-export const mkNode = <A>(a: A, left: Tree<A>, right: Tree<A>): Node<A> => {
-  return {
-    _kind: "node",
-    data: a,
-    left,
-    right,
-  };
-};
-
-const eq_empty_node = <A>(x: unknown): x is Empty<A> => {
-  if (typeof x === "object") {
-    if (x !== null) {
-      if ("_kind" in x) {
-        if (x._kind === "empty") {
-          if ("data" in x) {
-            return x.data !== undefined;
-          }
-        }
-      }
-    }
-  }
-
-  return false;
-};
-
-const eq_node = <A>(x: unknown): x is Node<A> => {
-  if (typeof x === "object") {
-    if (x !== null) {
-      if ("_kind" in x) {
-        if (x._kind === "node") {
-          if ("left" in x && "right" in x) {
-            if (eq_empty_node(x.left) && eq_empty_node(x.right)) {
-              return true;
-            } else if (eq_empty_node(x.left) && !eq_empty_node(x.right)) {
-              if ("data" in x) {
-                return x.data !== undefined;
-              }
-            } else if (eq_empty_node(x.right) && !eq_empty_node(x.left)) {
-              if ("data" in x) {
-                return x.data !== undefined;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  return false;
-};
-
 /*
  * Problem 47
  *
  * Check whether a given term represents a binary tree.
  */
-export const is_tree = <A>(x: unknown): x is Tree<A> => {
-  if (eq_empty_node(x)) {
+export const is_tree = <A>(x: unknown): x is BinaryTree<A> => {
+  if (B.eq_empty(x)) {
     return true;
+  } else if (B.eq_branch(x)) {
+    return is_tree(x.left) && is_tree(x.right);
+  } else {
+    return false;
   }
-
-  if (eq_node(x)) {
-    return true;
-  }
-
-  return false;
 };
 
 /*
@@ -1011,10 +939,10 @@ export const is_tree = <A>(x: unknown): x is Tree<A> => {
  * Note: uses depth-first search
  * Output: 4 2 1 3 6 5 7
  */
-export const print_tree = <A>(t: Tree<A>): void => {
-  const helper = <A>(t: Tree<A>): List<A> => {
-    if (eq_empty_node(t)) {
-      return [t.data];
+export const print_tree = <A>(t: BinaryTree<A>): void => {
+  const helper = <A>(t: BinaryTree<A>): List<A> => {
+    if (B.eq_empty(t)) {
+      return [];
     } else {
       return [t.data, ...helper(t.left), ...helper(t.right)];
     }
@@ -1060,7 +988,7 @@ export const print_tree = <A>(t: Tree<A>): void => {
  *
  * Check whether a given binary tree is symmetric.
  */
-export const is_symmetric_tree = <A>(x: unknown): x is Node<A> => {
+export const is_symmetric_tree = <A>(x: unknown): x is BinaryTree<A> => {
   return false;
 };
 
