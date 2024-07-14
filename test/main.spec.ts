@@ -455,6 +455,7 @@ test("[34] Should return a list of primes within a range", () => {
   expect(primes_from(10, 20)).toStrictEqual([11, 13, 17, 19]);
   expect(primes_from(50, 100)).toStrictEqual([53, 59, 61, 67, 71, 73, 79, 83, 89, 97]);
   // expect(primes_from(2, 7920)).toHaveLength(1000);
+  // ^ causes `RangeError: Maximum call stack size exceeded`
 });
 
 test("[35] Should return two primes that sum to the given even number", () => {
