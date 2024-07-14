@@ -1,12 +1,12 @@
 export interface Empty {
-  _kind: "empty";
+  readonly _kind: "empty";
 }
 
 export interface Branch<A> {
-  _kind: "branch";
-  data: A;
-  left: BinaryTree<A>;
-  right: BinaryTree<A>;
+  readonly _kind: "branch";
+  readonly data: A;
+  readonly left: BinaryTree<A>;
+  readonly right: BinaryTree<A>;
 }
 
 export type BinaryTree<A> = Empty | Branch<A>;
@@ -34,6 +34,12 @@ export const mkBranch = <A>(a: A, left: BinaryTree<A>, right: BinaryTree<A>): Br
     right,
   };
 };
+
+/*
+ * For some reason, TypeScript doesn't narrow type when using `hasOwnProperty("key")`
+ * but does when using the `in` operator.
+ * https://github.com/microsoft/TypeScript/issues/10485
+ */
 
 export const eq_empty = (x: unknown): x is Empty => {
   if (typeof x === "object") {

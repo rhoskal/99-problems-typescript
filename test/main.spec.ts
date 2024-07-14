@@ -562,7 +562,7 @@ test("[47] Should return true if given a valid binary tree", () => {
   //   x   x
   //        \
   //         x
-  const t1: BT.BinaryTree<string> = BT.mkBranch(
+  const t1: unknown = BT.mkBranch(
     "x",
     BT.mkLeaf("x"),
     BT.mkBranch("x", BT.mkEmpty(), BT.mkLeaf("x")),
@@ -574,26 +574,25 @@ test("[47] Should return true if given a valid binary tree", () => {
   //   x   x
   //  /     \
   // x       x
-  const t2: BT.BinaryTree<string> = BT.mkBranch(
+  const t2: unknown = BT.mkBranch(
     "x",
     BT.mkBranch("x", BT.mkLeaf("x"), BT.mkEmpty()),
     BT.mkBranch("x", BT.mkEmpty(), BT.mkLeaf("x")),
   );
   expect(is_tree(t2)).toBe(true);
 
-  expect(
-    is_tree({
-      _kind: "empty",
-      data: 1, // invalid
-    }),
-  ).toBe(false);
-  expect(
-    is_tree({
-      _kind: "branch",
-      left: null, // invalid
-      right: { _kind: "empty" },
-    }),
-  ).toBe(false);
+  const t3: unknown = {
+    _kind: "empty",
+    data: 1, // invalid
+  };
+  expect(is_tree(t3)).toBe(false);
+
+  const t4: unknown = {
+    _kind: "branch",
+    left: null, // invalid
+    right: { _kind: "empty" },
+  };
+  expect(is_tree(t4)).toBe(false);
 });
 
 test.skip("[48] Should return true if given a valid binary tree", () => {

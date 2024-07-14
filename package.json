@@ -16,7 +16,7 @@
     "lint:fix": "eslint --fix '{src,test}/**/*.ts'",
     "test": "vitest --dir test --run",
     "test:watch": "vitest --dir test",
-    "prepare": "is-ci || husky install"
+    "prepare": "is-ci || husky"
   },
   "devDependencies": {
     "@types/node": "^20.14.10",
@@ -29,7 +29,7 @@
     "husky": "^9.0.11",
     "is-ci": "^3.0.1",
     "lint-staged": "^15.2.7",
-    "prettier": "^3.3.2",
+    "prettier": "^3.3.3",
     "typescript": "^5.5.3",
     "vitest": "^2.0.2"
   },
