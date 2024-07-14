@@ -41,14 +41,10 @@ export const mkBranch = <A>(a: A, left: BinaryTree<A>, right: BinaryTree<A>): Br
  * https://github.com/microsoft/TypeScript/issues/10485
  */
 
-export const eq_empty = (x: unknown): x is Empty => {
-  if (typeof x === "object") {
-    if (x !== null) {
-      if ("_kind" in x) {
-        return x._kind === "empty";
-      } else {
-        return false;
-      }
+const keysAreValid = (obj: unknown, keys: ReadonlyArray<string>): boolean => {
+  if (typeof obj === "object") {
+    if (obj !== null) {
+      return Object.keys(obj).every((key) => keys.includes(key));
     } else {
       return false;
     }
@@ -57,27 +53,81 @@ export const eq_empty = (x: unknown): x is Empty => {
   }
 };
 
+const allKeysArePresent = (obj: unknown, keys: ReadonlyArray<string>): boolean => {
+  if (typeof obj === "object") {
+    if (obj !== null) {
+      const objKeys = Object.keys(obj);
+
+      return keys.every((key) => objKeys.includes(key));
+    } else {
+      return false;
+    }
+  } else {
+    return false;
+  }
+};
+
+const keysMatch = (obj: unknown, keys: ReadonlyArray<string>): boolean => {
+  return keysAreValid(obj, keys) && allKeysArePresent(obj, keys);
+};
+
+export const eq_empty = (x: unknown): x is Empty => {
+  const verifyShape = (x: unknown): boolean => {
+    if (typeof x === "object") {
+      if (x !== null) {
+        if ("_kind" in x) {
+          return x._kind === "empty";
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  };
+
+  return verifyShape(x) && keysMatch(x, ["_kind"]);
+};
+
 export const eq_branch = <A>(x: unknown): x is Branch<A> => {
-  if (typeof x === "object") {
-    if (x !== null) {
-      if ("_kind" in x) {
-        if (x._kind === "branch") {
-          if ("data" in x) {
-            if (x.data === undefined || x.data === null) {
+  const verifyShape = (x: unknown): boolean => {
+    if (typeof x === "object") {
+      if (x !== null) {
+        if ("_kind" in x) {
+          if (x._kind === "branch") {
+            if ("data" in x) {
+              if (x.data === undefined || x.data === null) {
+                return false;
+              }
+
+              if ("left" in x && "right" in x) {
+                return (
+                  x.left !== undefined &&
+                  x.left !== null &&
+                  x.right !== undefined &&
+                  x.right !== null
+                );
+              } else {
+                return false;
+              }
+            } else {
               return false;
             }
-
-            if ("left" in x && "right" in x) {
-              return (
-                x.left !== undefined && x.left !== null && x.right !== undefined && x.right !== null
-              );
-              // return true;
-            }
+          } else {
+            return false;
           }
+        } else {
+          return false;
         }
+      } else {
+        return false;
       }
+    } else {
+      return false;
     }
-  }
+  };
 
-  return false;
+  return verifyShape(x) && keysMatch(x, ["_kind", "data", "left", "right"]);
 };

@@ -912,6 +912,8 @@ export const huffman = (_fs: List<[string, number]>): List<[string, string]> => 
  * Problem 47
  *
  * Check whether a given term represents a binary tree.
+ * Note: since TypeScript doesn't have nominal types, we must validate the shape,
+ * values and has no additional keys.
  */
 export const is_tree = <A>(x: unknown): x is BinaryTree<A> => {
   if (B.eq_empty(x)) {
