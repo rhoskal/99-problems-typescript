@@ -936,23 +936,6 @@ export const is_tree = <A>(x: unknown): x is BinaryTree<A> => {
  */
 // export const create_complete_tree = (n: number): List<Tree<"x">> => {};
 
-/*
- * Helps with debugging.
- * Note: uses depth-first search
- * Output: 4 2 1 3 6 5 7
- */
-export const print_tree = <A>(t: BinaryTree<A>): void => {
-  const helper = <A>(t: BinaryTree<A>): List<A> => {
-    if (BT.eq_empty(t)) {
-      return [];
-    } else {
-      return [t.data, ...helper(t.left), ...helper(t.right)];
-    }
-  };
-
-  console.log(helper(t).join(" "));
-};
-
 // Backtracking is a problem-solving algorithmic technique that involves
 // finding a solution incrementally by trying different options and undoing
 // them if they lead to a dead end.

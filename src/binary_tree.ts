@@ -132,6 +132,54 @@ export const eq_branch = <A>(x: unknown): x is Branch<A> => {
   return verifyShape(x) && keysMatch(x, ["_kind", "data", "left", "right"]);
 };
 
-// const insert_depth_first = <A>(a: A): Tree<A> => {};
+/*
+ * Helps with debugging.
+ * Output:
+  ( Branch
+      1
+      (Branch 12 (Branch 122 Empty Empty) (Branch 121 Empty Empty))
+      (Branch 11 (Branch 112 Empty Empty) (Branch 111 Empty Empty))
+  )
 
-// const insert_breadth_first = <A>(a: A): Tree<A> => {};
+  1
+  +- 11
+  |  +- 111
+  |  `- 112
+  `- 12
+      +- 121
+      `- 122
+
+   Credit to Raekye -> https://stackoverflow.com/questions/12556469/nicely-printing-showing-a-binary-tree-in-haskell
+ */
+export const pretty_print = <A>(tree: BinaryTree<A>): string => {
+  if (eq_branch(tree)) {
+    if (eq_empty(tree.left) && eq_empty(tree.right)) {
+      return "Empty root";
+    } else {
+      return pretty_print_helper(tree).join("\n");
+    }
+  } else {
+    return "Invalid binary tree";
+  }
+};
+
+const pretty_print_helper = <A>(tree: BinaryTree<A>): ReadonlyArray<string> => {
+  const go = <A>(left: BinaryTree<A>, right: BinaryTree<A>): ReadonlyArray<string> => {
+    const pad = (first: string, rest: string) => {
+      return (lines: ReadonlyArray<string>) => {
+        return lines.map((line, idx) => (idx === 0 ? first : rest) + line);
+      };
+    };
+
+    const leftLines = pretty_print_helper(left);
+    const rightLines = pretty_print_helper(right);
+
+    return [...pad("+- ", "|  ")(rightLines), ...pad("`- ", "   ")(leftLines)];
+  };
+
+  if (eq_empty(tree)) {
+    return [];
+  } else {
+    return [`${tree.data}`, ...go(tree.left, tree.right)];
+  }
+};
