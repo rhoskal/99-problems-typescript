@@ -6,11 +6,13 @@
 - [x] Questions 11 to 20: Lists, continued
 - [x] Questions 21 to 30: Lists again
 - [x] Questions 31 to 41: Arithmetic
-- [ ] Questions 42 to 45: Logic and codes
-- [ ] Questions 54a to 60: Binary trees
-- [ ] Questions 61 to 69: Binary trees, continued
-- [ ] Questions 70B to 73: Multiway trees
-- [ ] Questions 80 to 89: Graphs
+- [ ] Questions 42 to 46: Logic and codes
+- [ ] Questions 47 to 50: Binary trees
+- [ ] Questions 51 to 60: Binary trees, continued
+- [ ] Questions 61 to 63: Binary trees again
+- [ ] Questions 64 to 68: Multiway trees
+- [ ] Questions 69 to 70: Graphs
+- [ ] Questions 71 to 79: Graphs, continued
 - [ ] Questions 90 to 94: Miscellaneous problems
 - [ ] Questions 95 to 99: Miscellaneous problems, continued
 

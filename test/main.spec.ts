@@ -642,4 +642,4 @@ test("[49] Should return true if given is valid symmetic binary tree", () => {
   expect(is_symmetric_tree(t3)).toBe(true);
 });
 
-test.skip("[51]", () => {});
+test.skip("[50]", () => {});
