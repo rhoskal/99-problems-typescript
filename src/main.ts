@@ -1,7 +1,7 @@
 import { performance } from "perf_hooks"; // nodejs package
 
 import { BinaryTree } from "./binary_tree";
-import * as B from "./binary_tree";
+import * as BT from "./binary_tree";
 import { List, LoL, Nullable } from "./types";
 import * as utils from "./utils";
 
@@ -916,9 +916,9 @@ export const huffman = (_fs: List<[string, number]>): List<[string, string]> => 
  * values and has no additional keys.
  */
 export const is_tree = <A>(x: unknown): x is BinaryTree<A> => {
-  if (B.eq_empty(x)) {
+  if (BT.eq_empty(x)) {
     return true;
-  } else if (B.eq_branch(x)) {
+  } else if (BT.eq_branch(x)) {
     return is_tree(x.left) && is_tree(x.right);
   } else {
     return false;
@@ -943,7 +943,7 @@ export const is_tree = <A>(x: unknown): x is BinaryTree<A> => {
  */
 export const print_tree = <A>(t: BinaryTree<A>): void => {
   const helper = <A>(t: BinaryTree<A>): List<A> => {
-    if (B.eq_empty(t)) {
+    if (BT.eq_empty(t)) {
       return [];
     } else {
       return [t.data, ...helper(t.left), ...helper(t.right)];
@@ -983,24 +983,30 @@ export const print_tree = <A>(t: BinaryTree<A>): void => {
  *
  * Check whether a given binary tree is symmetric.
  */
-// export const create_symmetric_tree = (as: List<number>): Tree<number> => {};
-
-/*
- * Problem 50
- *
- * Check whether a given binary tree is symmetric.
- */
 export const is_symmetric_tree = <A>(x: unknown): x is BinaryTree<A> => {
-  return false;
+  const isMirror = <A>(node1: BinaryTree<A>, node2: BinaryTree<A>): boolean => {
+    if (BT.eq_empty(node1) && BT.eq_empty(node2)) {
+      return true;
+    } else if (BT.eq_branch(node1) && BT.eq_branch(node2)) {
+      return isMirror(node1.left, node2.right) && isMirror(node1.right, node2.left);
+    } else {
+      return false;
+    }
+  };
+
+  if (typeof x === "object") {
+    if (x !== null) {
+      if (BT.eq_empty(x)) {
+        return true;
+      } else if (BT.eq_branch(x)) {
+        return isMirror(x.left, x.right);
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  } else {
+    return false;
+  }
 };
-
-// const insert_depth_first = <A>(a: A): Tree<A> => {};
-
-// const insert_breadth_first = <A>(a: A): Tree<A> => {};
-
-/*
- * Problem 51
- *
- * Check whether a given binary tree is symmetric.
- */
-// export const create_complete_balanced_tree = <A>(): Tree<A> => {};

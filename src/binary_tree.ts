@@ -131,3 +131,7 @@ export const eq_branch = <A>(x: unknown): x is Branch<A> => {
 
   return verifyShape(x) && keysMatch(x, ["_kind", "data", "left", "right"]);
 };
+
+// const insert_depth_first = <A>(a: A): Tree<A> => {};
+
+// const insert_breadth_first = <A>(a: A): Tree<A> => {};

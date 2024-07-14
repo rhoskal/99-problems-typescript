@@ -46,6 +46,7 @@ import {
   gray,
   huffman,
   is_tree,
+  is_symmetric_tree,
 } from "../src/main";
 import * as BT from "../src/binary_tree";
 import * as Bool from "../src/bool";
@@ -596,15 +597,49 @@ test("[47] Should return true if given a valid binary tree", () => {
   expect(is_tree(t4)).toBe(false);
 });
 
-test.skip("[48] Should return true if given a valid binary tree", () => {
+test.skip("[48] Should return a symmetric binary tree", () => {
   // print_tree(
   //   mkNode(4, mkNode(2, mkEmptyNode(1), mkEmptyNode(3)), mkNode(6, mkEmptyNode(5), mkEmptyNode(7))),
   // );
   // expect(complete_binary_tree(2)).toStrictEqual({ _kind: "empty", data: "x" });
 });
 
-test.skip("[49] Should return a symmetric binary tree", () => {});
+test("[49] Should return true if given is valid symmetic binary tree", () => {
+  //     x
+  //    / \
+  //   x   x
+  //        \
+  //         x
+  const t1: unknown = BT.mkBranch(
+    "x",
+    BT.mkLeaf("x"),
+    BT.mkBranch("x", BT.mkEmpty(), BT.mkLeaf("x")),
+  );
+  expect(is_symmetric_tree(t1)).toBe(false);
 
-test.skip("[50] Should return true if given is valid symmetic binary tree", () => {});
+  //     x
+  //    / \
+  //   x   x
+  //  /     \
+  // x       x
+  const t2: unknown = BT.mkBranch(
+    "x",
+    BT.mkBranch("x", BT.mkLeaf("x"), BT.mkEmpty()),
+    BT.mkBranch("x", BT.mkEmpty(), BT.mkLeaf("x")),
+  );
+  expect(is_symmetric_tree(t2)).toBe(true);
+
+  //      x
+  //    /  \
+  //   x    x
+  //    \  /
+  //    x x
+  const t3: unknown = BT.mkBranch(
+    "x",
+    BT.mkBranch("x", BT.mkEmpty(), BT.mkLeaf("x")),
+    BT.mkBranch("x", BT.mkLeaf("x"), BT.mkEmpty()),
+  );
+  expect(is_symmetric_tree(t3)).toBe(true);
+});
 
 test.skip("[51]", () => {});
