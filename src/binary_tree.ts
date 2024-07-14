@@ -46,11 +46,15 @@ export const eq_empty = (x: unknown): x is Empty => {
     if (x !== null) {
       if ("_kind" in x) {
         return x._kind === "empty";
+      } else {
+        return false;
       }
+    } else {
+      return false;
     }
+  } else {
+    return false;
   }
-
-  return false;
 };
 
 export const eq_branch = <A>(x: unknown): x is Branch<A> => {
@@ -59,12 +63,15 @@ export const eq_branch = <A>(x: unknown): x is Branch<A> => {
       if ("_kind" in x) {
         if (x._kind === "branch") {
           if ("data" in x) {
-            if (x.data === undefined) {
+            if (x.data === undefined || x.data === null) {
               return false;
             }
 
             if ("left" in x && "right" in x) {
-              return true;
+              return (
+                x.left !== undefined && x.left !== null && x.right !== undefined && x.right !== null
+              );
+              // return true;
             }
           }
         }

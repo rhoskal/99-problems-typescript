@@ -589,6 +589,7 @@ test("[47] Should return true if given a valid binary tree", () => {
 
   const t4: unknown = {
     _kind: "branch",
+    data: "x",
     left: null, // invalid
     right: { _kind: "empty" },
   };
